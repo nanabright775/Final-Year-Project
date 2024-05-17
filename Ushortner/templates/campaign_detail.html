@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Detail</title>
+</head>
+<body>
+    <h1>Campaign Detail</h1>
+    <p>Title: {{ campaign.title }}</p>
+    <p>Description: {{ campaign.description }}</p>
+
+    {% if campaign.image %}
+    <img src= "{{ campaign.image }}" alt="campaign image">
+    {% endif %}
+    <p>Created At: {{ campaign.created_at }}</p>
+
+    
+    <form action="{% url 'delete_campaign' campaign_id=campaign.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" onclick="return confirm('Are you sure you want to delete this campaign?')">Delete</button>
+        
+        <a href="{% url 'update_campaign' campaign.id %}">Update</a>
+
+    </form>
+</body>
+</html>

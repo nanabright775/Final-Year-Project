@@ -9,7 +9,6 @@
         <th>Original URL</th>
         <th>Short Code</th>
         <th>Date Created</th>
-        {% comment %} <th>Analytics</th> {% endcomment %}
       </tr>
     </thead>
     <tbody>
@@ -42,5 +41,17 @@
   {% endif %}
     <br>
     <br>
-    <a href="{% url 'analytics_view' %}">Analytics</a>
+    <p>Check out your analytics for the URLs <a href="{% url 'analytics_view' %}">Analytics</a></p>
+
+  <h2>Customize Your Short URL</h2>
+  <p>Want to create a custom short URL? <a href="{% url 'customize_short_url' %}">Click here to customize your short URL</a></p>
+  <p>Want to only have a QR CODE for a link <a href="{% url 'generate_qr_code' %}">Generate QR Code</a></p>
+  <br>
+  <br>
+  <a href="{% url 'campaign_create' %}">Create a New Campaign</a>
+  <br>
+  <br>
+  <a href="{% url 'my_campaigns' %}">My Campaigns</a>
+
+
 {% endblock %}

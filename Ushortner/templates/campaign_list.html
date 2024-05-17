@@ -1,0 +1,11 @@
+{% block content %}
+<h1>Campaigns</h1>
+{% for campaign in campaigns %}
+  <div>
+    <h2>{{ campaign.description }}</h2>
+    <p>{{ campaign.url }}</p>
+    <img src="{{ campaign.image.url }}" alt="Campaign Image">
+    <p>Posted by: {{ campaign.user.username }} on {{ campaign.created_at }}</p>
+  </div>
+{% endfor %}
+{% endblock %}

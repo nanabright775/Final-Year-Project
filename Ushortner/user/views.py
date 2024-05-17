@@ -12,6 +12,9 @@ from urlshortner.views import generate_qr_code
 from urlshortner.models import ShortURL, Click
 from django.http import HttpResponse, HttpResponseRedirect
 from collections import defaultdict
+from user.forms import CustomShortURLForm, GenerateQRCodeForm
+
+
 
 def signup_view(request):
     if request.method == 'POST':
@@ -150,9 +153,58 @@ def url_details_view(request, short_code):
     return render(request, 'url_details.html', context)
 
 
+@login_required
+def customize_short_url_view(request):
+    short_url = None
+    qr_code = None
+
+    if request.method == 'POST':
+        form = CustomShortURLForm(request.POST)
+        if form.is_valid():
+            original_url = form.cleaned_data['original_url']
+            custom_short_code = form.cleaned_data['custom_short_code']
+
+            # Ensure the custom short code is unique
+            if ShortURL.objects.filter(short_code=custom_short_code).exists():
+                form.add_error('custom_short_code', 'This short code is already in use.')
+            else:
+                short_url = ShortURL.objects.create(
+                    user=request.user,
+                    original_url=original_url,
+                    short_code=custom_short_code
+                )
+                qr_code = generate_qr_code(f"http://127.0.0.1:8000/{short_url.short_code}")
+    else:
+        form = CustomShortURLForm()
+    
+    return render(request, 'customize_short_url.html', {'form': form, 'short_url': short_url, 'qr_code': qr_code})
 
 
 
+#for the user to only generate a qr code 
+def generate_qr_code_view(request):
+    qr_code = None
+
+    if request.method == 'POST':
+        form = GenerateQRCodeForm(request.POST)
+        if form.is_valid():
+            url = form.cleaned_data['url']
+            qr_code = generate_qr_code(url)
+    else:
+        form = GenerateQRCodeForm()
+
+    return render(request, 'generate_qr_code.html', {'form': form, 'qr_code': qr_code})
+
+
+
+
+#for deletion of url
+def delete_short_url(request, short_code):
+    short_url = get_object_or_404(ShortURL, short_code=short_code)
+    if request.method == 'POST':
+        short_url.delete()
+        return redirect('analytics_view')
+    return redirect('analytics_view')
 
 
 

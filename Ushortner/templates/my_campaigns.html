@@ -1,0 +1,18 @@
+{% comment %} {% extends "base.html" %} {% endcomment %}
+{% comment %} {% block title %}My Campaigns{% endblock %} {% endcomment %}
+
+{% block content %}
+    <h1>My Campaigns</h1>
+    <ul>
+        {% for campaign in user_campaigns %}
+            <li>
+                <a href="{{ campaign.url }}">{{ campaign.description }}</a>
+                <form action="{% url 'delete_campaign' campaign.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                    <a href="{% url 'update_campaign' campaign.id %}">Update</a>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
