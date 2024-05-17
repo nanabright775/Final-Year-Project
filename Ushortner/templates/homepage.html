@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Shortener</title>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="#">URL Shortener</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'shorten' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'signup' %}">SignUp/Register</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              <li class="nav-item">
+                {% comment %} <a class="nav-link" href="{% url 'qr-creator' %}">QR Creator</a> {% endcomment %}
+              </li>
+              <li class="nav-item">
+                {% comment %} <a class="nav-link" href="{% url 'customize' %}">Customize Your Link</a> {% endcomment %}
+              </li>
+              <li class="nav-item">
+                {% comment %} <a class="nav-link" href="{% url 'campaign' %}">Campaign</a> {% endcomment %}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+    <h1>Shorten Your URL</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="url" placeholder="Enter URL here" required>
+        <button type="submit">Shorten</button>
+    </form>
+    <br>
+    {% if short_code %}
+    <p>Your shortened URL is:</p>
+    <div id="short-code">{{ short_code }}</div>
+    <p>Click <a href="{{ short_code }}">here</a> to visit the original URL.</p>
+    {% endif %}
+    <br>
+    {% if qr_code %}
+    <img src="data:image/jpeg;base64,{{ qr_code|safe }}" alt="QR Code">
+    {% endif %}
+    <br>
+    <br>
+    {% comment %} <a href="{% url 'analytics' %}">Analytics</a> {% endcomment %}
+</body>
+</html>
+
+
