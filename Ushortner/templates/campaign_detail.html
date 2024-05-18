@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campaign Detail</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Campaign_detail {% endblock %}
+
+{% block content %}
     <h1>Campaign Detail</h1>
     <p>Title: {{ campaign.title }}</p>
     <p>Description: {{ campaign.description }}</p>
@@ -23,5 +19,4 @@
         <a href="{% url 'update_campaign' campaign.id %}">Update</a>
 
     </form>
-</body>
-</html>
+{% endblock %}
