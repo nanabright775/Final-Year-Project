@@ -19,17 +19,28 @@
                 <a class="nav-link" href="{% url 'shorten' %}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'signup' %}">SignUp/Register</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">Login</a>
-              </li>
-              <li class="nav-item">
                <a class="nav-link" href="{% url 'generate_qr_code' %}">QR Creator</a>
               </li>
               <li class="nav-item">
               <a class="nav-link" href="{% url 'campaign_list' %}">Campaigns</a>
               </li>
+              
+             {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'userdashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">SignUp/Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+              {% endif %}
+              
             </ul>
           </div>
         </div>

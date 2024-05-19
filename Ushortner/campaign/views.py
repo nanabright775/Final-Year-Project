@@ -9,6 +9,11 @@ def campaign_list(request):
 
 @login_required
 def campaign_create(request):
+    initial_data = {}
+    short_url = request.GET.get('short_url', None)
+    if short_url:
+        initial_data['url'] = short_url
+    
     if request.method == 'POST':
         form = CampaignForm(request.POST, request.FILES)
         if form.is_valid():
@@ -17,7 +22,8 @@ def campaign_create(request):
             campaign.save()
             return redirect('campaign_list')
     else:
-        form = CampaignForm()
+        form = CampaignForm(initial=initial_data)
+    
     return render(request, 'campaign_create.html', {'form': form})
 
 @login_required

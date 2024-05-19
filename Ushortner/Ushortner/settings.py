@@ -54,6 +54,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Ushortner.urls'
+LOGOUT_REDIRECT_URL = '/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    # 'myapp/static', # If you have additional static files, specify their paths here
+]
 
 TEMPLATES = [
     {

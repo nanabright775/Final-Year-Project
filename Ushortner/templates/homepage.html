@@ -1,143 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener</title>
-    <style>
-        #qr-code img {
-            display: block;
-            margin: 10px 0;
-        }
-        .button-group {
-            margin: 10px 0;
-        }
-        .share-buttons button {
-            margin: 5px;
-        }
-    </style>
-</head>
-<body>
+{% extends 'base.html' %}
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">URL Shortener</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'shorten' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'signup' %}">SignUp/Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'generate_qr_code' %}">QR Creator</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'campaign_list' %}">Campaigns</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <h1>Shorten Your URL</h1>
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="url" placeholder="Enter URL here" required>
-        <button type="submit">Shorten</button>
-    </form>
-    <br>
-    {% if short_code %}
-    <div>
-        <p>Your shortened URL is:</p>
-        <div id="short-code">
-            <a href="http://127.0.0.1:8000/{{ short_code }}">http://127.0.0.1:8000/{{ short_code }}</a>
-        </div>
-        <div class="button-group">
-            <button onclick="copyToClipboard('http://127.0.0.1:8000/{{ short_code }}')">Copy URL</button>
-        </div>
-        <div class="share-buttons">
-            <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')">Share to WhatsApp</button>
-            <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_code }}')">Share to Facebook</button>
-            <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_code }}')">Share to Twitter</button>
-        </div>
-        <p>Click <a href="http://127.0.0.1:8000/{{ short_code }}">here</a> to visit the original URL.</p>
+{% block title %}Homepage {% endblock %}
+{% load static %}
+{% block content %}
+<h1>Shorten Your URL</h1>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="url" placeholder="Enter URL here" required>
+    <button type="submit">Shorten</button>
+</form>
+<br>
+{% if short_code %}
+<div>
+    <p>Your shortened URL is:</p>
+    <div id="short-code">
+        <a href="http://127.0.0.1:8000/{{ short_code }}">http://127.0.0.1:8000/{{ short_code }}</a>
     </div>
-    {% endif %}
-    <br>
-    {% if qr_code %}
-    <div id="qr-code">
-        <img src="data:image/jpeg;base64,{{ qr_code|safe }}" alt="QR Code">
-        <div class="button-group">
-            <button onclick="copyImageToClipboard('data:image/jpeg;base64,{{ qr_code|safe }}')">Copy QR Code</button>
-            <a href="data:image/jpeg;base64,{{ qr_code|safe }}" download="qr_code.jpg">
-                <button>Download QR Code</button>
-            </a>
-        </div>
-        <div class="share-buttons">
-            <button onclick="shareQrCodeToWhatsApp('data:image/jpeg;base64,{{ qr_code|safe }}')">Share QR Code to WhatsApp</button>
-            <button onclick="shareQrCodeToFacebook('data:image/jpeg;base64,{{ qr_code|safe }}')">Share QR Code to Facebook</button>
-            <button onclick="shareQrCodeToTwitter('data:image/jpeg;base64,{{ qr_code|safe }}')">Share QR Code to Twitter</button>
-        </div>
+    <div class="button-group">
+        <button onclick="copyToClipboard('http://127.0.0.1:8000/{{ short_code }}')">Copy URL</button>
     </div>
-    {% endif %}
-    <br>
-    <script>
-        function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(function() {
-            alert('URL copied to clipboard!');
-        }, function(err) {
-            alert('Failed to copy URL: ', err);
-        });
-    }
+    <div class="share-buttons">
+        <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')">Share to WhatsApp</button>
+        <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_code }}')">Share to Facebook</button>
+        <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_code }}')">Share to Twitter</button>
+    </div>
+    <p>Click <a href="http://127.0.0.1:8000/{{ short_code }}">here</a> to visit the original URL.</p>
+</div>
+{% endif %}
+<br>
+{% if qr_code %}
+<div id="qr-code">
+    <img src="data:image/jpeg;base64,{{ qr_code|safe }}" alt="QR Code">
+    <div class="button-group">
+        <button onclick="copyImageToClipboard('data:image/jpeg;base64,{{ qr_code|safe }}')">Copy QR Code</button>
+        <a href="data:image/jpeg;base64,{{ qr_code|safe }}" download="qr_code.jpg">
+            <button>Download QR Code</button>
+        </a>
+    </div>
+    <div class="share-buttons">
+        <button onclick="shareQrCodeToWhatsApp('data:image/jpeg;base64,{{ qr_code|safe }}')">Share QR Code to WhatsApp</button>
+        <button onclick="shareQrCodeToFacebook('data:image/jpeg;base64,{{ qr_code|safe }}')">Share QR Code to Facebook</button>
+        <button onclick="shareQrCodeToTwitter('data:image/jpeg;base64,{{ qr_code|safe }}')">Share QR Code to Twitter</button>
+    </div>
+</div>
+{% endif %}
 
-    function copyImageToClipboard(imageSrc) {
-        fetch(imageSrc)
-            .then(response => response.blob())
-            .then(blob => {
-                const item = new ClipboardItem({ "image/png": blob });
-                navigator.clipboard.write([item]).then(function() {
-                    alert('QR Code copied to clipboard!');
-                }, function(err) {
-                    alert('Failed to copy QR Code: ', err);
-                });
-            });
-    }
-
-    function shareToWhatsApp(url) {
-        window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, '_blank');
-    }
-
-    function shareToFacebook(url) {
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-    }
-
-    function shareToTwitter(url) {
-        window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`, '_blank');
-    }
-
-    function shareQrCodeToWhatsApp(imageSrc) {
-        const imgTag = `<img src="${imageSrc}" alt="QR Code">`;
-        window.open(`https://wa.me/?text=${encodeURIComponent(imgTag)}`, '_blank');
-    }
-
-    function shareQrCodeToFacebook(imageSrc) {
-        const imgTag = `<img src="${imageSrc}" alt="QR Code">`;
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imgTag)}`, '_blank');
-    }
-
-    function shareQrCodeToTwitter(imageSrc) {
-        const imgTag = `<img src="${imageSrc}" alt="QR Code">`;
-        window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(imgTag)}`, '_blank');
-    }
-
-    </script>
-</body>
-</html>
+<br>
+<script src="{% static 'scripts.js' %}" defer></script>
+{% endblock content %}

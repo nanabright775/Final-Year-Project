@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}dashboard {% endblock %}
-
+{% load static %}
 {% block content %}
-
 <h1>User Dashboard</h1>
 <p>Welcome, {{ request.user.username }}!</p>
 <h2>Your Short URLs</h2>
@@ -26,6 +25,9 @@
             <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')">Share to WhatsApp</button>
             <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_code }}')">Share to Facebook</button>
             <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_code }}')">Share to Twitter</button>
+            <a href="{% url 'campaign_create' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}">
+              <button>Add to Campaign</button>
+            </a>
           </div> 
           </td>
           </tr>
@@ -56,6 +58,9 @@
   <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')">Share to WhatsApp</button>
   <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_code }}')">Share to Facebook</button>
   <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_code }}')">Share to Twitter</button>
+  <a href="{% url 'campaign_create' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}">
+    <button>Add to Campaign</button>
+  </a>
 </div> 
 
 
@@ -84,4 +89,6 @@
   <a href="{% url 'my_campaigns' %}">My Campaigns</a>
 
 
-{% endblock %}
+<script src="{% static 'scripts.js' %}" defer></script>
+
+{% endblock content %}
