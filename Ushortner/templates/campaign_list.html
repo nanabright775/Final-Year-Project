@@ -2,6 +2,7 @@
 {% block title %} Campaigns {% endblock %}
 
 {% block content %}
+<div class="p-10 sm:ml-64">
 <h1>Campaigns</h1>
 {% for campaign in campaigns %}
   <div>
@@ -10,5 +11,6 @@
     <img src="{{ campaign.image.url }}" alt="Campaign Image">
     <p>Posted by: {{ campaign.user.username }} on {{ campaign.created_at }}</p>
   </div>
+</div>
 {% endfor %}
 {% endblock %}

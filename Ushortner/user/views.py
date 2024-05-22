@@ -1,32 +1,41 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect, get_object_or_404
-# from django.shortcuts import get_object_or_404, redirect
-from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from urlshortner.models import ShortURL
 import uuid
-from user_agents import parse as ua_parse
 from urlshortner.views import generate_qr_code
 from urlshortner.models import ShortURL, Click
-from django.http import HttpResponse, HttpResponseRedirect
-from collections import defaultdict
 from user.forms import CustomShortURLForm, GenerateQRCodeForm
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 
 
 
 def signup_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
+        username = request.POST.get('username')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        
+        errors = []
+
+        if not username or not password1 or not password2:
+            errors.append("All fields are required.")
+        if password1 != password2:
+            errors.append("Passwords do not match.")
+        if User.objects.filter(username=username).exists():
+            errors.append("Username already exists.")
+        
+        if not errors:
+            user = User.objects.create(username=username, password=make_password(password1))
             login(request, user)
             return redirect(reverse('userdashboard'))
-    else:
-        form = UserCreationForm()
+        else:
+            return render(request, 'signup.html', {'errors': errors})
+    
+    return render(request, 'signup.html')
 
-    return render(request, 'signup.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':

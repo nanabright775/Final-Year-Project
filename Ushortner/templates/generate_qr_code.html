@@ -2,6 +2,7 @@
 {% block title %}generate_qr_code {% endblock %}
 
 {% block content %}
+<div class="p-10 sm:ml-64">
 <h1>Generate QR Code for URL</h1>
 
 <form method="post">
@@ -13,6 +14,7 @@
 {% if qr_code %}
   <h2>QR Code</h2>
   <img src="data:image/jpeg;base64,{{ qr_code }}" alt="QR Code">
+</div>
 {% endif %}
 
 {% endblock %}

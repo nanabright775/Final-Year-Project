@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'user_agents',
     'user',
     'campaign',
+    'compressor',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,13 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
     # 'myapp/static', # If you have additional static files, specify their paths here
 ]
+
+
+COMPRESS_ROOT = BASE_DIR / 'static'
+
+COMPRESS_ENABLED = True
+
+STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
 TEMPLATES = [
     {
