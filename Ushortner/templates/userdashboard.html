@@ -2,6 +2,10 @@
 {% block title %}dashboard {% endblock %}
 {% load static %}
 {% block content %}
+
+
+<div class="p-10 sm:ml-64">
+
 <h1>User Dashboard</h1>
 <p>Welcome, {{ request.user.username }}!</p>
 <h2>Your Short URLs</h2>
@@ -88,7 +92,7 @@
   <br>
   <a href="{% url 'my_campaigns' %}">My Campaigns</a>
 
-
+  </div>
 <script src="{% static 'scripts.js' %}" defer></script>
 
 {% endblock content %}

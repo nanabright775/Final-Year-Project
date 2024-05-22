@@ -3,6 +3,8 @@
 {% block title %}Analytics {% endblock %}
 
 {% block content %}
+<div class="p-10 sm:ml-64">
+
   <h1>Analytics for {{ username }}</h1>
   <form method="get">
     <label for="start_date">Start Date:</label>
@@ -36,4 +38,5 @@
         </tr>
       {% endfor %}
     </tbody> 
-{%endblock%}
+  </div>
+{% endblock %}

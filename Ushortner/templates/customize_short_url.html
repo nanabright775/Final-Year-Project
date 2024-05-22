@@ -2,6 +2,7 @@
 {% block title %}Customize {% endblock %}
 
 {% block content %}
+<div class="p-10 sm:ml-64">
   <h1>Customize your Short URL</h1>
 
   <form method="post">
@@ -19,4 +20,5 @@
   {% endif %}
   <br>
   <a href="{% url 'userdashboard' %}">Back to Dashboard</a>
+</div>
 {% endblock %}
