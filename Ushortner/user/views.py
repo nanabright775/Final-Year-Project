@@ -216,17 +216,7 @@ def delete_short_url(request, short_code):
     return redirect('analytics_view')
 
 
-
-
-# def redirect_to_original(request, short_code):
-#     try:
-#         short_url = ShortURL.objects.get(short_code=short_code)
-#         return redirect(short_url.original_url)
-#     except ShortURL.DoesNotExist:
-#         return HttpResponseNotFound('Short URL does not exist')
-
-# def redirect_view(request, short_code):
-#     short_url = get_object_or_404(ShortUrl, short_code=short_code)
-#     # Record the click
-#     Click.objects.create(short_url=short_url, timestamp=timezone.now())
-#     return redirect(short_url.original_url)
+@login_required
+def user_links(request):
+    user_short_urls = ShortURL.objects.filter(user=request.user)
+    return render(request, 'links.html', {'user_short_urls': user_short_urls})

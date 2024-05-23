@@ -6,43 +6,6 @@
 
 <div class="p-10 sm:ml-64">
 
-<h1>User Dashboard</h1>
-<p>Welcome, {{ request.user.username }}!</p>
-<h2>Your Short URLs</h2>
-{% if user_short_urls %}
-  <table>
-    <thead>
-      <tr>
-        <th>Original URL</th>
-        <th>Short Code</th>
-        <th>Date Created</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for short_url in user_short_urls %}
-        <tr>
-          <td><a href="{{ short_url.original_url }}">{{ short_url.original_url }}</a></td>
-          <td><a href="http://127.0.0.1:8000/{{ short_url.short_code }}">http://127.0.0.1:8000/{{ short_url.short_code }}</a></td> 
-          <td>{{ short_url.date_created }}</td>
-          <td>   <div class="share-buttons">
-            <button onclick="copyToClipboard('http://127.0.0.1:8000/{{ short_code }}')">Copy URL</button>
-            <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')">Share to WhatsApp</button>
-            <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_code }}')">Share to Facebook</button>
-            <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_code }}')">Share to Twitter</button>
-            <a href="{% url 'campaign_create' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}">
-              <button>Add to Campaign</button>
-            </a>
-          </div> 
-          </td>
-          </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-{% else %}
-  <p>You have not created any short URLs yet.</p>
-{% endif %}
-
 <h1>Shorten Your URL</h1>
 <form method="post">
     {% csrf_token %}

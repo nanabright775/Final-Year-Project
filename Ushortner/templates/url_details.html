@@ -3,6 +3,8 @@
 {% block title %}Details {% endblock %}
 {% load static %}
 {% block content %}
+
+<div class="p-10 sm:ml-64">
   <h1>Details for URL: <a href="http://127.0.0.1:8000/{{ short_url.short_code }}">http://127.0.0.1:8000/{{ short_url.short_code }}</a></h1>
   <p>Original URL: <a href="{{ short_url.original_url }}">{{ short_url.original_url }}</a></p>
   <p>Short Code: {{ short_url.short_code }}</p>
@@ -51,7 +53,7 @@
       <button>Add to Campaign</button>
     </a>
 </div> 
-
+</div>
 <script src="{% static 'scripts.js' %}" defer></script>
 
 {% endblock %}
