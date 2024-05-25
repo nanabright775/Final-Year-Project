@@ -3,7 +3,7 @@
 {% block title %}Chat with {{ user.username }}{% endblock %}
 
 {% block content %}
-<div class="p-10 sm:ml-64">
+<div class="p-10 sm:ml-64 h-screen">
         
     <div class=" flex-col">
         <div class="flex-none">
@@ -20,8 +20,9 @@
         <br>
         <br>
         <br>
-        <div class="flex-none bg-white p-4 fixed bottom-0 right-0">
-          <form method="post" class="flex right-2 mx-auto w-full max-w-lg">
+  
+        <div class="flex-row bg-white p-4 fixed bottom-0 right-0">
+          <form method="post" class="flex right-2 ">
             {% csrf_token %}
             <div class="flex-grow">
               {{ form.content }}
@@ -36,8 +37,3 @@
 </div>
 
 {% endblock %}
-{% comment %} 
-<div class="fixed top-0  bg-white">
-    <h1 class="text-center text-3xl font-bold text-gray-900 mb-8">Chat with {{ user.username }}</h1>
-</div>
-<br> {% endcomment %}

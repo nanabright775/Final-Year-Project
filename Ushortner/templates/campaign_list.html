@@ -5,10 +5,10 @@
 <div class="p-10 sm:ml-64">
 
 <h1 class="text-center text-4xl font-bold text-gray-900 mb-8">Campaigns</h1>
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-1 ">
+<div class="h-1  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-1 ">
 {% for campaign in campaigns %}
 <div class="max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
-       <img class="rounded-t-lg" src="{{ campaign.image.url }}" alt="Campaign Image">
+    <img class="rounded-t-lg  rounded-lg w-full" src="{{ campaign.image.url }}" alt="Campaign Image">
      <div class="p-2"> 
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ campaign.description }}</p>
         <a href="{{ campaign.url }}"  class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
