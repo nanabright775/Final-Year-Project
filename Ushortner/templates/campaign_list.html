@@ -18,6 +18,11 @@
           </svg>
         </a>
         <p class="p-2">post by: {{ campaign.user.username }} on {{ campaign.created_at }} </p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'chat_detail' campaign.user.username %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+            Chat with {{ campaign.user.username }}
+        </a>
+    {% endif %}
       </div>
 </div>
 {% endfor %}

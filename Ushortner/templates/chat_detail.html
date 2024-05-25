@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Chat with {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="p-10 sm:ml-64">
+        
+    <div class=" flex-col">
+        <div class="flex-none">
+          <h1 class="text-center text-3xl font-bold text-gray-900 mb-8">Chat with {{ user.username }}</h1>
+        </div>
+        
+        <div class="h-screen flex-1 overflow-y-auto p-4">
+          {% for message in messages %}
+            <div>
+              <strong>{{ message.sender.username }}</strong>: {{ message.content }}
+            </div>
+          {% endfor %}
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="flex-none bg-white p-4 fixed bottom-0 right-0">
+          <form method="post" class="flex right-2 mx-auto w-full max-w-lg">
+            {% csrf_token %}
+            <div class="flex-grow">
+              {{ form.content }}
+            </div>
+            <button type="submit" class="bg-blue-500 text-black px-4 py-2 rounded">
+              Send
+            </button>
+          </form>
+        </div>
+      </div>
+
+</div>
+
+{% endblock %}
+{% comment %} 
+<div class="fixed top-0  bg-white">
+    <h1 class="text-center text-3xl font-bold text-gray-900 mb-8">Chat with {{ user.username }}</h1>
+</div>
+<br> {% endcomment %}

@@ -6,11 +6,11 @@
 {% block content %}
 <div class="p-10 sm:ml-64">
 
-    <div class="container">
+    <div >
             <h1 class="text-3xl m-4">My Shortened Links</h1>
             {% if user_short_urls %}
                 {% for short_url in user_short_urls %}
-                <div class="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="mb-4 max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <a href="{{ short_url.short_code }}">
                         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-blue-700 dark:text-white">http://127.0.0.1:8000/{{ short_url.short_code }}</h5>
                     </a>

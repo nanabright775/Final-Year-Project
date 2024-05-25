@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'user',
     'campaign',
     'compressor',
+    'chat',
 ]
 
 MIDDLEWARE = [

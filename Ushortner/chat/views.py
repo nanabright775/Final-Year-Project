@@ -1,0 +1,54 @@
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from .models import Message
+from .forms import MessageForm
+from django.db.models import Q 
+
+
+@login_required
+def chat_list(request):
+    # Get all users the current user has sent or received messages from
+    users = User.objects.filter(
+        Q(id__in=Message.objects.filter(sender=request.user).values_list('receiver_id', flat=True)) |
+        Q(id__in=Message.objects.filter(receiver=request.user).values_list('sender_id', flat=True))
+    ).distinct()
+
+    # Get unread message counts for each user
+    unread_counts = {}
+    for user in users:
+        unread_counts[user.id] = Message.objects.filter(sender=user, receiver=request.user, is_read=False).count()
+
+    return render(request, 'chat_list.html', {'users': users, 'unread_counts': unread_counts})
+
+
+
+@login_required
+def chat_detail(request, username):
+    user = get_object_or_404(User, username=username)
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.receiver = user
+            message.save()
+            return redirect('chat_detail', username=user.username)
+    else:
+        form = MessageForm()
+    # Get messages between the current user and the target user
+    messages = Message.objects.filter(
+        (Q(sender=request.user) & Q(receiver=user)) |
+        (Q(sender=user) & Q(receiver=request.user))
+    ).order_by('timestamp')
+
+    # Mark messages as read
+    unread_messages = messages.filter(receiver=request.user, is_read=False)
+    unread_messages.update(is_read=True)
+
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        if content:
+            Message.objects.create(sender=request.user, receiver=user, content=content)
+
+    return render(request, 'chat_detail.html', {'messages': messages,'form': form, 'user': user})
