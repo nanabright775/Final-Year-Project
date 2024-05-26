@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'campaign',
     'compressor',
     'chat',
+    'reels',
 ]
 
 MIDDLEWARE = [

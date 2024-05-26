@@ -3,17 +3,20 @@
 
 {% block content %}
 <div class="p-10 sm:ml-64">
-    <h1>My Campaigns</h1>
+    <h1 class="text-3xl m-4">My Campaigns</h1>
+    <div class="mb-4 max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
     <ul>
         {% for campaign in user_campaigns %}
             <li>
-                <a href="{{ campaign.url }}">{{ campaign.description }}</a>
-                <form action="{% url 'delete_campaign' campaign.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">Delete</button>
-                    <a href="{% url 'update_campaign' campaign.id %}">Update</a>
-                </form>
+                <p>{{ campaign.description }}</p>
+                {% comment %} <img class="rounded-t-lg  rounded-lg w-full" src="{{ campaign.image.url }}" alt="Campaign Image"> {% endcomment %}
+                
+                <a href="{% url 'campaign_detail' campaign.id %}">view_detail</a>
             </li>
         {% endfor %}
     </ul>
+
+
+</div>
 {% endblock %}
