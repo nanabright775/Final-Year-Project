@@ -5,7 +5,7 @@ from .forms import CampaignForm
 
 def campaign_list(request):
     campaigns = Campaign.objects.all()
-    return render(request, 'campaign_list.html', {'campaigns': campaigns})
+    return render(request, 'campaign/campaign_list.html', {'campaigns': campaigns})
 
 @login_required
 def campaign_create(request):
@@ -24,20 +24,12 @@ def campaign_create(request):
     else:
         form = CampaignForm(initial=initial_data)
     
-    return render(request, 'campaign_create.html', {'form': form})
+    return render(request, 'campaign/campaign_create.html', {'form': form})
 
 @login_required
 def my_campaigns(request):
     user_campaigns = Campaign.objects.filter(user=request.user)
-    return render(request, 'my_campaigns.html', {'user_campaigns': user_campaigns})
-
-
-# @login_required
-# def delete_campaign(request, campaign_id):
-#     campaign = get_object_or_404(Campaign, pk=campaign_id)
-#     if request.method == 'POST' and campaign.user == request.user:
-#         campaign.delete()
-#     return redirect('my_campaigns')
+    return render(request, 'campaign/my_campaigns.html', {'user_campaigns': user_campaigns})
 
 
 #update campaign function
@@ -51,19 +43,19 @@ def update_campaign(request, campaign_id):
             return redirect('campaign_detail', campaign_id=campaign_id)
     else:
         form = CampaignForm(instance=campaign)
-    return render(request, 'update_campaign.html', {'form': form, 'campaign': campaign})
+    return render(request, 'campaign/update_campaign.html', {'form': form, 'campaign': campaign})
 
 
 #for detail view of the campaign
 def campaign_detail(request, campaign_id):
     campaign = get_object_or_404(Campaign, pk=campaign_id)
-    return render(request, 'campaign_detail.html', {'campaign': campaign})
+    return render(request, 'campaign/campaign_detail.html', {'campaign': campaign})
 
 
 @login_required
 def my_campaigns(request):
     user_campaigns = Campaign.objects.filter(user=request.user)
-    return render(request, 'my_campaign.html', {'user_campaigns': user_campaigns})
+    return render(request, 'campaign/my_campaign.html', {'user_campaigns': user_campaigns})
 
 
 

@@ -20,7 +20,7 @@ def shorten_view(request):
         if ShortURL.objects.filter(original_url=original_url).exists():
             short_code = ShortURL.objects.get(original_url=original_url).short_code
             qr_code = generate_qr_code(request.build_absolute_uri(f'/{short_code}'))
-            return render(request, 'homepage.html', {'original_url': original_url, 'short_code': short_code, 'qr_code': qr_code})
+            return render(request, 'basehome/homepage.html', {'original_url': original_url, 'short_code': short_code, 'qr_code': qr_code})
             # return render(request, 'shorten.html', {'original\_url': original_url, 'short\_code': short_code})
 
         else:
@@ -28,11 +28,11 @@ def shorten_view(request):
             ShortURL.objects.create(original_url=original_url, short_code=short_code)
             short_url = request.build_absolute_uri(f'/{short_code}')
             qr_code = generate_qr_code(request.build_absolute_uri(f'/{short_code}'))
-            return render(request, 'homepage.html', {'original_url': original_url, 'short_code': short_code, 'qr_code': qr_code})
+            return render(request, 'basehome/homepage.html', {'original_url': original_url, 'short_code': short_code, 'qr_code': qr_code})
             return HttpResponseRedirect(f'/{short_code}')
         
     else:
-        return render(request, 'homepage.html')
+        return render(request, 'basehome/homepage.html')
               
 
 #function to generate qr code

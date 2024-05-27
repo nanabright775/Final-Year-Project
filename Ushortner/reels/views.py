@@ -5,13 +5,13 @@ from .forms import ReelForm
 
 def reel_list(request):
     reels = Reel.objects.all().order_by('-created_at')
-    return render(request, 'reel_list.html', {'reels': reels})
+    return render(request, 'reels/reel_list.html', {'reels': reels})
 
 
 @login_required
 def my_reels(request):
     user_reels = Reel.objects.filter(user=request.user)
-    return render(request, 'my_reels.html', {'user_reels': user_reels})
+    return render(request, 'reels/my_reels.html', {'user_reels': user_reels})
 
 
 
@@ -31,7 +31,7 @@ def reel_upload(request):
             return redirect('reel_list')
     else:
         form = ReelForm(initial=initial_data)
-    return render(request, 'reel_upload.html', {'form': form})
+    return render(request, 'reels/reel_upload.html', {'form': form})
 
 @login_required
 def reel_update(request, reel_id):
@@ -43,7 +43,7 @@ def reel_update(request, reel_id):
             return redirect('reel_list')
     else:
         form = ReelForm(instance=reel)
-    return render(request, 'reel_update.html', {'form': form, 'reel': reel})
+    return render(request, 'reels/reel_update.html', {'form': form, 'reel': reel})
 
 @login_required
 def reel_delete(request, reel_id):
@@ -51,4 +51,4 @@ def reel_delete(request, reel_id):
     if request.method == 'POST':
         reel.delete()
         return redirect('my_reels')
-    return render(request, 'reel_delete.html', {'reel': reel})
+    return render(request, 'reels/reel_delete.html', {'reel': reel})

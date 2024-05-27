@@ -32,9 +32,9 @@ def signup_view(request):
             login(request, user)
             return redirect(reverse('userdashboard'))
         else:
-            return render(request, 'signup.html', {'errors': errors})
+            return render(request, 'user/signup.html', {'errors': errors})
     
-    return render(request, 'signup.html')
+    return render(request, 'user/signup.html')
 
 
 def login_view(request):
@@ -46,7 +46,7 @@ def login_view(request):
         if user is not None:
             login(request, user) 
             return redirect(reverse('userdashboard'))
-    return render(request, 'login.html')
+    return render(request, 'user/login.html')
 
 @login_required
 def user_dashboard(request):
@@ -73,21 +73,13 @@ def user_dashboard(request):
         'short_code': short_code,
         'qr_code': qr_code,
     }
-    return render(request, 'userdashboard.html', context)
+    return render(request, 'user/userdashboard.html', context)
 
 
 
 def logout_view(request):
     logout(request)
     return redirect(reverse('login'))
-
-
-# def redirect_view(request, short_code):
-#     short_url = ShortURL.objects.get(short_code=short_code)
-#     click = Click.objects.create(short_url=short_url, user_agent=request.META.get('USER_AGENT'), referer=request.META.get('REFERER'), ip_address=request.META.get('REMOTE_ADDR'))
-#     short_url.clicks += 1
-#     short_url.save()
-#     return HttpResponsePermanentRedirect(short_url.original_url)
 
 
 def redirect_view(request, short_code):
@@ -107,8 +99,6 @@ def redirect_view(request, short_code):
     )
     click.save()
     Click.click_count =+ 1
-    # short_url.save(update_fields=['click_count'])
-    # Redirect to the original URL
     return redirect(short_url.original_url)
 
 
@@ -139,10 +129,8 @@ def analytics_view(request):
         'sort_by': sort_by, 
         'username': request.user.username
         }
-    # print(url_clicks)
-    # print(combined_data)
     
-    return render(request, 'analytics.html', context)
+    return render(request, 'user/analytics.html', context)
 
 
 
@@ -159,7 +147,7 @@ def url_details_view(request, short_code):
         'qr_coded':qr_coded,
     }
     # print(short_urls_detail)
-    return render(request, 'url_details.html', context)
+    return render(request, 'user/url_details.html', context)
 
 
 @login_required
@@ -186,7 +174,7 @@ def customize_short_url_view(request):
     else:
         form = CustomShortURLForm()
     
-    return render(request, 'customize_short_url.html', {'form': form, 'short_url': short_url, 'qr_code': qr_code})
+    return render(request, 'user/customize_short_url.html', {'form': form, 'short_url': short_url, 'qr_code': qr_code})
 
 
 
@@ -202,7 +190,7 @@ def generate_qr_code_view(request):
     else:
         form = GenerateQRCodeForm()
 
-    return render(request, 'generate_qr_code.html', {'form': form, 'qr_code': qr_code})
+    return render(request, 'user/generate_qr_code.html', {'form': form, 'qr_code': qr_code})
 
 
 
@@ -219,4 +207,4 @@ def delete_short_url(request, short_code):
 @login_required
 def user_links(request):
     user_short_urls = ShortURL.objects.filter(user=request.user)
-    return render(request, 'links.html', {'user_short_urls': user_short_urls})
+    return render(request, 'user/links.html', {'user_short_urls': user_short_urls})

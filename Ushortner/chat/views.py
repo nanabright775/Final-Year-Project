@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import Message
 from .forms import MessageForm
 from django.db.models import Q 
-
+from django.http import HttpResponseRedirect
 
 @login_required
 def chat_list(request):
@@ -19,7 +19,7 @@ def chat_list(request):
     for user in users:
         unread_counts[user.id] = Message.objects.filter(sender=user, receiver=request.user, is_read=False).count()
 
-    return render(request, 'chat_list.html', {'users': users, 'unread_counts': unread_counts})
+    return render(request, 'chat/chat_list.html', {'users': users, 'unread_counts': unread_counts})
 
 
 
@@ -51,4 +51,5 @@ def chat_detail(request, username):
         if content:
             Message.objects.create(sender=request.user, receiver=user, content=content)
 
-    return render(request, 'chat_detail.html', {'messages': messages,'form': form, 'user': user})
+    return render(request, 'chat/chat_detail.html', {'messages': messages,'form': form, 'user': user})
+

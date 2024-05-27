@@ -1,0 +1,65 @@
+{% extends 'basehome/base.html' %}
+{% block title %}Details {% endblock %}
+{% load static %}
+{% block content %}
+
+<div class="p-10 sm:ml-64">
+  <h1 class="text-2xl font-bold mb-4">Details for URL: 
+    <a href="http://127.0.0.1:8000/{{ short_url.short_code }}" class="text-blue-600 hover:text-blue-800">http://127.0.0.1:8000/{{ short_url.short_code }}</a>
+  </h1>
+  <p class="mb-2">Original URL: 
+    <a href="{{ short_url.original_url }}" class="text-blue-600 hover:text-blue-800">{{ short_url.original_url }}</a>
+  </p>
+  <p class="mb-2">Short Code: {{ short_url.short_code }}</p>
+  <p class="mb-2">QR Code:</p>
+  <img src="data:image/png;base64,{{ qr_coded }}" alt="QR Code" class="mb-4">
+  <a href="data:image/jpeg;base64,{{ qr_coded|safe }}" download="qr_code.jpg">
+    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Download QR Code</button>
+  </a>
+  <p class="mt-4 mb-4">Date Created: {{ short_url.date_created }}</p>
+
+  <h2 class="text-xl font-semibold mb-4">Click Details</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm mb-6">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IP Address</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referer</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Browser</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        {% for click in clicks %}
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">{{ click.timestamp }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ click.ip_address }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ click.referer }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ click.browser }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ click.device }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+  <form action="{% url 'delete_short_url' short_url.short_code %}" method="post" class="mb-6">
+    {% csrf_token %}
+    <button type="submit" onclick="return confirm('Are you sure you want to delete this URL?')" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Delete</button>
+  </form>
+
+  <div class="share-buttons mb-6 space-y-4">
+    <button onclick="copyToClipboard('http://127.0.0.1:8000/{{ short_code }}')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Copy URL</button>
+    <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Share to WhatsApp</button>
+    <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_code }}')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Share to Facebook</button>
+    <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_code }}')" class="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">Share to Twitter</button>
+    <a href="{% url 'campaign_create' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}">
+      <button class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">Add to Campaign</button>
+    </a>
+  </div>
+</div>
+
+<script src="{% static 'scripts.js' %}" defer></script>
+
+{% endblock %}
