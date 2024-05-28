@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ business_card.name }}'s Business Card</h1>
+    <div>
+        <img src="{{ business_card.template.image.url }}" alt="Business Card Template" style="width:400px;height:auto;">
+        <p>Name: {{ business_card.name }}</p>
+        <p>Company: {{ business_card.company_name }}</p>
+        <p>Email: {{ business_card.email }}</p>
+        <p>Phone: {{ business_card.phone_number }}</p>
+        <p>LinkedIn: <a href="{{ business_card.linkedin }}">{{ business_card.linkedin }}</a></p>
+        <p>Twitter: <a href="{{ business_card.twitter }}">{{ business_card.twitter }}</a></p>
+        <p>Facebook: <a href="{{ business_card.facebook }}">{{ business_card.facebook }}</a></p>
+        <p>Instagram: <a href="{{ business_card.instagram }}">{{ business_card.instagram }}</a></p>
+    </div>
+</div>
+{% endblock %}

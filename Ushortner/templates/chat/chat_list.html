@@ -18,7 +18,10 @@
                         {{ unread_counts|get_item:user.id }}
                     </span>
                     {% endif %}
-                    
+                    <form method="post" action="{% url 'delete_chat' user.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="ml-4 bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600">Delete</button>
+                    </form>
                 </div>
                 
             </li>

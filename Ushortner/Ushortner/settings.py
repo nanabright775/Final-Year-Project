@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'compressor',
     'chat',
     'reels',
+    'business_card',
 ]
 
 MIDDLEWARE = [

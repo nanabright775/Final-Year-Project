@@ -7,6 +7,8 @@ class Message(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
+    file = models.FileField(upload_to='uploads/', blank=True, null=True)  
 
+    
     def __str__(self):
         return f"{self.sender} to {self.receiver} - {self.content[:20]}"

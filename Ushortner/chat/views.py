@@ -27,7 +27,7 @@ def chat_list(request):
 def chat_detail(request, username):
     user = get_object_or_404(User, username=username)
     if request.method == 'POST':
-        form = MessageForm(request.POST)
+        form = MessageForm(request.POST, request.FILES)
         if form.is_valid():
             message = form.save(commit=False)
             message.sender = request.user
@@ -51,5 +51,18 @@ def chat_detail(request, username):
         if content:
             Message.objects.create(sender=request.user, receiver=user, content=content)
 
+    if request.method == 'POST' and 'delete_message_ids' in request.POST:
+            message_ids = request.POST.getlist('delete_message_ids')
+            Message.objects.filter(id__in=message_ids).delete()
+
     return render(request, 'chat/chat_detail.html', {'messages': messages,'form': form, 'user': user})
 
+
+@login_required
+def delete_chat(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    Message.objects.filter(
+        (Q(sender=request.user) & Q(receiver=user)) |
+        (Q(sender=user) & Q(receiver=request.user))
+    ).delete()
+    return redirect('chat_list')

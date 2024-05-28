@@ -12,6 +12,7 @@ urlpatterns = [
     path('', include('user.urls')),
     path('chat/', include('chat.urls')),
     path('reels/', include('reels.urls')),
+    path('business_card/', include('business_card.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
