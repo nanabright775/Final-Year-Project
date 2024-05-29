@@ -79,3 +79,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Scroll to the bottom initially when the page loads
   window.addEventListener('load', scrollToBottom);
+
+
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    html2canvas(document.getElementById('business-card')).then(function(canvas) {
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = '{{ business_card.name }}_business_card.png';
+        link.click();
+    });
+});
+
+document.getElementById('shareBtn').addEventListener('click', function() {
+    if (navigator.share) {
+        navigator.share({
+            title: '{{ business_card.name }}\'s Business Card',
+            text: 'Check out this business card!',
+            url: window.location.href
+        }).catch(error => console.error('Error sharing:', error));
+    } else {
+        alert('Your browser does not support the Web Share API.');
+    }
+}); 

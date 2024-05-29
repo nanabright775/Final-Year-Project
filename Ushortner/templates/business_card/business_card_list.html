@@ -1,0 +1,30 @@
+{% extends "basehome/base.html" %}
+
+{% block content %}
+<div class="p-10 sm:ml-64">
+    <div class="container mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold mb-4">My Business Cards</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for card in business_cards %}
+            <div class="bg-gray-100 p-4 rounded-lg shadow-md">
+                <div class="h-48 overflow-hidden">
+                    <img src="{{ card.template.image.url }}" alt="Business Card Template" class="w-full h-full object-cover">
+                </div>
+                <p class="text-sm"><strong>Name:</strong> {{ card.name }}</p>
+                <p class="text-sm"><strong>Company:</strong> {{ card.company_name }}</p>
+                <p class="text-sm"><strong>Email:</strong> {{ card.email }}</p>
+                <p class="text-sm"><strong>Phone:</strong> {{ card.phone_number }}</p>
+                <p class="text-sm"><strong>LinkedIn:</strong> <a href="{{ card.linkedin }}" class="text-blue-500 hover:underline break-words">{{ card.linkedin }}</a></p>
+                <p class="text-sm"><strong>Twitter:</strong> <a href="{{ card.twitter }}" class="text-blue-500 hover:underline break-words">{{ card.twitter }}</a></p>
+                <p class="text-sm"><strong>Facebook:</strong> <a href="{{ card.facebook }}" class="text-blue-500 hover:underline break-words">{{ card.facebook }}</a></p>
+                <p class="text-sm"><strong>Instagram:</strong> <a href="{{ card.instagram }}" class="text-blue-500 hover:underline break-words">{{ card.instagram }}</a></p>
+                <div class="mt-4 flex space-x-2">
+                    <a href="{% url 'business_card_update' card.pk %}" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600">Update</a>
+                    <a href="{% url 'business_card_delete' card.pk %}" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

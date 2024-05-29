@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'chat',
     'reels',
     'business_card',
+    'detect',
 ]
 
 MIDDLEWARE = [

@@ -22,6 +22,7 @@ class UserBusinessCard(models.Model):
     facebook = models.URLField(blank=True, null=True)
     instagram = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    logo = models.ImageField(upload_to='logos/', blank=True, null=True)
+    
     def __str__(self):
         return f"{self.user.username}'s Business Card"

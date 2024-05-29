@@ -9,7 +9,7 @@ class UserBusinessCardForm(forms.ModelForm):
         model = UserBusinessCard
         fields = [
             'template', 'name', 'company_name', 'email', 'phone_number', 
-            'linkedin', 'twitter', 'facebook', 'instagram'
+            'linkedin', 'twitter', 'facebook', 'instagram', 'logo',
         ]
         widgets = {
             'template': forms.Select(attrs={
@@ -38,5 +38,8 @@ class UserBusinessCardForm(forms.ModelForm):
             }),
             'instagram': forms.URLInput(attrs={
                 'class': 'block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+            }),
+            'logo': forms.ClearableFileInput(attrs={'class': 'block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+            
             }),
         }

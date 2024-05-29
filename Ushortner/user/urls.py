@@ -27,6 +27,7 @@ urlpatterns = [
     path('links/', user_links, name='user_links'),
     path('reels/', include('reels.urls')),
     path('business_card/', include('business_card.urls')),
+    path('detect/', include('detect.urls')),
     path('<short_code>/', redirect_view, name='redirect_view'),
     path('details/<short_code>/', url_details_view, name='url_details_view'),
     path('<str:short_code>/delete/', delete_short_url, name='delete_short_url'),
