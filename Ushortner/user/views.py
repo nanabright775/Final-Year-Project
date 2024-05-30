@@ -9,7 +9,8 @@ from urlshortner.models import ShortURL, Click
 from user.forms import CustomShortURLForm, GenerateQRCodeForm
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-
+from django.db.models import Q 
+from django.utils.dateparse import parse_date
 
 
 def signup_view(request):
@@ -111,24 +112,36 @@ def analytics_view(request):
 
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
+    search_query = request.GET.get('search', '')
+
     if start_date and end_date:
+        start_date = parse_date(start_date)
+        end_date = parse_date(end_date)
         clicks = clicks.filter(timestamp__range=[start_date, end_date])
 
+    if search_query:
+        short_urls = short_urls.filter(
+            Q(original_url__icontains=search_query) |
+            Q(short_code__icontains=search_query)
+        )
+
     for click in clicks:
-        url_clicks[click.short_url] += 1
+        if click.short_url in url_clicks:
+            url_clicks[click.short_url] += 1
 
     sort_by = request.GET.get('sort_by')
     if sort_by == 'clicks':
-        clicks = clicks.order_by('-click_count')
+        url_clicks = dict(sorted(url_clicks.items(), key=lambda item: item[1], reverse=True))
 
     context = {
         'url_clicks': url_clicks,
-        'clicks': clicks, 
-        'start_date': start_date, 
-        'end_date': end_date, 
-        'sort_by': sort_by, 
+        'clicks': clicks,
+        'start_date': start_date,
+        'end_date': end_date,
+        'sort_by': sort_by,
+        'search_query': search_query,
         'username': request.user.username
-        }
+    }
     
     return render(request, 'user/analytics.html', context)
 
@@ -161,7 +174,6 @@ def customize_short_url_view(request):
             original_url = form.cleaned_data['original_url']
             custom_short_code = form.cleaned_data['custom_short_code']
 
-            # Ensure the custom short code is unique
             if ShortURL.objects.filter(short_code=custom_short_code).exists():
                 form.add_error('custom_short_code', 'This short code is already in use.')
             else:
@@ -200,11 +212,32 @@ def delete_short_url(request, short_code):
     short_url = get_object_or_404(ShortURL, short_code=short_code)
     if request.method == 'POST':
         short_url.delete()
-        return redirect('user_links')
+        return redirect('analytics_view')
     return redirect('analytics_view')
+
 
 
 @login_required
 def user_links(request):
     user_short_urls = ShortURL.objects.filter(user=request.user)
+    
+    search_query = request.GET.get('search', '')
+    date_from = request.GET.get('date_from', '')
+    date_to = request.GET.get('date_to', '')
+    min_clicks = request.GET.get('min_clicks', '')
+    
+    if search_query:
+        user_short_urls = user_short_urls.filter(
+            Q(original_url__icontains=search_query) | 
+            Q(short_code__icontains=search_query)
+        )
+
+    if date_from:
+        user_short_urls = user_short_urls.filter(date_created__gte=date_from)
+    if date_to:
+        user_short_urls = user_short_urls.filter(date_created__lte=date_to)
+    
+    if min_clicks:
+        user_short_urls = user_short_urls.filter(clicks__gte=min_clicks)
+    
     return render(request, 'user/links.html', {'user_short_urls': user_short_urls})
