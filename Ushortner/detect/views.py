@@ -1,22 +1,31 @@
-from django.shortcuts import render
-from .forms import URLForm
-import joblib
-import tldextract
+import numpy as np
+import pickle
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .feature import FeatureExtraction
 
+file = open("detect/model.pkl", "rb")
+gbc = pickle.load(file)
+file.close()
 
-# Load the trained model
-model = joblib.load('detect/url_detector_model.pkl')
+@api_view(['POST'])
+def predict(request):
+    url = request.data.get('url', '')
+    print(request.data)
+    if not url:
+        return Response({'error': 'URL is required'}, status=400)
 
+    obj = FeatureExtraction(url)
+    x = np.array(obj.getFeaturesList()).reshape(1, 30)
 
-def detect_link(request):
-    result = None
-    if request.method == 'POST':
-        form = URLForm(request.POST)
-        if form.is_valid():
-            url = form.cleaned_data['url']
-            ext = tldextract.extract(url)
-            url_features = f"{ext.domain}.{ext.suffix}"
-            result = model.predict([url_features])[0]
-    else:
-        form = URLForm()
-    return render(request, 'detect/detect_link.html', {'form': form, 'result': result})
+    y_pred = gbc.predict(x)[0]
+    y_pro_phishing = gbc.predict_proba(x)[0, 0]
+    y_pro_non_phishing = gbc.predict_proba(x)[0, 1]
+
+    response_data = {
+        'url': url,
+        'prediction': y_pred,
+        'probability_phishing': y_pro_phishing,
+        'probability_non_phishing': y_pro_non_phishing
+    }
+    return Response(response_data)

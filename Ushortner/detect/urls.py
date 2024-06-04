@@ -4,5 +4,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.detect_link, name='detect_link'),
+    # path('detect/', views.form_page, name='form_page'),
+    path('', views.predict, name='predict'),
 ]
