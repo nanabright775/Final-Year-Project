@@ -11,7 +11,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.db.models import Q 
 from django.utils.dateparse import parse_date
-
+from django.db.models import Count
+import json
 
 def signup_view(request):
     if request.method == 'POST':
@@ -63,7 +64,7 @@ def user_dashboard(request):
             short_code = short_url.short_code
             qr_code = generate_qr_code(request.build_absolute_uri(f'/{short_code}'))
         else:
-            short_code = str(uuid.uuid4())[:10]
+            short_code = str(uuid.uuid4())[:5]
             short_url = ShortURL.objects.create(original_url=original_url, short_code=short_code, user=request.user)
             qr_code = generate_qr_code(request.build_absolute_uri(f'/{short_code}'))
             short_url.save()
@@ -133,6 +134,8 @@ def analytics_view(request):
     if sort_by == 'clicks':
         url_clicks = dict(sorted(url_clicks.items(), key=lambda item: item[1], reverse=True))
 
+
+
     context = {
         'url_clicks': url_clicks,
         'clicks': clicks,
@@ -146,22 +149,29 @@ def analytics_view(request):
     return render(request, 'user/analytics.html', context)
 
 
-
 @login_required
 def url_details_view(request, short_code):
     short_url = get_object_or_404(ShortURL, short_code=short_code)
     clicks = Click.objects.filter(short_url=short_url)
-    short_urls_detail = ShortURL.objects.filter(user=request.user)
     qr_coded = generate_qr_code(f"http://127.0.0.1:8000/{short_url.short_code}")
-    
+
+    clicks_per_day = clicks.extra({'day': 'date(timestamp)'}).values('day').annotate(clicks=Count('id')).order_by('day')
+    clicks_per_day = list(clicks_per_day)
+
+    referrer_distribution = clicks.values('referer').annotate(count=Count('id')).order_by('-count')
+    device_distribution = clicks.values('device').annotate(count=Count('id')).order_by('-count')
+    browser_distribution = clicks.values('browser').annotate(count=Count('id')).order_by('-count')
     context = {
         'short_url': short_url,
+        'clicks_per_day': json.dumps(clicks_per_day),
+        'referrer_distribution': json.dumps(list(referrer_distribution)),
+        'device_distribution': json.dumps(list(device_distribution)),
+        'browser_distribution': json.dumps(list(browser_distribution)),
         'clicks': clicks,
-        'qr_coded':qr_coded,
+        'qr_coded': qr_coded,
     }
-    # print(short_urls_detail)
-    return render(request, 'user/url_details.html', context)
 
+    return render(request, 'user/url_details.html', context)
 
 @login_required
 def customize_short_url_view(request):

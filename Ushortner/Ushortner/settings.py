@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'reels',
     'business_card',
     'detect',
+    'whitenoise',
 ]
 
 MIDDLEWARE = [
