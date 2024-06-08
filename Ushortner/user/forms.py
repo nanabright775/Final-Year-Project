@@ -10,8 +10,8 @@ class CustomShortURLForm(forms.ModelForm):
         required=True,
         widget=forms.TextInput(attrs={
             'placeholder': 'Enter custom short code here',
-            'class': "p-2.5 text-md text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        })
+            'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50', 'rows': 4}),
+              
         )
 
     class Meta:
@@ -20,15 +20,15 @@ class CustomShortURLForm(forms.ModelForm):
         widgets = {
             'original_url': forms.URLInput(attrs={
                 'placeholder': 'Enter URL here',
-                'class': "p-2.5 text-md text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            })
+                'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50', 'rows': 4}),
+          
         }
 
 class GenerateQRCodeForm(forms.Form):
     url = forms.URLField(label='Enter URL', widget=forms.URLInput(attrs={
         'placeholder': 'Enter URL here',
-        'class':"p-2.5 text-md text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-
+        'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50', 'rows': 4,
+           
         }))
 
 

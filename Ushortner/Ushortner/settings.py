@@ -40,13 +40,12 @@ INSTALLED_APPS = [
     'urlshortner',
     'user_agents',
     'user',
-    'campaign',
     'compressor',
     'chat',
-    'reels',
     'business_card',
     'detect',
     'whitenoise',
+    'advertisements',
 ]
 
 MIDDLEWARE = [

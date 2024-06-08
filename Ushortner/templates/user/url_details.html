@@ -45,10 +45,11 @@
             <a href="{{ short_url.original_url }}" class="text-blue-600 hover:text-blue-800">{{ short_url.original_url }}</a>
         </p>
         <p class="mb-2">Short Code: {{ short_url.short_code }}</p>
+        <p class="mt-4 mb-4">Date Created: {{ short_url.date_created }}</p>
+
         <a href="data:image/jpeg;base64,{{ qr_coded|safe }}" download="qr_code.jpg">
             <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Download QR Code</button>
         </a>
-        <p class="mt-4 mb-4">Date Created: {{ short_url.date_created }}</p>
     </div>
 </div>
 
@@ -85,9 +86,6 @@
     <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Share to WhatsApp</button>
     <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_code }}')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Share to Facebook</button>
     <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_code }}')" class="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">Share to Twitter</button>
-    <a href="{% url 'campaign_create' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}">
-      <button class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">Add to Campaign</button>
-    </a>
   </div>
 
 
