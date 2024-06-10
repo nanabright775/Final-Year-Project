@@ -222,8 +222,8 @@ def delete_short_url(request, short_code):
     short_url = get_object_or_404(ShortURL, short_code=short_code)
     if request.method == 'POST':
         short_url.delete()
-        return redirect('analytics_view')
-    return redirect('analytics_view')
+        return redirect('user_links')
+    return redirect('user_links')
 
 
 

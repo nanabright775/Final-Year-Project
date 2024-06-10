@@ -54,33 +54,32 @@
 </div>
 
   <h2 class="text-xl font-semibold mb-4 mt-4">Click Details</h2>
-  <div class="overflow-x-auto">
-    <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm mb-6">
-      <thead class="bg-gray-50">
-        <tr>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IP Address</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referer</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Browser</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device</th>
-        </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
-        {% for click in clicks %}
-        <tr>
-          <td class="px-6 py-4 whitespace-nowrap">{{ click.timestamp }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ click.ip_address }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ click.referer }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ click.browser }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ click.device }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
 
- 
-
+    <div class="overflow-y-auto max-h-80">
+      <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm mb-6">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IP Address</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referer</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Browser</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          {% for click in clicks %}
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap">{{ click.timestamp }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ click.ip_address }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ click.referer }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ click.browser }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ click.device }}</td>
+              </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  
   <div class="share-buttons mb-6 space-y-4">
     <button onclick="copyToClipboard('http://127.0.0.1:8000/{{ short_code }}')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Copy URL</button>
     <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Share to WhatsApp</button>
@@ -89,20 +88,21 @@
   </div>
 
 
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
-  <div class="bg-white p-4 rounded-lg shadow-md">
-    <canvas id="clicksPerDayChart" class="w-full h-64"></canvas>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
+    <div class="bg-white p-4 rounded-lg shadow-md">
+      <canvas id="clicksPerDayChart" class="w-full h-64"></canvas>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md">
+      <canvas id="referrerChart" class="w-full h-64"></canvas>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md">
+      <canvas id="deviceChart" class="w-full h-64"></canvas>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow-md">
+      <canvas id="browserChart" class="w-full h-64"></canvas>
+    </div>
   </div>
-  <div class="bg-white p-4 rounded-lg shadow-md">
-    <canvas id="referrerChart" class="w-full h-64"></canvas>
-  </div>
-  <div class="bg-white p-4 rounded-lg shadow-md">
-    <canvas id="deviceChart" class="w-full h-64"></canvas>
-  </div>
-  <div class="bg-white p-4 rounded-lg shadow-md">
-    <canvas id="browserChart" class="w-full h-64"></canvas>
-  </div>
-</div>
+  
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
