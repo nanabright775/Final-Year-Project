@@ -143,3 +143,15 @@ function closeModal(modal){
     modal.classList.remove('active')
     overlay.classList.remove('active')
 }
+
+function toggleDropdown() {
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    dropdownMenu.classList.toggle('hidden');
+  }
+
+  document.querySelectorAll("[id^=dropdownMenuButton]").forEach(button => {
+    button.addEventListener("click", function() {
+        const menuId = this.id.replace("Button", "");
+        document.getElementById(menuId).classList.toggle("hidden");
+    });
+});
