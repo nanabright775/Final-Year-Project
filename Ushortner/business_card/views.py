@@ -16,9 +16,13 @@ def create_business_card(request):
         if form.is_valid():
             business_card = form.save(commit=False)
             business_card.user = request.user
-            business_card.save()
-            # image_path = generate_business_card(business_card)
-            return redirect('business_card_detail', pk=business_card.pk)
+
+            if not business_card.template and not business_card.custom_template_image:
+                form.add_error('template', 'Please select a template or upload a custom template image.')
+                form.add_error('custom_template_image', 'Please select a template or upload a custom template image.')
+            else:
+                business_card.save()
+                return redirect('business_card_detail', pk=business_card.pk)
     else:
         form = UserBusinessCardForm()
 

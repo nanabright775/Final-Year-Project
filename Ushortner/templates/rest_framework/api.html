@@ -4,61 +4,85 @@
 {% block title %}Detection {% endblock %}
 {% block content %}
 <div class="p-10 sm:ml-64"> 
-
   <div class="container mx-auto p-6 bg-white shadow-md rounded-md">
-    
     <div class="flex flex-col items-center justify-center" data-aos="fade-up">
       <h1 class="text-3xl font-bold text-center mb-6">Link Detection</h1>
       <form id="url-form" role="form" class="w-full max-w-md">
         {% csrf_token %}
         <div class="flex flex-col space-y-4">
           <div class="form-group">
-            <input type="text" name="name" class="form-control border border-gray-300 p-2 w-full rounded-md"
-              id="name" placeholder="Enter a URL link in format http or https and should contain www" />
+            <input type="text" name="name" class="form-control border border-gray-300 p-2 w-full rounded-md" id="name" placeholder="Enter a URL link in format http or https and should contain www" />
           </div>
         </div>
         <div class="text-center mt-4 space-x-2">
-          <button id="predict" class="btn btn-danger bg-red-500 text-white py-2 px-4 rounded-md" onclick="predictURL()" type="button">
-            Predict
-          </button>
-          <button id="reset" class="btn btn-primary bg-blue-500 text-white py-2 px-4 rounded-md" onclick="resetPage()" type="button">
-            Reset
-          </button>
+          <button id="predict" class="btn btn-danger bg-red-500 text-white py-2 px-4 rounded-md" onclick="predictURL()" type="button">Predict</button>
+          <button id="reset" class="btn btn-primary bg-blue-500 text-white py-2 px-4 rounded-md" onclick="resetPage()" type="button">Reset</button>
         </div>
       </form>
       <div class="result-container mt-4 hidden">
         <p>Prediction Result: <span id="prediction-result" class="font-semibold"></span></p>
-        <p>Phishing Probability: <span id="phishing-probability" class="font-semibold"></span></p>
+        <p>Probability: <span id="phishing-probability" class="font-semibold"></span></p>
       </div>
     </div>
   </div>
 
+  <!-- Processing Spinner in Pop-up Box -->
+  <div id="spinner-container" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 hidden">
+    <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
+      <div class="loader"></div>
+      <p class="text-center mt-4">Processing...</p>
+    </div>
+  </div>
+
+  <style>
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 8px solid #3498db;
+      width: 50px;
+      height: 50px;
+      -webkit-animation: spin 2s linear infinite; /* Safari */
+      animation: spin 2s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
   <script>
     function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
         }
-        return cookieValue;
+      }
+      return cookieValue;
     }
+
     const csrftoken = getCookie('csrftoken');
 
     function predictURL() {
       var url = document.getElementById("name").value;
-      if (url == "") {
-        alert("ENTER A URL");
+      if (url === "") {
+        alert("Please enter a URL.");
       } else {
         if (url.includes("http")) {
           document.getElementById("predict").innerHTML = "Predicting ...";
-    
+          document.getElementById("spinner-container").classList.remove("hidden");
+
           fetch("http://127.0.0.1:8000/detect/", {
             method: "POST",
             headers: {
@@ -69,42 +93,36 @@
               url: url,
             }),
           })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Network response was not ok");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              // Handle the API response here
-              console.log(data);
-              document.getElementById("predict").innerHTML = "Predicted";
-              document.getElementById("predict").class = "btn btn-success";
-              var predictionResult = document.getElementById("prediction-result");
-              var phishingProbability = document.getElementById("phishing-probability");
-              var resultContainer = document.querySelector(".result-container");
-    
-              predictionResult.textContent = data.prediction == 0 ? "Deemed suspicious" : "Deemed non-suspicious";
-              if (data.prediction == 0) {
-                predictionResult.classList.add("phishing");
-              }
-              phishingProbability.textContent = (data.probability_phishing * 100).toFixed(2) + "%";
-              resultContainer.style.display = "block";
-            })
-            .catch((error) => {
-              console.error("There was a problem with the fetch operation:", error);
-            });
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            document.getElementById("predict").innerHTML = "Predict";
+            document.getElementById("spinner-container").classList.add("hidden");
+
+            var predictionResult = document.getElementById("prediction-result");
+            var phishingProbability = document.getElementById("phishing-probability");
+            var resultContainer = document.querySelector(".result-container");
+
+            predictionResult.textContent = data.prediction == 0 ? "Deemed suspicious" : "Deemed non-suspicious";
+            phishingProbability.textContent = (data.probability_phishing * 100).toFixed(2) + "%";
+            resultContainer.classList.remove("hidden");
+          })
+          .catch((error) => {
+            console.error("There was a problem with the fetch operation:", error);
+            document.getElementById("spinner-container").classList.add("hidden");
+          });
         } else {
-          alert("URL MUST CONTAIN HTTPS OR HTTP");
+          alert("URL must contain HTTP or HTTPS.");
         }
       }
     }
 
-function resetPage() {
-  console.log("HELLO");
-  location.reload();
-}
-
+    function resetPage() {
+      location.reload();
+    }
   </script>
-  
 {% endblock %}

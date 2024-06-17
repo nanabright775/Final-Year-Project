@@ -1,18 +1,18 @@
-# business_card/forms.py
-
 from django import forms
 from .models import UserBusinessCard
-
 
 class UserBusinessCardForm(forms.ModelForm):
     class Meta:
         model = UserBusinessCard
         fields = [
-            'template', 'name', 'company_name', 'email', 'phone_number', 
+            'template', 'custom_template_image', 'name', 'company_name', 'email', 'phone_number', 
             'linkedin', 'twitter', 'facebook', 'instagram', 'logo',
         ]
         widgets = {
             'template': forms.Select(attrs={
+                'class': 'block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+            }),
+            'custom_template_image': forms.ClearableFileInput(attrs={
                 'class': 'block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
             }),
             'name': forms.TextInput(attrs={
