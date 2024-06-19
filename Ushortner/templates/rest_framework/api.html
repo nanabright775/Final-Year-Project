@@ -30,7 +30,15 @@
   <div id="spinner-container" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 hidden">
     <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
       <div class="loader"></div>
-      <p class="text-center mt-4">Processing...</p>
+      <p class="text-center mt-4">checking...</p>
+    </div>
+  </div>
+
+  <!-- Error Pop-up Box -->
+  <div id="error-popup" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 hidden">
+    <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
+      <p class="text-center text-red-500 font-semibold" id="error-message">Invalid URL! Please enter a valid URL.</p>
+      <button class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md" onclick="closeErrorPopup()">Close</button>
     </div>
   </div>
 
@@ -77,10 +85,11 @@
     function predictURL() {
       var url = document.getElementById("name").value;
       if (url === "") {
-        alert("Please enter a URL.");
+        //alert("Please enter a URL.");
+        document.getElementById('error-popup').classList.remove('hidden');
       } else {
         if (url.includes("http")) {
-          document.getElementById("predict").innerHTML = "Predicting ...";
+          document.getElementById("predict").innerHTML = "checking...";
           document.getElementById("spinner-container").classList.remove("hidden");
 
           fetch("http://127.0.0.1:8000/detect/", {
@@ -116,13 +125,18 @@
             document.getElementById("spinner-container").classList.add("hidden");
           });
         } else {
-          alert("URL must contain HTTP or HTTPS.");
+          //alert("URL must contain HTTP or HTTPS.");
+          document.getElementById('error-popup').classList.remove('hidden');
         }
       }
     }
 
     function resetPage() {
       location.reload();
+    }
+
+    function closeErrorPopup() {
+      document.getElementById('error-popup').classList.add('hidden');
     }
   </script>
 {% endblock %}
