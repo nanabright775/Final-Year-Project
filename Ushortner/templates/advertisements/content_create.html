@@ -2,7 +2,8 @@
 {% block title %}Create Advertisement{% endblock %}
 
 {% block content %}
-<div class="p-10 sm:ml-64">
+
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen"> 
     <h1 class="text-3xl font-bold mb-4">Create Advertisement</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}

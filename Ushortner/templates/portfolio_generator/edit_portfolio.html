@@ -1,0 +1,16 @@
+{% extends "basehome/base.html" %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen">
+    <h1>Edit Portfolio</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+{% endblock %}

@@ -2,7 +2,8 @@
 {% block title %}My Advertisements{% endblock %}
 {% load custom_tags %}
 {% block content %}
-<div class="p-10 sm:ml-64">
+<body class="overflow-hidden">
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen"> 
     <h1 class="text-3xl font-bold mb-4">My Advertisements</h1>
     <form method="get" action="{% url 'search' %}">
         <input type="text" name="q" placeholder="Search..." class="border rounded py-2 px-3 text-grey-darkest" />
@@ -54,5 +55,9 @@
             </div>
         {% endfor %}
     </div>
+    <br>
+    <br>
+    <br>
 </div>
+</body>
 {% endblock %}

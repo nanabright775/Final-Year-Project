@@ -4,13 +4,14 @@
 {% load static %}
 
 {% block content %}
-<div class="p-10 sm:ml-64">
+<body class="overflow-hidden">
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen">
     <div>
         <h1 class="text-3xl m-4">My Shortened Links</h1>
         
         <!-- Search Form -->
         <form method="get" class="mb-6 flex items-center space-x-4">
-            <input type="text" name="search" placeholder="Search by URL" class="border border-gray-300 rounded p-2" value="{{ request.GET.search }}">
+            <input type="text" name="search" placeholder="Search by shorted url code" class="border border-gray-300 rounded p-2" value="{{ request.GET.search }}">
             
             <label for="date_from" class="sr-only">Date from</label>
             <input type="date" name="date_from" id="date_from" class="border border-gray-300 rounded p-2" value="{{ request.GET.date_from }}">
@@ -32,7 +33,16 @@
                 <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">{{ short_url.original_url }}</p>
                 <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">{{ short_url.date_created }}</p>
             
-                <a href="{% url 'url_details_view' short_code=short_url.short_code %}" class=" hidden md:flex flex-wrap space-x-2 absolute top-2 right-2 text-blue-700 hover:underline p-4">View Detail</a>
+                <div class="hidden md:flex flex-wrap space-x-2 absolute top-2 right-2 text-blue-700 hover:underline p-4">
+                    <a href="{% url 'url_details_view' short_code=short_url.short_code %}" class="text-blue-700 hover:underline">View Detail</a>
+                    <button onclick="copyToClipboard('http://127.0.0.1:8000/{{ short_url.short_code }}')" class="text-blue-700 hover:underline">
+                    
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 5h6m-6 4h6M10 3v4h4V3h-4Z"/>
+                          </svg>
+                          
+                    </button>
+                </div>
             
                 <!-- Share and Delete buttons for larger screens -->
                 <div class="hidden md:flex flex-wrap space-x-2 mt-4">
@@ -105,6 +115,7 @@
                         <a href="{% url 'content_create' 'campaign' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Advertise</a>
                         <a href="{% url 'content_create' 'reel' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">VidAD</a>
                         <a href="{% url 'url_details_view' short_code=short_url.short_code %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Detail</a>
+                        <button onclick="copyToClipboard('{{ short_url.short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Copy</button>
                         <form action="{% url 'delete_short_url' short_url.short_code %}" method="post">
                             {% csrf_token %}
                             <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="block w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-gray-100">Delete</button>
@@ -119,7 +130,13 @@
             </div>
         {% endif %}
     </div>
+    <br>
+    <br>
+    <br>
 </div>
+
+  
+</body>
 <script src="{% static 'scripts.js' %}" defer></script>
 <script>
     // JavaScript for handling dropdown menu visibility
@@ -129,5 +146,6 @@
             document.getElementById(menuId).classList.toggle("hidden");
         });
     });
+
 </script>
 {% endblock %}

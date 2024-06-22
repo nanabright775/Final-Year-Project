@@ -1,0 +1,20 @@
+{% extends "basehome/base.html" %}
+
+{% block title %} {{ portfolio.title }} {% endblock %}
+{% block content %}
+
+{% load static %}
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen">
+    
+    <title>{{ portfolio.title }}</title>
+   
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-4">{{ portfolio.title }}</h1>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            {{ portfolio.content|safe }}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

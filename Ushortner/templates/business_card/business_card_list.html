@@ -1,7 +1,8 @@
 {% extends "basehome/base.html" %}
 
 {% block content %}
-<div class="p-10 sm:ml-64">
+<body class="overflow-hidden">
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen"> 
     <div class="container mx-auto bg-white p-8 rounded-lg shadow-lg">
         <h1 class="text-3xl font-bold mb-4">My Business Cards</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -45,8 +46,11 @@
             {% endfor %}
         </div>
     </div>
+    <br>
+    <br>
+    <br>
 </div>
-
+</body>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.3.2/dist/html2canvas.min.js" defer></script>
 <script>
     document.querySelectorAll('button').forEach(button => {

@@ -3,8 +3,9 @@
 {% extends "basehome/base.html" %}
 
 {% block content %}
-<div class="p-10 sm:ml-64">
-    <div class="container mx-auto bg-white p-8 rounded-lg shadow-lg">
+<body class="overflow-hidden">
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen"> 
+    <div class="mb-8 container mx-auto bg-white p-8 rounded-lg shadow-lg">
         <h1 class="text-3xl font-bold mb-4">Update Business Card</h1>
         <form method="post" class="space-y-4">
             {% csrf_token %}
@@ -12,5 +13,8 @@
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Update</button>
         </form>
     </div>
+<br>
+<br>
 </div>
+</body>
 {% endblock %}

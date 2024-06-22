@@ -3,7 +3,8 @@
 {% block title %}Analytics {% endblock %}
 
 {% block content %}
-<div class="p-10 sm:ml-64">
+<body class="overflow-hidden">
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen">
   <h1 class="text-3xl font-bold mb-6">Analytics for {{ username }}</h1>
   <form method="get" class="mb-6 flex flex-wrap items-center space-x-4">
     <div class="mb-4">
@@ -32,7 +33,7 @@
     </div>
   </form>
 
-  <div class="overflow-x-auto">
+  <div class="overflow-x-auto overflow-y-auto max-h-80">
     <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm">
       <thead class="bg-gray-50">
         <tr>
@@ -58,5 +59,9 @@
       </tbody>
     </table>
   </div>
+  <br>
+  <br>
+  <br>
 </div>
+</body>
 {% endblock %}

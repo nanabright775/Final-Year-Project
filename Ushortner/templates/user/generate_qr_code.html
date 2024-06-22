@@ -2,8 +2,8 @@
 {% block title %}generate_qr_code {% endblock %}
 
 {% block content %}
-<div class="p-10 sm:ml-64 bg-white rounded-lg">
-<h1 class="text-center text-3xl font-bold text-gray-900 mb-8">Generate QR Code for URL</h1>
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen">
+  <h1 class="text-center text-3xl font-bold text-gray-900 mb-8">Generate QR Code for URL</h1>
 
 <form method="post" class="space-y-6 ml-10">
   {% csrf_token %}

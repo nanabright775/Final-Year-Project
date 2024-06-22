@@ -3,7 +3,8 @@
 {% block title %}Comments{% endblock %}
 
 {% block content %}
-<div class="p-10 sm:ml-64">
+<body class="overflow-hidden">
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen"> 
     <h1 class="text-center text-4xl font-bold text-gray-900 mb-8">Comments</h1>
     <div class="max-w-lg mx-auto bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden dark:bg-gray-800 dark:border-gray-700">
         <div class="p-4">
@@ -25,5 +26,9 @@
             {% endif %}
         </div>
     </div>
+    <br>
+    <br>
+    <br>
 </div>
+</body>
 {% endblock %}

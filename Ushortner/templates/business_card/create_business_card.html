@@ -3,7 +3,8 @@
 {% extends "basehome/base.html" %}
 {% block title %}Business Card {% endblock %}
 {% block content %}
-<div class="p-10 sm:ml-64"> 
+<body class="overflow-hidden">
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen"> 
     <div class="container mx-auto p-4">
         <h1 class="text-3xl font-bold mb-4">Create Business Card</h1>
         <form method="post" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md">
@@ -66,5 +67,9 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
 </div>
+</body>
 {% endblock %}

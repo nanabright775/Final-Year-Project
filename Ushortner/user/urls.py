@@ -29,6 +29,7 @@ urlpatterns = [
     path('advertisements/', include('advertisements.urls')),
     path('business_card/', include('business_card.urls')),
     path('detect/', include('detect.urls')),
+    path('portfolio_generator/', include('portfolio_generator.urls')),
     path('<short_code>/', redirect_view, name='redirect_view'),
     path('details/<short_code>/', url_details_view, name='url_details_view'),
     path('<str:short_code>/delete/', delete_short_url, name='delete_short_url'),

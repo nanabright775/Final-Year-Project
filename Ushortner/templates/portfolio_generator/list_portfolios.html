@@ -1,0 +1,23 @@
+
+{% extends "basehome/base.html" %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen">
+    <h1 class="text-4xl font-bold mb-6">My Portfolios</h1>
+    <ul class="space-y-4">
+        {% for portfolio in portfolios %}
+            <li class="bg-white p-4 rounded-lg shadow-md flex justify-between items-center">
+                <a href="{{ portfolio.url }}" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold">{{ portfolio.title }}</a>
+                <a href="{% url 'portfolio_generator:edit_portfolio' portfolio.id %}" class="text-sm text-gray-500 hover:text-gray-700">Edit</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
+```
+
+This code adds styling to the page using Tailwind CSS, making the page look cleaner and more modern. It includes background color, spacing, typography, and hover effects.

@@ -2,8 +2,8 @@
 {% block title %}Details{% endblock %}
 {% load static %}
 {% block content %}
-
-<div class="p-10 sm:ml-64">
+<body class="overflow-hidden">
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen">
   <div class="relative bg-white shadow-md rounded-lg p-6 flex items-center space-x-6">
      <!-- Delete URL Modal -->
   <form action="{% url 'delete_short_url' short_url.short_code %}" method="post" class="mb-6 absolute top-2 right-3">
@@ -102,9 +102,12 @@
       <canvas id="browserChart" class="w-full h-64"></canvas>
     </div>
   </div>
-  
+  <br>
+<br>
+<br>
 </div>
 
+</body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0"></script>
 

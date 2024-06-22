@@ -3,10 +3,10 @@
 {% load static %}
 {% block content %}
 
+<body class="overflow-hidden">
 <link rel="stylesheet" href="{% static 'static/dash.css' %}">
-<div class="p-10 sm:ml-64">
-
-<h1 class="text-center text-4xl font-bold text-gray-900 mb-8">Shorten Your URL</h1>
+<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen">
+  <h1 class="text-center text-4xl font-bold text-gray-900 mb-8">Shorten Your URL</h1>
 <form method="post" class="flex mx-20">
     {% csrf_token %}
     <input type="text" name="url" placeholder="Enter URL here" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required>
@@ -123,8 +123,12 @@
   <br>
   <br>
   <a href="{% url 'my_content' %}">My Campaigns</a>
+ 
   </div>
-  
+  <br>
+  <br>
+  <br>
+  <br>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -145,6 +149,6 @@
 
 
   </div>
-
+</body>
 
 {% endblock content %}
