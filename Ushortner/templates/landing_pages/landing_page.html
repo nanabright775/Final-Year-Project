@@ -1,0 +1,43 @@
+<!-- landing_pages/templates/landing_pages/landing_page.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ landing_page.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: {{ landing_page.background_color }};
+            color: {{ landing_page.text_color }};
+            font-family: {{ landing_page.font_style }};
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto p-4">
+        <div class="bg-white rounded p-6 {{ landing_page.theme }}">
+            {% if landing_page.profile_image %}
+                <img src="{{ landing_page.profile_image.url }}" alt="{{ landing_page.name }}" class="w-24 h-24 rounded-full mx-auto">
+            {% endif %}
+            <h1 class="text-2xl font-bold mt-4">{{ landing_page.title }}</h1>
+            <p class="mt-2">{{ landing_page.description }}</p>
+            <p class="text-lg mt-4">{{ landing_page.name }}</p>
+            <div class="mt-4">
+                {% if landing_page.facebook_url %}
+                    <a href="{{ landing_page.facebook_url }}" class="text-blue-600 hover:underline">Facebook</a>
+                {% endif %}
+                {% if landing_page.twitter_url %}
+                    <a href="{{ landing_page.twitter_url }}" class="text-blue-400 hover:underline">Twitter</a>
+                {% endif %}
+                {% if landing_page.instagram_url %}
+                    <a href="{{ landing_page.instagram_url }}" class="text-pink-600 hover:underline">Instagram</a>
+                {% endif %}
+                {% if landing_page.linkedin_url %}
+                    <a href="{{ landing_page.linkedin_url }}" class="text-blue-700 hover:underline">LinkedIn</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'whitenoise',
     'advertisements',
     'portfolio_generator',
+    'landing_pages',
 ]
 
 MIDDLEWARE = [
