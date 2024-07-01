@@ -14,7 +14,6 @@ urlpatterns = [
     path('business_card/', include('business_card.urls')),
     path('detect/', include('detect.urls')),
     path('advertisements/', include('advertisements.urls')),
-    path('portfolio_generator/', include('portfolio_generator.urls')),
     path('landing/', include('landing_pages.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

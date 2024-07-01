@@ -1,5 +1,6 @@
-# landing_pages/models.py
 from django.db import models
+from django.utils.text import slugify
+from django.contrib.auth.models import User
 
 THEME_CHOICES = [
     ('theme1', 'Theme 1'),
@@ -29,9 +30,9 @@ FONT_CHOICES = [
 ]
 
 class LandingPage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField()
-    name = models.CharField(max_length=100)
     profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)
     theme = models.CharField(max_length=50, choices=THEME_CHOICES)
     layout = models.CharField(max_length=50, choices=LAYOUT_CHOICES)
@@ -43,6 +44,13 @@ class LandingPage(models.Model):
     twitter_url = models.URLField(blank=True, null=True)
     instagram_url = models.URLField(blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
+    additional_image_1 = models.ImageField(upload_to='additional_images/', blank=True, null=True)
+    additional_image_2 = models.ImageField(upload_to='additional_images/', blank=True, null=True)
+    additional_image_3 = models.ImageField(upload_to='additional_images/', blank=True, null=True)
+    video = models.FileField(upload_to='videos/', blank=True, null=True)
+    slug = models.SlugField(unique=True)
+
+    
 
     def __str__(self):
         return self.title

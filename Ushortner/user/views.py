@@ -14,6 +14,7 @@ from django.utils.dateparse import parse_date
 from django.db.models import Count
 import json
 
+
 def signup_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -32,7 +33,9 @@ def signup_view(request):
         if not errors:
             user = User.objects.create(username=username, password=make_password(password1))
             login(request, user)
-            return redirect(reverse('userdashboard'))
+            # return redirect(reverse('shorten_view'))
+            return render(request, 'basehome/homepage.html')
+
         else:
             return render(request, 'user/signup.html', {'errors': errors})
     
@@ -47,7 +50,9 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user) 
-            return redirect(reverse('userdashboard'))
+            # return redirect(reverse('shorten_view'))
+            return render(request, 'basehome/homepage.html')
+
     return render(request, 'user/login.html')
 
 @login_required

@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'detect',
     'whitenoise',
     'advertisements',
-    'portfolio_generator',
     'landing_pages',
 ]
 

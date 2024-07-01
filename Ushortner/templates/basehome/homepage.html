@@ -3,8 +3,8 @@
 {% block title %}Homepage {% endblock %}
 {% load static %}
 {% block content %}
-<body class="bg-gray-100">
-<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen"> 
+<body >
+<div class="bg-gray-100 p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen"> 
   <header class="relative overflow-hidden">
     <div class="container mx-auto text-center animate-fadeIn shadow-lg   bg-blue-600 text-white py-6">
         <h1 class="text-4xl font-bold">Welcome to URL Shortener</h1>
@@ -77,10 +77,10 @@
       </div>
     </a>
 
-    <a href="{% if user.is_authenticated %}{% url 'content_list' %}{% else %}{% url 'signup' %}{% endif %}" >
+    <a href="{% if user.is_authenticated %}{% url 'create_landing_page' %}{% else %}{% url 'signup' %}{% endif %}" >
       <div class="bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse">
-        <h3 class="text-xl font-semibold mb-4">Check Adverts</h3>
-        <p class="text-gray-700 mb-4">See the advertisements of product and more.</p>
+        <h3 class="text-xl font-semibold mb-4">Create Pages</h3>
+        <p class="text-gray-700 mb-4">Create an advertisements page for product and more.</p>
       </div>
     </a>
     </section>
