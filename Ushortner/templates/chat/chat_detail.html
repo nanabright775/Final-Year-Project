@@ -2,8 +2,8 @@
 {% block title %}Chat with {{ user.username }}{% endblock %}
 
 {% block content %}
-<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen flex flex-col"> 
-
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen flex flex-col"> 
+    <div class="w-full h-screen bg-gray-100">
 {% comment %} <div class="p-10 sm:ml-64 h-screen "> {% endcomment %}
     <div class="flex-none">
         <h1 class="text-center text-3xl font-bold text-gray-900 mb-8">Chat with {{ user.username }}</h1>
@@ -41,5 +41,6 @@
             </button>
         </form>
     </div>
+</div>
 </div>
 {% endblock %}

@@ -5,7 +5,8 @@
 
 {% block content %}
 <body class="overflow-hidden">
-<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen"> 
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen"> 
+    <div class="w-full h-screen bg-gray-100">
 <h1 class="text-center text-4xl font-bold text-gray-900 mb-8">Adverts</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         {% for item in content %}
@@ -66,6 +67,7 @@
     <br>
     <br>
     <br>
+</div>
 </div>
 </body>
 {% endblock %}

@@ -3,7 +3,8 @@
 {% load static %}
 {% block content %}
 <body class="overflow-hidden">
-<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen">
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen">
+  <div class="w-full h-screen bg-gray-100">
   <div class="relative bg-white shadow-md rounded-lg p-6 flex items-center space-x-6">
      <!-- Delete URL Modal -->
   <form action="{% url 'delete_short_url' short_url.short_code %}" method="post" class="mb-6 absolute top-2 right-3">
@@ -60,7 +61,7 @@
         <thead class="bg-gray-50">
           <tr>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IP Address</th>
+            {% comment %} <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IP Address</th> {% endcomment %}
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referer</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Browser</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device</th>
@@ -70,7 +71,7 @@
           {% for click in clicks %}
               <tr>
                 <td class="px-6 py-4 whitespace-nowrap">{{ click.timestamp }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ click.ip_address }}</td>
+                {% comment %} <td class="px-6 py-4 whitespace-nowrap">{{ click.ip_address }}</td> {% endcomment %}
                 <td class="px-6 py-4 whitespace-nowrap">{{ click.referer }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ click.browser }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ click.device }}</td>
@@ -106,7 +107,7 @@
 <br>
 <br>
 </div>
-
+</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0"></script>

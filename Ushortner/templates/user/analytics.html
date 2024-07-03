@@ -4,7 +4,8 @@
 
 {% block content %}
 <body class="overflow-hidden">
-<div class="p-10 sm:ml-64 mt-20 overflow-y-auto max-h-screen">
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen">
+  <div class="w-full h-screen bg-gray-100">
   <h1 class="text-3xl font-bold mb-6">Analytics for {{ username }}</h1>
   <form method="get" class="mb-6 flex flex-wrap items-center space-x-4">
     <div class="mb-4">
@@ -62,6 +63,7 @@
   <br>
   <br>
   <br>
+</div>
 </div>
 </body>
 {% endblock %}
