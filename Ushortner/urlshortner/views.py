@@ -8,7 +8,10 @@ from django.shortcuts import render
 
 def shorten_view(request):
         return render(request, 'basehome/homepage.html')
-              
+
+
+def api_documentation(request):
+    return render(request, 'api/api_documentation.html')            
 
 #function to generate qr code
 def generate_qr_code(url):

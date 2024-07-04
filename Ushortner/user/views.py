@@ -13,6 +13,9 @@ from django.db.models import Q
 from django.utils.dateparse import parse_date
 from django.db.models import Count
 import json
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.hashers import make_password
+
 
 
 def signup_view(request):
@@ -256,3 +259,31 @@ def user_links(request):
         user_short_urls = user_short_urls.filter(clicks__gte=min_clicks)
     
     return render(request, 'user/links.html', {'user_short_urls': user_short_urls})
+
+
+
+@login_required
+def settings_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        errors = []
+
+        if not username:
+            errors.append("Username is required.")
+        if password1 and password1 != password2:
+            errors.append("Passwords do not match.")
+
+        if not errors:
+            request.user.username = username
+            if password1:
+                request.user.password = make_password(password1)
+                update_session_auth_hash(request, request.user)  # Prevents user from being logged out
+            request.user.save()
+            return redirect('settings')
+
+        return render(request, 'user/settings.html', {'errors': errors})
+
+    return render(request, 'user/settings.html')

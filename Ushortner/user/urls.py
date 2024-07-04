@@ -11,6 +11,7 @@ from .views import (
     generate_qr_code_view,
     delete_short_url,
     user_links,
+    settings_view,
 )
 from chat import views
 
@@ -22,6 +23,7 @@ urlpatterns = [
     path('analytics/', analytics_view, name='analytics_view'),
     path('customize/', customize_short_url_view, name='customize_short_url'),
     path('generate_qr_code/', generate_qr_code_view, name='generate_qr_code'),
+    path('settings/', settings_view, name='settings'),
     path('chat/', include('chat.urls')),
     path('links/', user_links, name='user_links'),
     path('advertisements/', include('advertisements.urls')),
