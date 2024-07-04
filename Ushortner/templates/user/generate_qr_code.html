@@ -15,7 +15,7 @@
 </form>
 
 {% if qr_code %}
-<div class="ml-10">
+<div class="ml-10 mb-8">
   <br>
   <img src="data:image/jpeg;base64,{{ qr_code }}" alt="QR Code" class="border-gray-300 p-2 rounded-lg shadow-md">
   <a href="data:image/jpeg;base64,{{ qr_code|safe }}" download="qr_code.jpg">
@@ -30,6 +30,7 @@
     </button>
 </a>
 </div>
+
 </div>
 </div>
 {% endif %}

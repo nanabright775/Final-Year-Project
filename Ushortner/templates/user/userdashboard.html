@@ -9,7 +9,7 @@
   <h1 class="text-center text-4xl font-bold text-gray-900 mb-8">Shorten Your URL</h1>
 <form method="post" class="flex mx-20">
     {% csrf_token %}
-    <input type="text" name="url" placeholder="Enter URL here" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required>
+    <input type="text" name="url" placeholder="Enter URL here" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required>
     <button type="submit" class="inline-flex items-center py-2.5 px-6 ms-3 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
       Shorten
     </button>
@@ -21,7 +21,7 @@
   <div class="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
 <p>Your shortened URL is:</p>
-  <div >
+  <div>
     <a href="{{ short_code }}" class="mb-2 text-2xl font-semibold tracking-tight text-blue-700 dark:text-white">
     {{ short_code }}
   </a>

@@ -4,9 +4,11 @@
 {% block content %}
 <body class="overflow-hidden">
 <div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen"> 
-    <div class="container mx-auto bg-white p-8 rounded-lg shadow-lg">
+    <div class="w-full h-screen bg-gray-100">
+
+    <div class="container mx-auto  p-8 rounded-lg ">
         <h1 class="text-3xl font-bold mb-4">{{ business_card.name }}'s Business Card</h1>
-        <div id="business-card" class="flex flex-col items-center bg-gray-100 p-4 rounded-lg shadow-md" style="width: 300px;">
+        <div id="business-card" class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md" style="width: 300px;">
             <div class="h-48 overflow-hidden">
                 {% if business_card.custom_template_image %}
                     <img src="{{ business_card.custom_template_image.url }}" alt="Business Card Template" class="w-full h-full object-cover">
@@ -33,6 +35,7 @@
     <br>
     <br>
     <br>
+</div>
 </div>
 </body>
 
