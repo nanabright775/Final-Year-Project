@@ -20,7 +20,7 @@
             <label for="date_to" class="sr-only">Date to</label>
             <input type="date" name="date_to" id="date_to" class="border border-gray-300 rounded p-2" value="{{ request.GET.date_to }}">
             
-            <input type="number" name="min_clicks" placeholder="Min Clicks" class="border border-gray-300 rounded p-2" value="{{ request.GET.min_clicks }}">
+            {% comment %} <input type="number" name="min_clicks" placeholder="Min Clicks" class="border border-gray-300 rounded p-2" value="{{ request.GET.min_clicks }}"> {% endcomment %}
             
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Search</button>
         </form>
@@ -136,7 +136,7 @@
     <br>
 </div>
 </div>
-  
+</div>
 </body>
 <script src="{% static 'scripts.js' %}" defer></script>
 <script>

@@ -238,7 +238,8 @@ def delete_short_url(request, short_code):
 @login_required
 def user_links(request):
     user_short_urls = ShortURL.objects.filter(user=request.user)
-    
+    # click_user = Click.objects.filter(click_count=click_count)
+
     search_query = request.GET.get('search', '')
     date_from = request.GET.get('date_from', '')
     date_to = request.GET.get('date_to', '')
@@ -257,7 +258,8 @@ def user_links(request):
     
     if min_clicks:
         user_short_urls = user_short_urls.filter(clicks__gte=min_clicks)
-    
+        # click_user=click_user.filter(click_count__gte=min_clicks)
+    # print(Click.click_count)
     return render(request, 'user/links.html', {'user_short_urls': user_short_urls})
 
 
