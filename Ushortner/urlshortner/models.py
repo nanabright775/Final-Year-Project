@@ -9,6 +9,8 @@ class ShortURL(models.Model):
     short_code = models.CharField(max_length=10, unique=True)
     clicks = models.IntegerField(default=0)
     date_created = models.DateTimeField(auto_now_add=True)
+    qr_code_data = models.TextField(null=True, blank=True)  
+
     
     def __str__(self):
         return self.short_code

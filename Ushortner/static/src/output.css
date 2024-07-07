@@ -1120,10 +1120,6 @@ input:checked + .toggle-bg {
   left: 0px;
 }
 
-.left-2 {
-  left: 0.5rem;
-}
-
 .right-0 {
   right: 0px;
 }
@@ -1438,6 +1434,10 @@ input:checked + .toggle-bg {
   height: 100vh;
 }
 
+.h-\[18px\] {
+  height: 18px;
+}
+
 .max-h-80 {
   max-height: 20rem;
 }
@@ -1520,6 +1520,10 @@ input:checked + .toggle-bg {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[18px\] {
+  width: 18px;
 }
 
 .min-w-full {
@@ -1786,10 +1790,6 @@ input:checked + .toggle-bg {
 
 .overflow-x-hidden {
   overflow-x: hidden;
-}
-
-.overflow-y-hidden {
-  overflow-y: hidden;
 }
 
 .whitespace-nowrap {

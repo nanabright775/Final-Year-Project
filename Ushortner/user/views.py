@@ -73,7 +73,7 @@ def user_dashboard(request):
             qr_code = generate_qr_code(request.build_absolute_uri(f'/{short_code}'))
         else:
             short_code = str(uuid.uuid4())[:5]
-            short_url = ShortURL.objects.create(original_url=original_url, short_code=short_code, user=request.user)
+            short_url = ShortURL.objects.create(original_url=original_url, short_code=short_code, qr_code_data = generate_qr_code(original_url), user=request.user)
             qr_code = generate_qr_code(request.build_absolute_uri(f'/{short_code}'))
             short_url.save()
         short_code = request.build_absolute_uri(f'/{short_code}')
@@ -82,7 +82,10 @@ def user_dashboard(request):
         'user_short_urls': user_short_urls,
         'short_code': short_code,
         'qr_code': qr_code,
+
     }
+    if 'original_url' in locals():  # Check if 'original_url' is defined
+        context['original_url'] = original_url
     return render(request, 'user/userdashboard.html', context)
 
 
@@ -238,8 +241,8 @@ def delete_short_url(request, short_code):
 @login_required
 def user_links(request):
     user_short_urls = ShortURL.objects.filter(user=request.user)
-    # click_user = Click.objects.filter(click_count=click_count)
 
+   
     search_query = request.GET.get('search', '')
     date_from = request.GET.get('date_from', '')
     date_to = request.GET.get('date_to', '')
@@ -260,7 +263,7 @@ def user_links(request):
         user_short_urls = user_short_urls.filter(clicks__gte=min_clicks)
         # click_user=click_user.filter(click_count__gte=min_clicks)
     # print(Click.click_count)
-    return render(request, 'user/links.html', {'user_short_urls': user_short_urls})
+    return render(request, 'user/links.html', {'user_short_urls': user_short_urls, })
 
 
 
