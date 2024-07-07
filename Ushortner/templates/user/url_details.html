@@ -6,12 +6,46 @@
 <div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen">
   <div class="w-full h-screen bg-gray-100">
   <div class="relative bg-white shadow-md rounded-lg p-6 flex items-center space-x-6">
-     <!-- Delete URL Modal -->
-  <form action="{% url 'delete_short_url' short_url.short_code %}" method="post" class="mb-6 absolute top-2 right-3">
+     
+    
+    
+    
+    <!-- Delete URL Modal -->
+    <div class="absolute top-2 right-4 flex space-x-4">
+      <button onclick="copyToClipboard('http://127.0.0.1:8000/{{ short_url.short_code }}')" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700   dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+        Copy
+         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 5h6m-6 4h6M10 3v4h4V3h-4Z"/>
+         </svg>
+     </button>
+    
+      <button id="dropdownMenuButton{{ short_url.short_code }}" class="inline-flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+      Share
+      <svg class="w-[18px] h-[18px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-width="0.8" d="M7.926 10.898 15 7.727m-7.074 5.39L15 16.29M8 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm12 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm0-11a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
+        </svg>
+      </button>
+      <div id="dropdownMenu{{ short_url.short_code }}" class="hidden mr-4 absolute mt-12 w-48 py-2 bg-white border border-gray-200 rounded-lg z-50 shadow-lg dark:bg-gray-800 dark:border-gray-700">
+        <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_url.short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Share to WhatsApp</button>
+        <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_url.short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Share to Facebook</button>
+        <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_url.short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Share to Twitter</button>
+        <a href="{% url 'content_create' 'campaign' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            Advertise
+        </a>
+        <a href="{% url 'content_create' 'reel' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            VidAD
+        </a>
+        <a href="data:image/jpeg;base64,{{ short_url.qr_code_data|safe }}" download="qr_code.jpg" class="m-5 mt-4">Download QR Code</a>
+
+    </div>
+     <form action="{% url 'delete_short_url' short_url.short_code %}" method="post" >
     {% csrf_token %}
+    
+    
     <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" type="button">
       Delete
-    </button>  
+    </button> 
+     
     <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
       <div class="relative p-4 w-full max-w-md max-h-full">
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -37,6 +71,7 @@
       </div>
     </div>
   </form>
+</div>
     <img src="data:image/png;base64,{{ qr_coded }}" alt="QR Code" class="w-40 h-40 object-cover rounded-md">
     <div>
         <h1 class="text-2xl font-bold mb-4">Details for URL: 
@@ -47,12 +82,9 @@
         </p>
         <p class="mb-2">Short Code: {{ short_url.short_code }}</p>
         <p class="mt-4 mb-4">Date Created: {{ short_url.date_created }}</p>
-
-        <a href="data:image/jpeg;base64,{{ qr_coded|safe }}" download="qr_code.jpg">
-            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Download QR Code</button>
-        </a>
     </div>
 </div>
+
 
   <h2 class="text-xl font-semibold mb-4 mt-4">Click Details</h2>
 
@@ -81,26 +113,24 @@
       </table>
     </div>
   
-  <div class="share-buttons mb-6 space-y-4">
-    <button onclick="copyToClipboard('http://127.0.0.1:8000/{{ short_code }}')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Copy URL</button>
-    <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Share to WhatsApp</button>
-    <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_code }}')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Share to Facebook</button>
-    <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_code }}')" class="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">Share to Twitter</button>
+
+  <div class="bg-white p-4 rounded-lg  w-full h-64 mt-4">
+    <p>Bar Charts</p>
+    <canvas id="clicksPerDayChart" class="w-full h-64"></canvas>
   </div>
-
-
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
+    
     <div class="bg-white p-4 rounded-lg shadow-md">
-      <canvas id="clicksPerDayChart" class="w-full h-64"></canvas>
+      <p>Referrer Chart</p>
+      <canvas id="referrerChart" class="w-48 h-48"></canvas>
     </div>
     <div class="bg-white p-4 rounded-lg shadow-md">
-      <canvas id="referrerChart" class="w-full h-64"></canvas>
+      <p>Devices Chart</p>
+      <canvas id="deviceChart" class="w-48 h-48"></canvas>
     </div>
     <div class="bg-white p-4 rounded-lg shadow-md">
-      <canvas id="deviceChart" class="w-full h-64"></canvas>
-    </div>
-    <div class="bg-white p-4 rounded-lg shadow-md">
-      <canvas id="browserChart" class="w-full h-64"></canvas>
+      <p>Browser Chart</p>
+      <canvas id="browserChart" class="w-48 h-48"></canvas>
     </div>
   </div>
   <br>
@@ -135,15 +165,20 @@
   console.log(browserCounts)
   // Clicks Per Day Chart
   new Chart(document.getElementById('clicksPerDayChart'), {
-    type: 'line',
+    type: 'bar',
     data: {
       labels: clicksPerDayLabels,
       datasets: [{
         label: 'Clicks Per Day',
         data: clicksPerDayCounts,
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
-        fill: true
+        backgroundColor: 'rgba(247, 119, 185, 0.8)', 
+        //borderColor: 'rgba(75, 192, 192, 1)',
+        //borderWidth: 1,
+        fill: true,
+        barThickness: 24,
+        categoryPercentage: 0.8, 
+        barPercentage: 0.9 
+        
       }]
     },
     options: {
@@ -155,7 +190,6 @@
     }
   });
 
-  // Referrer Chart
   new Chart(document.getElementById('referrerChart'), {
     type: 'pie',
     data: {
@@ -166,8 +200,23 @@
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
       }]
     },
-    options: { responsive: true }
-  });
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false // Disable the default legend
+        },
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem) {
+              return referrerLabels[tooltipItem.dataIndex] + ': ' + referrerCounts[tooltipItem.dataIndex];
+            }
+          }
+        }
+      }
+    }
+  }); // Referrer Chart
+ 
 
   // Device Chart
   new Chart(document.getElementById('deviceChart'), {
@@ -180,7 +229,21 @@
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
       }]
     },
-    options: { responsive: true }
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false // Disable the default legend
+        },
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem) {
+              return referrerLabels[tooltipItem.dataIndex] + ': ' + referrerCounts[tooltipItem.dataIndex];
+            }
+          }
+        }
+      }
+    }
   });
 
   // Browser Chart
@@ -194,7 +257,44 @@
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
       }]
     },
-    options: { responsive: true }
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false // Disable the default legend
+        },
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem) {
+              return referrerLabels[tooltipItem.dataIndex] + ': ' + referrerCounts[tooltipItem.dataIndex];
+            }
+          }
+        }
+      }
+    }
+  });
+
+//custom legend scroll
+  const legendContainer = document.getElementById('chartLegend');
+  const legendItems = chart.data.labels.map((label, index) => {
+    const color = chart.data.datasets[0].backgroundColor[index];
+    return `<li style="color: ${color};">${label}: ${chart.data.datasets[0].data[index]}</li>`;
+  }).join('');
+  legendContainer.innerHTML = `<ul>${legendItems}</ul>`;
+</script>
+
+<script>
+  // JavaScript for handling dropdown menu visibility
+document.querySelectorAll("[id^=dropdownMenuButton]").forEach(button => {
+      button.addEventListener("click", function() {
+          const menuId = this.id.replace("Button", "");
+          document.getElementById(menuId).classList.toggle("hidden");
+      });
+  });
+  
+  document.getElementById('menu-button').addEventListener('click', function() {
+      var dropdown = document.getElementById('menu-dropdown');
+      dropdown.classList.toggle('hidden');
   });
 </script>
 <script src="{% static 'scripts.js' %}" defer></script>

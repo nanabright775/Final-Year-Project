@@ -22,14 +22,12 @@
       {% if qr_code %}
       <div>
           <img src="data:image/jpeg;base64,{{ qr_code|safe }}" alt="QR Code" class="w-48 h-48 border-gray-300 p-2 rounded-lg">
-          <a href="data:image/jpeg;base64,{{ qr_code|safe }}" download="qr_code.jpg" class="m-5 mt-4"> 
-              
-          </a>
+        
       </div>
     </div>
       {% endif %}
      
-      <div>
+      <div class="mt-4">
           <p>Your shortened URL is:</p>
           <a href="{{ short_code }}" class="mb-2 text-2xl font-semibold tracking-tight text-blue-700 dark:text-white">
               {{ short_code }}
@@ -41,13 +39,9 @@
           <div class="hidden md:flex flex-wrap space-x-2  mt-4">
               <div class="m-5 rtl:ml-0 inline-flex  space-x-2 rounded-md " role="group">
                 
-                <button class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800   dark:bg-blue-600 dark:hover:bg-blue-700 ">
-                  Download QR Code
-                  <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                      <path fill-rule="evenodd" d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule="evenodd"/>
-                      <path fill-rule="evenodd" d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd"/>
-                  </svg>
-              </button>
+              <a href="data:image/jpeg;base64,{{ qr_coded|safe }}" download="qr_code.jpg">
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Download QR Code</button>
+            </a>
                
                   <button id="menu-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700   dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
                     Share

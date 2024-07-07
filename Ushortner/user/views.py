@@ -15,8 +15,8 @@ from django.db.models import Count
 import json
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.hashers import make_password
-
-
+from django.contrib import messages
+from django.conf import settings
 
 def signup_view(request):
     if request.method == 'POST':
@@ -35,11 +35,13 @@ def signup_view(request):
         
         if not errors:
             user = User.objects.create(username=username, password=make_password(password1))
+            user.backend = f'{settings.AUTHENTICATION_BACKENDS[0]}'
             login(request, user)
-            # return redirect(reverse('shorten_view'))
             return render(request, 'basehome/homepage.html')
 
         else:
+            for error in errors:
+                messages.error(request, error)
             return render(request, 'user/signup.html', {'errors': errors})
     
     return render(request, 'user/signup.html')
@@ -50,13 +52,27 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user) 
-            # return redirect(reverse('shorten_view'))
-            return render(request, 'basehome/homepage.html')
+        errors = []
 
+        if not username or not password:
+            errors.append("All fields are required.")
+
+        if not errors:
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user) 
+                return render(request, 'basehome/homepage.html')
+            else:
+                errors.append("Incorrect username or password.")
+        else:
+            errors.append("Incorrect username or password.")
+
+        for error in errors:
+            messages.error(request, error)
+        
+        return render(request, 'user/login.html', {'errors': errors})
     return render(request, 'user/login.html')
+
 
 @login_required
 def user_dashboard(request):

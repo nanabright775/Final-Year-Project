@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('urlshortner.urls')),
     path('', include('user.urls')),
+    path('accounts/', include('allauth.urls')),
     path('chat/', include('chat.urls')),
     path('business_card/', include('business_card.urls')),
     path('detect/', include('detect.urls')),

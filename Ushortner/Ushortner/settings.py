@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'urlshortner',
     'user_agents',
     'user',
@@ -47,6 +52,7 @@ INSTALLED_APPS = [
     'whitenoise',
     'advertisements',
     'landing_pages',
+
 ]
 
 MIDDLEWARE = [
@@ -57,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'Ushortner.urls'
@@ -66,6 +73,26 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
     # 'myapp/static', # If you have additional static files, specify their paths here
 ]
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1  # Ensure you have SITE_ID configured correctly
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': 'your_client_id',
+            'secret': 'your_client_secret',
+            'key': '',
+        }
+    }
+}
+
+LOGIN_REDIRECT_URL = '/' 
 
 
 COMPRESS_ROOT = BASE_DIR / 'static'
@@ -85,6 +112,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
             ],
         },
     },

@@ -1338,6 +1338,10 @@ input:checked + .toggle-bg {
   margin-top: 2rem;
 }
 
+.ml-3 {
+  margin-left: 0.75rem;
+}
+
 .block {
   display: block;
 }
@@ -1422,6 +1426,10 @@ input:checked + .toggle-bg {
   height: 2.25rem;
 }
 
+.h-\[18px\] {
+  height: 18px;
+}
+
 .h-\[calc\(100\%-1rem\)\] {
   height: calc(100% - 1rem);
 }
@@ -1434,8 +1442,12 @@ input:checked + .toggle-bg {
   height: 100vh;
 }
 
-.h-\[18px\] {
-  height: 18px;
+.h-12 {
+  height: 3rem;
+}
+
+.h-52 {
+  height: 13rem;
 }
 
 .max-h-80 {
@@ -1518,12 +1530,24 @@ input:checked + .toggle-bg {
   width: 2rem;
 }
 
+.w-\[18px\] {
+  width: 18px;
+}
+
 .w-full {
   width: 100%;
 }
 
-.w-\[18px\] {
-  width: 18px;
+.w-2 {
+  width: 0.5rem;
+}
+
+.w-1 {
+  width: 0.25rem;
+}
+
+.w-16 {
+  width: 4rem;
 }
 
 .min-w-full {
@@ -2578,6 +2602,11 @@ input:checked + .toggle-bg {
   color: rgb(54 47 120 / var(--tw-text-opacity));
 }
 
+.hover\:text-gray-800:hover {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
 .hover\:underline:hover {
   text-decoration-line: underline;
 }
@@ -2883,6 +2912,10 @@ input:checked + .toggle-bg {
 @media (min-width: 640px) {
   .sm\:ml-64 {
     margin-left: 16rem;
+  }
+
+  .sm\:inline {
+    display: inline;
   }
 
   .sm\:hidden {
