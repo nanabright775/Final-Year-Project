@@ -157,7 +157,7 @@
                     </div>
                 
                     <div class="bg-gray-50 p-4 rounded shadow mt-8">
-                        <div>
+                        {% comment %} <div>
                             {{ form.theme.label_tag }}<br>
                             {{ form.theme }}
                         </div>
@@ -168,7 +168,7 @@
                         <div class="mt-4">
                             {{ form.font_style.label_tag }}<br>
                             {{ form.font_style }}
-                        </div>
+                        </div> {% endcomment %}
                         <div class="mt-4">
                             {{ form.background_color.label_tag }}<br>
                             {{ form.background_color }}

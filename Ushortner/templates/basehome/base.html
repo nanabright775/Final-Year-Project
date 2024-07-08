@@ -103,6 +103,8 @@
                   </svg>
               </a>
               <ul x-show="open" @click.away="open = false" class="space-y-2 mt-2 ms-6">
+                {% comment %} <ul id="create-dropdown-menu" class="hidden space-y-2 mt-2 ms-6"> {% endcomment %}
+
                   <li>
                       <a href="{% url 'userdashboard' %}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                           <span class="ms-3">short link</span>
@@ -266,7 +268,6 @@
       document.getElementById('user-menu-button').addEventListener('click', function() {
           document.getElementById('user-dropdown').classList.toggle('hidden');
       });
-
 
   </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>

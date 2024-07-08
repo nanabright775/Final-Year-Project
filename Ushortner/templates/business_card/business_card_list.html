@@ -27,6 +27,8 @@
                 <div class="mt-4 flex space-x-2">
                     <a href="{% url 'business_card_update' card.pk %}" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600">Update</a>
                     <a href="{% url 'business_card_delete' card.pk %}" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Delete</a>
+                    {% comment %} <button id="downloadBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Download</button> {% endcomment %}
+
                 </div>
                 <div class="absolute top-2 right-2">
                     <button class="relative">
@@ -35,7 +37,9 @@
                             <path d="M12 7a2 2 0 110-4 2 2 0 010 4zm0 5a2 2 0 110-4 2 2 0 010 4zm0 5a2 2 0 110-4 2 2 0 010 4z"></path>
                         </svg>
                         <div class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200" onclick="downloadCard('{{ card.pk }}')">Download</a>
+                            {% comment %} <a href="#" id="downloadBtn" class="block px-4 py-2 text-gray-800 hover:bg-gray-200" onclick="downloadCard('{{ card.pk }}')">Download</a> {% endcomment %}
+                            {% comment %} <button id="downloadBtn" class="block px-4 py-2 text-gray-800 hover:bg-gray-200"  >Download </button> {% endcomment %}
+
                             <a href="https://wa.me/?text={{ request.build_absolute_uri }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Share on WhatsApp</a>
                             <a href="https://www.instagram.com/sharer.php?u={{ request.build_absolute_uri }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Share on Instagram</a>
                             <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Share on Telegram</a>
@@ -62,18 +66,19 @@
         });
     });
 
-    function downloadCard(cardId) {
-        const cardElement = document.getElementById(`card-${cardId}`);
-        const buttons = cardElement.querySelectorAll('button');
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+        const businessCard = document.getElementById('business-card');
+        const buttons = document.querySelectorAll('button');
         buttons.forEach(button => button.style.display = 'none');
 
-        html2canvas(cardElement).then(function(canvas) {
+        html2canvas(businessCard).then(function(canvas) {
             buttons.forEach(button => button.style.display = '');
             const link = document.createElement('a');
             link.href = canvas.toDataURL('image/png');
-            link.download = `business_card_${cardId}.png`;
+            link.download = '{{ business_card.name }}_business_card.png';
             link.click();
         });
-    }
+    });
+
 </script>
 {% endblock %}
