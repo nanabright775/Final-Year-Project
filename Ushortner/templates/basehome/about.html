@@ -1,0 +1,77 @@
+
+{% extends 'basehome/base.html' %}
+
+{% block title %}About Us {% endblock %}
+{% load static %}
+{% block content %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <div class="bg-gray-100 p-10  sm:ml-64 mt-12 overflow-y-auto max-h-screen"> 
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-10">
+        <section class="bg-white p-10 rounded-lg shadow-lg">
+            <h2 class="text-4xl font-bold text-center mb-5">About Us</h2>
+            <p class="text-lg text-gray-700 mb-6">Welcome to our URL Shortener application, a project developed by a team of dedicated final year students at Kwame Nkrumah University Of Science and Technology. Our mission is to provide an efficient and easy-to-use tool for shortening long URLs, making them more manageable and shareable.</p>
+            <p class="text-lg text-gray-700 mb-6">This project is a culmination of our learning and efforts throughout our academic journey. It aims to solve a common problem faced by many internet users: long and unwieldy URLs. By shortening URLs, we help users share links more easily on social media, in emails, and through various other platforms.</p>
+            
+            <h3 class="text-center text-4xl font-bold mb-3">Our Team</h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10 mt-8">
+                <div class="profile-card transform transition duration-500 hover:scale-105">
+                    <img src="{% static 'images/pro_klogo.jpeg' %}" alt="Prof. Dr. Selorm Klogo" class="w-48 h-48 mx-auto rounded-full shadow-lg">
+                    <h3 class="text-xl font-bold text-center mt-4">Dr. Griffith Selorm Klogo</h3>
+                    <p class="text-center">Supervisor, Senior Lecture 
+                        Research Areas/Interests
+                        
+                        Smart Metering and Metering Infrastructures Telecommunication Infrastructures Security and Security on Embedded Systems </p>
+                </div>
+                <div class="profile-card transform transition duration-500 hover:scale-105">
+                    <img src="{% static 'images/brightC.jpeg' %}" alt="Bright Atsiatorme" class="w-48 h-48 mx-auto rounded-full shadow-lg">
+                    <h3 class="text-xl font-bold text-center mt-4">Bright Atsiatorme</h3>
+                    <p class="text-center">Team Member, Cybersecurity, machine learning enthusiast and Django backend developper</p>
+                </div>
+                <div class="profile-card transform transition duration-500 hover:scale-105">
+                    <img src="{% static 'images/bonney.jpeg' %}" alt="Gideon Bonney" class="w-48 h-48 mx-auto rounded-full shadow-lg">
+                    <h3 class="text-xl font-bold text-center mt-4">Gideon Bonney</h3>
+                    <p class="text-center">Team Member, Machine learning enthusiast React frontend developper</p>
+                </div>
+                <div class="profile-card transform transition duration-500 hover:scale-105">
+                    <img src="{% static 'images/barima.jpeg' %}" alt="Barima Ashley" class="w-48 h-48 mx-auto rounded-full shadow-lg">
+                    <h3 class="text-xl font-bold text-center mt-4">Barima Ashley</h3>
+                    <p class="text-center">Team Member, Machine learning enthusiast Angular frontend developper</p>
+                </div>
+            </div>
+
+            <p class="text-lg text-gray-700 mb-6">Our team is composed Prof.Dr.Selorm Klogo(supervisor), Bright Atsiatorme, Gideon Bonney and Barima Ashley, these are talented students from Kwame Nkrumah University Of Science and Technology(KNUST) who have a passion for cybersecurity, web development and software engineering. Each member brings unique skills and perspectives to the table, contributing to the success of this project.</p>
+            <h3 class="text-center text-4xl font-bold mb-3">Features</h3>
+            <ul class="list-disc pl-5 text-lg text-gray-700">
+                <li>Quick and easy URL shortening</li>
+                <li>Customizable short URLs</li>
+                <li>Detailed click analytics</li>
+                <li>Secure and reliable service</li>
+                <li>Check safety of links with machine learning</li>
+                <li>Create eBussiness Card</li>
+                <li>Create An Advertise static web pages for Advertisement</li>
+                <li>Advertise your project within the app</li>
+                <li>Have a direct chat with AD creators, and much more</li>
+            </ul>
+
+            <p class="text-lg text-center text-gray-700 font-semibold mt-8 mb-4">Thank you for using our service</p>
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto text-center">
+          <p>&copy; 2024 URL Shortener. All rights reserved.</p>
+        </div>
+      </footer>
+
+</body>
+
+{% endblock content %}
+
+

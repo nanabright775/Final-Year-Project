@@ -22,6 +22,9 @@
         .theme3 { @apply bg-red-50 text-red-900; }
     </style>
 </head>
+
+{% load static %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
 <body class="{{ landing_page.font }} {{ landing_page.text_color }} {{ landing_page.theme }} {{ landing_page.layout }}">
     <div class="bg-white rounded-lg p-6 {% if landing_page.background_image %} bg-cover bg-center{% endif %}"
     {% if landing_page.background_image %}

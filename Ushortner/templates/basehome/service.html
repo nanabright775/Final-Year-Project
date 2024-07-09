@@ -1,0 +1,64 @@
+{% extends 'basehome/base.html' %}
+
+{% block title %}Services{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <div class="bg-gray-100 p-10 sm:ml-64 mt-8 overflow-y-auto max-h-screen"> 
+        <!-- Main Content -->
+        <main class="container mx-auto py-10">
+            <section class="p-4 rounded-lg">
+                <h2 class="text-4xl font-bold text-center mb-10">Our Services</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-2">Quick and easy URL shortening</h3>
+                        <p class="text-gray-700">Effortlessly shorten long URLs to make them more manageable and shareable.</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-2">Customizable short URLs</h3>
+                        <p class="text-gray-700">Create personalized short URLs to better suit your branding and needs.</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-2">Detailed click analytics</h3>
+                        <p class="text-gray-700">Track clicks on your shortened URLs with comprehensive analytics.</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-2">Secure and reliable service</h3>
+                        <p class="text-gray-700">Experience a secure and dependable URL shortening service.</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-2">Check safety of links with machine learning</h3>
+                        <p class="text-gray-700">Ensure the safety of your links with advanced machine learning techniques.</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-2">Create eBusiness Card</h3>
+                        <p class="text-gray-700">Easily create and share your professional eBusiness cards.</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-2">Create Advertisement static web pages</h3>
+                        <p class="text-gray-700">Develop static web pages to advertise your products or services.</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-2">Advertise your project within the app</h3>
+                        <p class="text-gray-700">Promote your projects directly within the application for more visibility.</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-2">Direct chat with AD creators</h3>
+                        <p class="text-gray-700">Have real-time conversations with advertisement creators for better collaboration.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-6 mt-12">
+            <div class="container mx-auto text-center">
+                <p>&copy; 2024 URL Shortener. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+
+{% endblock %}

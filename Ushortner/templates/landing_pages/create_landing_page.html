@@ -1,6 +1,9 @@
 {% extends "basehome/base.html" %}
 {% block title %} Create AD Page {% endblock%}
 {% block content %}
+
+{% load static %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
 <script>
     function updatePreview() {
         const title = document.getElementById('id_title').value;
