@@ -44,6 +44,8 @@ def contact_submit(request):
 
 
 
+def landingpage(request):
+    return render(request, 'basehome/landingpage.html') 
 
 
 def api_documentation(request):
