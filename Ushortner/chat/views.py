@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import Message
 from .forms import MessageForm
 from django.db.models import Q 
-from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 
 @login_required
 def chat_list(request):
@@ -33,9 +33,20 @@ def chat_detail(request, username):
             message.sender = request.user
             message.receiver = user
             message.save()
+
+            # Send an email notification
+            send_mail(
+                subject='New Message Notification',
+                message=f'You have received a new message from {request.user.username}.',
+                from_email='developeregyakofi@gmail.com',
+                recipient_list=[user.email],
+                fail_silently=False,
+            )
+
             return redirect('chat_detail', username=user.username)
     else:
         form = MessageForm()
+
     # Get messages between the current user and the target user
     messages = Message.objects.filter(
         (Q(sender=request.user) & Q(receiver=user)) |
@@ -52,10 +63,12 @@ def chat_detail(request, username):
             Message.objects.create(sender=request.user, receiver=user, content=content)
 
     if request.method == 'POST' and 'delete_message_ids' in request.POST:
-            message_ids = request.POST.getlist('delete_message_ids')
-            Message.objects.filter(id__in=message_ids).delete()
+        message_ids = request.POST.getlist('delete_message_ids')
+        Message.objects.filter(id__in=message_ids).delete()
 
-    return render(request, 'chat/chat_detail.html', {'messages': messages,'form': form, 'user': user})
+    return render(request, 'chat/chat_detail.html', {'messages': messages, 'form': form, 'user': user})
+
+
 
 
 @login_required

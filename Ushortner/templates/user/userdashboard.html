@@ -7,7 +7,6 @@
 <link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
 <body class="overflow-hidden">
 <div class="bg-gray-100 p-10 sm:ml-64 mt-12 mb-8 overflow-y-auto max-h-screen">
-
 <h1 class="text-center text-4xl font-bold text-gray-900 mb-8">Shorten Your URL</h1>
 <form method="post" class="flex mx-20">
     {% csrf_token %}
@@ -55,6 +54,9 @@
                     <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Share to WhatsApp</button>
                     <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Share to Facebook</button>
                     <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Share to Twitter</button>
+                    <a href="{% url 'content_create' 'campaign' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Advertise</a>
+                    <a href="{% url 'content_create' 'reel' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">VidAD</a>
+                   
                   </div>
 
                   <button onclick="copyToClipboard('http://127.0.0.1:8000/{{ short_url.short_code }}')" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700   dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
@@ -82,6 +84,9 @@
         <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Share to WhatsApp</button>
         <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Share to Facebook</button>
         <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Share to Twitter</button>
+        <a href="{% url 'content_create' 'campaign' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Advertise</a>
+        <a href="{% url 'content_create' 'reel' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">VidAD</a>
+       
       </div>
     </div>
   </div> 

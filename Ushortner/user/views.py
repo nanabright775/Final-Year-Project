@@ -17,27 +17,39 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 from django.conf import settings
+from django.db.models import Count, Sum
 
 def signup_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
+        email = request.POST.get('email')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
         
         errors = []
 
-        if not username or not password1 or not password2:
+        if not username or not email or not first_name or not last_name or not password1 or not password2:
             errors.append("All fields are required.")
         if password1 != password2:
             errors.append("Passwords do not match.")
         if User.objects.filter(username=username).exists():
             errors.append("Username already exists.")
+        if User.objects.filter(email=email).exists():
+            errors.append("Email already exists.")
         
         if not errors:
-            user = User.objects.create(username=username, password=make_password(password1))
+            user = User.objects.create(
+                username=username,
+                email=email,
+                first_name=first_name,
+                last_name=last_name,
+                password=make_password(password1)
+            )
             user.backend = f'{settings.AUTHENTICATION_BACKENDS[0]}'
             login(request, user)
-            return render(request, 'basehome/homepage.html')
+            return redirect('/')  
 
         else:
             for error in errors:
@@ -61,7 +73,7 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user) 
-                return render(request, 'basehome/homepage.html')
+                return render(request, 'user/dashboard.html')
             else:
                 errors.append("Incorrect username or password.")
         else:
@@ -308,3 +320,44 @@ def settings_view(request):
         return render(request, 'user/settings.html', {'errors': errors})
 
     return render(request, 'user/settings.html')
+
+
+
+
+def dashboard_view(request):
+    best_links = ShortURL.objects.annotate(
+        total_clicks=Sum('click__click_count')
+    ).order_by('-total_clicks')[:10]
+
+    total_links = ShortURL.objects.count()
+    total_clicks = Click.objects.aggregate(total_clicks=Sum('click_count'))['total_clicks']
+
+    if best_links:
+        best_link = best_links[0]
+        clicks = Click.objects.filter(short_url=best_link).order_by('-timestamp')
+        # Aggregating click statistics for charts
+        clicks_per_day = clicks.extra({'day': "date(timestamp)"}).values('day').annotate(clicks=Sum('click_count')).order_by('day')
+        referrer_distribution = clicks.values('referer').annotate(count=Count('referer')).order_by('-count')
+        device_distribution = clicks.values('device').annotate(count=Count('device')).order_by('-count')
+        browser_distribution = clicks.values('browser').annotate(count=Count('browser')).order_by('-count')
+    else:
+        best_link = None
+        clicks = []
+        clicks_per_day = []
+        referrer_distribution = []
+        device_distribution = []
+        browser_distribution = []
+
+    context = {
+        'best_links': best_links,
+        'total_links': total_links,
+        'total_clicks': total_clicks,
+        'best_link': best_link,
+        'clicks': clicks,
+        'clicks_per_day': list(clicks_per_day),
+        'referrer_distribution': list(referrer_distribution),
+        'device_distribution': list(device_distribution),
+        'browser_distribution': list(browser_distribution),
+    }
+
+    return render(request, 'user/dashboard.html', context)

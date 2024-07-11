@@ -8,49 +8,80 @@
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
     <div class="bg-gray-100 p-10 sm:ml-64 mt-8 overflow-y-auto max-h-screen"> 
         <!-- Main Content -->
-        <main class="container mx-auto py-10">
-            <section class="p-4 rounded-lg">
-                <h2 class="text-4xl font-bold text-center mb-10">Our Services</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-2">Quick and easy URL shortening</h3>
-                        <p class="text-gray-700">Effortlessly shorten long URLs to make them more manageable and shareable.</p>
-                    </div>
-                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-2">Customizable short URLs</h3>
-                        <p class="text-gray-700">Create personalized short URLs to better suit your branding and needs.</p>
-                    </div>
-                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-2">Detailed click analytics</h3>
-                        <p class="text-gray-700">Track clicks on your shortened URLs with comprehensive analytics.</p>
-                    </div>
-                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-2">Secure and reliable service</h3>
-                        <p class="text-gray-700">Experience a secure and dependable URL shortening service.</p>
-                    </div>
-                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-2">Check safety of links with machine learning</h3>
-                        <p class="text-gray-700">Ensure the safety of your links with advanced machine learning techniques.</p>
-                    </div>
-                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-2">Create eBusiness Card</h3>
-                        <p class="text-gray-700">Easily create and share your professional eBusiness cards.</p>
-                    </div>
-                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-2">Create Advertisement static web pages</h3>
-                        <p class="text-gray-700">Develop static web pages to advertise your products or services.</p>
-                    </div>
-                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-2">Advertise your project within the app</h3>
-                        <p class="text-gray-700">Promote your projects directly within the application for more visibility.</p>
-                    </div>
-                    <div class="card bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-110 hover:shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-2">Direct chat with AD creators</h3>
-                        <p class="text-gray-700">Have real-time conversations with advertisement creators for better collaboration.</p>
-                    </div>
-                </div>
+        <main class="container mx-auto py-12">
+            <section class="text-center mb-12 animate-slideIn">
+              <h2 class="text-3xl font-semibold mb-4">What We Offer</h2>
+              <p class="text-lg text-gray-700">Our platform provides a variety of tools to help you manage your URLs efficiently and creatively.</p>
             </section>
-        </main>
+        
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <a href="{% if user.is_authenticated %}{% url 'userdashboard' %}{% else %}{% url 'signup' %}{% endif %}">
+                  <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+                      <h3 class="text-xl font-semibold mb-4">Shorten Links</h3>
+                      <p class="text-gray-700 mb-4">Easily shorten any long URL and share it with your audience and the world.</p>
+                  </div>
+              </a>
+          
+              <a href="{% if user.is_authenticated %}{% url 'create_business_card' %}{% else %}{% url 'signup' %}{% endif %}">
+                  <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+                      <h3 class="text-xl font-semibold mb-4">Create Business Cards</h3>
+                      <p class="text-gray-700 mb-4">Generate professional business cards with your shortened links.</p>
+                  </div>
+              </a>
+          
+              <a href="{% if user.is_authenticated %}{% url 'content_create' 'reels' %}{% else %}{% url 'signup' %}{% endif %}">
+                  <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+                      <h3 class="text-xl font-semibold mb-4">Advertise Products</h3>
+                      <p class="text-gray-700 mb-4">Promote your products by linking shortened URLs and creating ads.</p>
+                  </div>
+              </a>
+          
+              <a href="{% if user.is_authenticated %}{% url 'generate_qr_code' %}{% else %}{% url 'signup' %}{% endif %}">
+                  <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+                      <h3 class="text-xl font-semibold mb-4">Create QR Codes</h3>
+                      <p class="text-gray-700 mb-4">Generate QR codes for your shortened links to share them easily.</p>
+                  </div>
+              </a>
+          
+              <a href="{% if user.is_authenticated %}{% url 'predict' %}{% else %}{% url 'signup' %}{% endif %}">
+                  <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+                      <h3 class="text-xl font-semibold mb-4">Check Link Safety</h3>
+                      <p class="text-gray-700 mb-4">Verify and check if any URL is malicious or safe to use.</p>
+                  </div>
+              </a>
+          
+              <a href="{% if user.is_authenticated %}{% url 'analytics_view' %}{% else %}{% url 'signup' %}{% endif %}">
+                  <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+                      <h3 class="text-xl font-semibold mb-4">View Analytics</h3>
+                      <p class="text-gray-700 mb-4">Track clicks, devices, and more with detailed analytics.</p>
+                  </div>
+              </a>
+          
+              <a href="{% if user.is_authenticated %}{% url 'customize_short_url' %}{% else %}{% url 'signup' %}{% endif %}">
+                  <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+                      <h3 class="text-xl font-semibold mb-4">Customize Links</h3>
+                      <p class="text-gray-700 mb-4">Personalize your shortened URLs to fit your brand.</p>
+                  </div>
+              </a>
+          
+              <a href="{% if user.is_authenticated %}{% url 'chat_list' %}{% else %}{% url 'signup' %}{% endif %}">
+                  <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+                      <h3 class="text-xl font-semibold mb-4">Chat with Creators</h3>
+                      <p class="text-gray-700 mb-4">Engage directly with people who upload reels and advertisements.</p>
+                  </div>
+              </a>
+          
+              <a href="{% if user.is_authenticated %}{% url 'create_landing_page' %}{% else %}{% url 'signup' %}{% endif %}">
+                  <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+                      <h3 class="text-xl font-semibold mb-4">Create Pages</h3>
+                      <p class="text-gray-700 mb-4">Create an advertisements page for product and more.</p>
+                  </div>
+              </a>
+          </section>
+          
+            
+          
+          </main>
 
         <!-- Footer -->
         <footer class="bg-gray-800 text-white py-6 mt-12">
@@ -60,5 +91,53 @@
         </footer>
     </div>
 </body>
+
+<style>
+    body {
+      overflow: hidden; /* Prevents scrolling of the entire body */
+    }
+  @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+  }
+  
+  @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+  }
+  
+  .animate-fadeIn {
+      animation: fadeIn 1.5s ease-in-out;
+  }
+  
+  .animate-slideIn {
+      animation: slideIn 1s ease-in-out;
+  }
+  
+  .hover\:animate-pulse:hover {
+      animation: pulse 1s infinite;
+  }
+  
+  @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+  }
+  
+  @keyframes bgChange {
+    0% { background-image: url('{% static 'images/bg1.jpeg' %}'); }
+    25% { background-image: url('{% static 'images/bg2.jpg' %}'); }
+    50% { background-image: url('{% static 'images/bg3.jpg' %}'); }
+    75% { background-image: url('{% static 'images/bg4.webp' %}'); }
+    100% { background-image: url('{% static 'images/bg1.jpeg' %}'); }
+  }
+  
+  .animate-bgChange {
+    animation: bgChange 20s infinite; /* Adjust the duration for smoother transitions */
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    opacity: 0.6; /* Adjust the opacity to your preference */
+  }
+  </style>
 
 {% endblock %}

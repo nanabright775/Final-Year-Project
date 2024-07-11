@@ -22,70 +22,70 @@
     </section>
 
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <a href="{% if user.is_authenticated %}{% url 'userdashboard' %}{% else %}{% url 'signup' %}{% endif %}" >
-      <div class="bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse">
-        <h3 class="text-xl font-semibold mb-4">Shorten Links</h3>
-        <p class="text-gray-700 mb-4">Easily shorten any URL and share it with your audience.</p>
-      </div>
-    </a>
-
-    <a href="{% if user.is_authenticated %}{% url 'create_business_card' %}{% else %}{% url 'signup' %}{% endif %}" >
-      <div class="bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse">
-        <h3 class="text-xl font-semibold mb-4">Create Business Cards</h3>
-        <p class="text-gray-700 mb-4">Generate professional business cards with your shortened links.</p>
-      </div>
-    </a>
-
-    <a href="{% if user.is_authenticated %}{% url 'content_create' 'reels' %}{% else %}{% url 'signup' %}{% endif %}" >
-      <div class="bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse">
-        <h3 class="text-xl font-semibold mb-4">Advertise Products</h3>
-        <p class="text-gray-700 mb-4">Promote your products by linking shortened URLs and creating ads.</p>
-      </div>
-    </a>
-    
-    <a href="{% if user.is_authenticated %}{% url 'generate_qr_code' %}{% else %}{% url 'signup' %}{% endif %}" >
-      <div class="bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse">
-        <h3 class="text-xl font-semibold mb-4">Create QR Codes</h3>
-        <p class="text-gray-700 mb-4">Generate QR codes for your shortened links to share them easily.</p>
-      </div>
-    </a>
-
-      <a href="{% if user.is_authenticated %}{% url 'predict' %}{% else %}{% url 'signup' %}{% endif %}" >  
-      <div class="bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse">
-        <h3 class="text-xl font-semibold mb-4">Check Link Safety</h3>
-        <p class="text-gray-700 mb-4">Verify if a URL is malicious or safe to use.</p>
-      </div>
-    </a>
-
-    <a href="{% if user.is_authenticated %}{% url 'analytics_view' %}{% else %}{% url 'signup' %}{% endif %}" >
-      <div class="bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse">
-        <h3 class="text-xl font-semibold mb-4">View Analytics</h3>
-        <p class="text-gray-700 mb-4">Track clicks, devices, and more with detailed analytics.</p>
-      </div>
-    </a>
-    
-    <a href="{% if user.is_authenticated %}{% url 'customize_short_url' %}{% else %}{% url 'signup' %}{% endif %}" >
-      <div class="bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse">
-        <h3 class="text-xl font-semibold mb-4">Customize Links</h3>
-        <p class="text-gray-700 mb-4">Personalize your shortened URLs to fit your brand.</p>
-      </div>
-    </a>
-
-
-    <a href="{% if user.is_authenticated %}{% url 'chat_list' %}{% else %}{% url 'signup' %}{% endif %}" >
-      <div class="bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse">
-        <h3 class="text-xl font-semibold mb-4">Chat with Creators</h3>
-        <p class="text-gray-700 mb-4">Engage directly with people who upload reels and advertisements.</p>
-      </div>
-    </a>
-
-    <a href="{% if user.is_authenticated %}{% url 'create_landing_page' %}{% else %}{% url 'signup' %}{% endif %}" >
-      <div class="bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse">
-        <h3 class="text-xl font-semibold mb-4">Create Pages</h3>
-        <p class="text-gray-700 mb-4">Create an advertisements page for product and more.</p>
-      </div>
-    </a>
-    </section>
+      <a href="{% if user.is_authenticated %}{% url 'userdashboard' %}{% else %}{% url 'signup' %}{% endif %}">
+          <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+              <h3 class="text-xl font-semibold mb-4">Shorten Links</h3>
+              <p class="text-gray-700 mb-4">Easily shorten any long URL and share it with your audience and the world.</p>
+          </div>
+      </a>
+  
+      <a href="{% if user.is_authenticated %}{% url 'create_business_card' %}{% else %}{% url 'signup' %}{% endif %}">
+          <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+              <h3 class="text-xl font-semibold mb-4">Create Business Cards</h3>
+              <p class="text-gray-700 mb-4">Generate professional business cards with your shortened links.</p>
+          </div>
+      </a>
+  
+      <a href="{% if user.is_authenticated %}{% url 'content_create' 'reels' %}{% else %}{% url 'signup' %}{% endif %}">
+          <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+              <h3 class="text-xl font-semibold mb-4">Advertise Products</h3>
+              <p class="text-gray-700 mb-4">Promote your products by linking shortened URLs and creating ads.</p>
+          </div>
+      </a>
+  
+      <a href="{% if user.is_authenticated %}{% url 'generate_qr_code' %}{% else %}{% url 'signup' %}{% endif %}">
+          <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+              <h3 class="text-xl font-semibold mb-4">Create QR Codes</h3>
+              <p class="text-gray-700 mb-4">Generate QR codes for your shortened links to share them easily.</p>
+          </div>
+      </a>
+  
+      <a href="{% if user.is_authenticated %}{% url 'predict' %}{% else %}{% url 'signup' %}{% endif %}">
+          <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+              <h3 class="text-xl font-semibold mb-4">Check Link Safety</h3>
+              <p class="text-gray-700 mb-4">Verify and check if any URL is malicious or safe to use.</p>
+          </div>
+      </a>
+  
+      <a href="{% if user.is_authenticated %}{% url 'analytics_view' %}{% else %}{% url 'signup' %}{% endif %}">
+          <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+              <h3 class="text-xl font-semibold mb-4">View Analytics</h3>
+              <p class="text-gray-700 mb-4">Track clicks, devices, and more with detailed analytics.</p>
+          </div>
+      </a>
+  
+      <a href="{% if user.is_authenticated %}{% url 'customize_short_url' %}{% else %}{% url 'signup' %}{% endif %}">
+          <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+              <h3 class="text-xl font-semibold mb-4">Customize Links</h3>
+              <p class="text-gray-700 mb-4">Personalize your shortened URLs to fit your brand.</p>
+          </div>
+      </a>
+  
+      <a href="{% if user.is_authenticated %}{% url 'chat_list' %}{% else %}{% url 'signup' %}{% endif %}">
+          <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+              <h3 class="text-xl font-semibold mb-4">Chat with Creators</h3>
+              <p class="text-gray-700 mb-4">Engage directly with people who upload reels and advertisements.</p>
+          </div>
+      </a>
+  
+      <a href="{% if user.is_authenticated %}{% url 'create_landing_page' %}{% else %}{% url 'signup' %}{% endif %}">
+          <div class="flex flex-col bg-white p-6 shadow-md rounded-md text-center hover:animate-pulse h-full">
+              <h3 class="text-xl font-semibold mb-4">Create Pages</h3>
+              <p class="text-gray-700 mb-4">Create an advertisements page for product and more.</p>
+          </div>
+      </a>
+  </section>
+  
     
     <section class="text-center mt-12 animate-slideIn">
       <h2 class="text-3xl font-semibold mb-4">And Much More!</h2>

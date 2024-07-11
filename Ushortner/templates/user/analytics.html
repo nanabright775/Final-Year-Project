@@ -12,8 +12,13 @@
   <h1 class="text-3xl font-bold mb-6">Analytics for {{ username }}</h1>
   <form method="get" class="mb-6 flex flex-wrap items-center space-x-4">
     <div class="mb-4">
-      <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date:</label>
+      <div class="flex">
+      <p class="block text-sm font-medium text-gray-700 mr-2">range </p>
+
+      <label for="start_date" class="block text-sm font-medium text-gray-700"> Start Date:</label>
+    </div>
       <input type="date" name="start_date" id="start_date" value="{{ request.GET.start_date }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+    
     </div>
     <div class="mb-4">
       <label for="end_date" class="block text-sm font-medium text-gray-700">End Date:</label>
@@ -22,7 +27,7 @@
     <div class="mb-4">
       <label for="sort_by" class="block text-sm font-medium text-gray-700">Sort By:</label>
       <select name="sort_by" id="sort_by" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-        <option value="">Select</option>
+        <option value="">Latest</option>
         <option value="clicks" {% if request.GET.sort_by == 'clicks' %}selected{% endif %}>Clicks</option>
       </select>
     </div>
@@ -32,7 +37,7 @@
     </div>
     <div class="mb-4">
       <button type="submit" class="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-        Filter
+        Filter by clicks
       </button>
     </div>
   </form>
