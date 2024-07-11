@@ -1,95 +1,244 @@
 {% extends 'basehome/base.html' %}
-
-{% block title %}Dashboard {% endblock %}
-
+{% block title %}Dashboard{% endblock %}
+{% load static %}
 {% block content %}
 
-{% load static %}
-<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
 <body class="overflow-hidden">
 <div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen">
   <div class="w-full h-screen bg-gray-100">
-    <h1 class="text-2xl font-bold mb-4">Dashboard - Best Performing Links</h1>
+    <div class="relative bg-white shadow-md rounded-lg p-6">
 
-    {% for link_details in best_links_with_details %}
-    <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-        <div class="flex items-center space-x-6">
-            <!-- Display link details -->
-            <div>
-                <h2 class="text-xl font-semibold mb-2">Short URL: 
-                    <a href="http://127.0.0.1:8000/{{ link_details.short_url.short_code }}" class="text-blue-600 hover:text-blue-800">http://127.0.0.1:8000/{{ link_details.short_url.short_code }}</a>
-                </h2>
-                <p class="mb-2">Original URL: 
-                    <a href="{{ link_details.short_url.original_url }}" class="text-blue-600 hover:text-blue-800">{{ link_details.short_url.original_url }}</a>
-                </p>
-                <p class="mb-2">Short Code: {{ link_details.short_url.short_code }}</p>
-                <p class="mt-4 mb-2">Date Created: {{ link_details.short_url.date_created }}</p>
-            </div>
-            
-            <!-- Buttons for copy, share, delete, etc. -->
-            <div class="flex space-x-4">
-                <button onclick="copyToClipboard('http://127.0.0.1:8000/{{ link_details.short_url.short_code }}')" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                    Copy
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 5h6m-6 4h6M10 3v4h4V3h-4Z"/>
-                    </svg>
-                </button>
-                <button id="dropdownMenuButton{{ link_details.short_url.short_code }}" class="inline-flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                    Share
-                    <svg class="w-[18px] h-[18px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-width="0.8" d="M7.926 10.898 15 7.727m-7.074 5.39L15 16.29M8 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm12 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm0-11a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
-                    </svg>
-                </button>
-                <!-- Add other buttons as needed -->
+      <p class="text-xl italic mb-4">{{ greeting }} {{ user.username }}</p>
+      <h1 class="text-center text-2xl font-bold mb-8">Analytics Dashboard</h1>
 
-                <!-- Dropdown menu for sharing options -->
-                <div id="dropdownMenu{{ link_details.short_url.short_code }}" class="hidden mr-4 absolute mt-12 w-48 py-2 bg-white border border-gray-200 rounded-lg z-50 shadow-lg dark:bg-gray-800 dark:border-gray-700">
-                    <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ link_details.short_url.short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Share to WhatsApp</button>
-                    <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ link_details.short_url.short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Share to Facebook</button>
-                    <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ link_details.short_url.short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Share to Twitter</button>
-                    <!-- Add more sharing options as needed -->
-                </div>
-
-                <!-- Delete link button -->
-                <form action="{% url 'delete_short_url' link_details.short_url.short_code %}" method="post">
-                    {% csrf_token %}
-                    <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" type="button">
-                        Delete
-                    </button>
-                </form>
-                <!-- Add more actions as needed -->
-            </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white p-6 text-center rounded-lg shadow-md">
+          <h2 class="text-xl font-semibold">Total Links</h2>
+          <p class="text-3xl">{{ total_links }}</p>
         </div>
+        <div class="bg-white text-center p-6 rounded-lg shadow-md">
+          <h2 class="text-xl font-semibold">Total Clicks</h2>
+          <p class="text-3xl">{{ total_clicks }}</p>
+        </div>
+        
+      </div>
 
-        <!-- Display click details -->
-        <h2 class="text-xl font-semibold mb-2 mt-4">Click Details</h2>
+      <div class="mt-6">
+        <h2 class="text-xl font-semibold mb-4">Top Performing Links</h2>
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Short URL
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Clicks
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            {% for link, click_count in best_links %}
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <a href="{{ link.get_absolute_url }}" class="text-blue-600 hover:text-blue-800">
+                  {{ link.short_code }}
+                </a>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ click_count }} clicks
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        
+      </div>
+
+      {% if best_link %}
+      <div class="mt-6">
+        <h2 class="text-xl font-semibold mb-4">Details for Top Link: {{ best_link.short_code }}</h2>
+
         <div class="overflow-y-auto max-h-80">
-            <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm mb-6">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referer</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Browser</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    {% for click in link_details.clicks %}
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ click.timestamp }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ click.referer }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ click.browser }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ click.device }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+          <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm mb-6">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referer</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Browser</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              {% for click in clicks %}
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap">{{ click.timestamp }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ click.referer }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ click.browser }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ click.device }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+          <div class="bg-white p-4 rounded-lg shadow-md">
+            <p>Clicks Per Day</p>
+            <canvas id="clicksPerDayChart" class="w-full h-64"></canvas>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-md">
+            <p>Referrer Distribution</p>
+            <canvas id="referrerChart" class="w-48 h-48"></canvas>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-md">
+            <p>Device Distribution</p>
+            <canvas id="deviceChart" class="w-48 h-48"></canvas>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-md">
+            <p>Browser Distribution</p>
+            <canvas id="browserChart" class="w-48 h-48"></canvas>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
     </div>
-    {% endfor %}
-
-
-</div>
+  </div>
 </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0"></script>
+<script>
+  // Data for Clicks Per Day Chart
+  var clicksPerDayData = {{ clicks_per_day|safe }};
+  var clicksPerDayLabels = clicksPerDayData.map(item => item.day);
+  var clicksPerDayCounts = clicksPerDayData.map(item => item.clicks);
+
+  // Data for Referrer Chart
+  var referrerData = {{ referrer_distribution|safe }};
+  var referrerLabels = referrerData.map(item => item.referer);
+  var referrerCounts = referrerData.map(item => item.count);
+
+  // Data for Device Chart
+  var deviceData = {{ device_distribution|safe }};
+  var deviceLabels = deviceData.map(item => item.device);
+  var deviceCounts = deviceData.map(item => item.count);
+
+  // Data for Browser Chart
+  var browserData = {{ browser_distribution|safe }};
+  var browserLabels = browserData.map(item => item.browser);
+  var browserCounts = browserData.map(item => item.count);
+
+  // Clicks Per Day Chart
+  new Chart(document.getElementById('clicksPerDayChart'), {
+    type: 'bar',
+    data: {
+      labels: clicksPerDayLabels,
+      datasets: [{
+        label: 'Clicks Per Day',
+        data: clicksPerDayCounts,
+        backgroundColor: 'rgba(247, 119, 185, 0.8)', 
+        fill: true,
+        barThickness: 24,
+        categoryPercentage: 0.8, 
+        barPercentage: 0.9 
+        
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: { type: 'time', time: { unit: 'day' } },
+        y: { beginAtZero: true }
+      }
+    }
+  });
+
+  // Referrer Chart
+  new Chart(document.getElementById('referrerChart'), {
+    type: 'pie',
+    data: {
+      labels: referrerLabels,
+      datasets: [{
+        label: 'Referrer',
+        data: referrerCounts,
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem) {
+              return referrerLabels[tooltipItem.dataIndex] + ': ' + referrerCounts[tooltipItem.dataIndex];
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // Device Chart
+  new Chart(document.getElementById('deviceChart'), {
+    type: 'pie',
+    data: {
+      labels: deviceLabels,
+      datasets: [{
+        label: 'Device',
+        data: deviceCounts,
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem) {
+              return deviceLabels[tooltipItem.dataIndex] + ': ' + deviceCounts[tooltipItem.dataIndex];
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // Browser Chart
+  new Chart(document.getElementById('browserChart'), {
+    type: 'pie',
+    data: {
+      labels: browserLabels,
+      datasets: [{
+        label: 'Browser',
+        data: browserCounts,
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem) {
+              return browserLabels[tooltipItem.dataIndex] + ': ' + browserCounts[tooltipItem.dataIndex];
+            }
+          }
+        }
+      }
+    }
+  });
+</script>
+<script>
+  // JavaScript for handling dropdown menu visibility
+  document.querySelectorAll("[id^=dropdownMenuButton]").forEach(button => {
+    button.addEventListener("click", function() {
+      const menuId = this.id.replace("Button", "");
+      document.getElementById(menuId).classList.toggle("hidden");
+    });
+  });
+</script>
 {% endblock %}

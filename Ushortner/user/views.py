@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from urlshortner.models import ShortURL
 import uuid
@@ -17,7 +18,8 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 from django.conf import settings
-from django.db.models import Count, Sum
+from django.db.models import Count
+from datetime import datetime
 
 def signup_view(request):
     if request.method == 'POST':
@@ -73,7 +75,8 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user) 
-                return render(request, 'user/dashboard.html')
+                # return redirect(request, 'dashboard_view')
+                return HttpResponseRedirect(reverse('dashboard'))
             else:
                 errors.append("Incorrect username or password.")
         else:
@@ -184,7 +187,7 @@ def analytics_view(request):
         'search_query': search_query,
         'username': request.user.username
     }
-    
+    # print(url_clicks)
     return render(request, 'user/analytics.html', context)
 
 
@@ -322,21 +325,41 @@ def settings_view(request):
     return render(request, 'user/settings.html')
 
 
+def get_greeting():
+    current_hour = datetime.now().hour
+    if current_hour < 12:
+        return "Good Morning"
+    elif current_hour < 18:
+        return "Good Afternoon"
+    else:
+        return "Good Evening"
 
-
+@login_required   
 def dashboard_view(request):
-    best_links = ShortURL.objects.annotate(
-        total_clicks=Sum('click__click_count')
-    ).order_by('-total_clicks')[:10]
+    clicks = Click.objects.filter(short_url__user=request.user)
+    short_urls = ShortURL.objects.filter(user=request.user)
 
-    total_links = ShortURL.objects.count()
-    total_clicks = Click.objects.aggregate(total_clicks=Sum('click_count'))['total_clicks']
+    url_clicks = {short_url: 0 for short_url in short_urls}
+
+    for click in clicks:
+        if click.short_url in url_clicks:
+            url_clicks[click.short_url] += 1
+
+    total_links = short_urls.count()
+    total_clicks = sum(url_clicks.values())
+
+
+    best_links = sorted(url_clicks.items(), key=lambda item: item[1], reverse=True)[:10]
 
     if best_links:
-        best_link = best_links[0]
+        best_link, _ = best_links[0]
         clicks = Click.objects.filter(short_url=best_link).order_by('-timestamp')
         # Aggregating click statistics for charts
-        clicks_per_day = clicks.extra({'day': "date(timestamp)"}).values('day').annotate(clicks=Sum('click_count')).order_by('day')
+
+        clicks_per_day = clicks.extra({'day': 'date(timestamp)'}).values('day').annotate(clicks=Count('id')).order_by('day')
+        clicks_per_day = list(clicks_per_day)
+
+
         referrer_distribution = clicks.values('referer').annotate(count=Count('referer')).order_by('-count')
         device_distribution = clicks.values('device').annotate(count=Count('device')).order_by('-count')
         browser_distribution = clicks.values('browser').annotate(count=Count('browser')).order_by('-count')
@@ -347,6 +370,8 @@ def dashboard_view(request):
         referrer_distribution = []
         device_distribution = []
         browser_distribution = []
+        
+    greeting = get_greeting()
 
     context = {
         'best_links': best_links,
@@ -354,6 +379,7 @@ def dashboard_view(request):
         'total_clicks': total_clicks,
         'best_link': best_link,
         'clicks': clicks,
+        'greeting': greeting,
         'clicks_per_day': list(clicks_per_day),
         'referrer_distribution': list(referrer_distribution),
         'device_distribution': list(device_distribution),

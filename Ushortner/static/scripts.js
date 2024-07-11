@@ -104,7 +104,6 @@ document.getElementById('shareBtn').addEventListener('click', function() {
 
 
 
-
 //stealed code here
 
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
