@@ -51,7 +51,9 @@ def signup_view(request):
             )
             user.backend = f'{settings.AUTHENTICATION_BACKENDS[0]}'
             login(request, user)
-            return redirect('/')  
+            return HttpResponseRedirect(reverse('dashboard'))
+
+            # return redirect('/')  
 
         else:
             for error in errors:
