@@ -31,6 +31,11 @@ FONT_CHOICES = [
 
 class LandingPage(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, blank=True, null=True)
+    welMessage = models.CharField(max_length=300, blank=True, null=True)
+    contact = models.CharField(max_length=200, blank=True, null=True)
+    location = models.CharField(max_length=200, blank=True, null=True)
+    bussiness_name = models.CharField(max_length=200, blank=True, null=True)
     title = models.CharField(max_length=200)
     description = models.TextField()
     profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)

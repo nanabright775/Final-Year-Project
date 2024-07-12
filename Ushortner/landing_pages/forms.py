@@ -9,7 +9,8 @@ class LandingPageForm(forms.ModelForm):
             'title', 'description',  'profile_image', 'theme', 'layout', 
             'background_color', 'background_image', 'text_color', 'font_style', 
             'facebook_url', 'twitter_url', 'instagram_url', 'linkedin_url',
-            'additional_image_1', 'additional_image_2', 'additional_image_3', 'video',
+            'additional_image_1', 'additional_image_2', 'additional_image_3', 'video','name', 'location',
+            'welMessage', 'bussiness_name', 'contact',
      
         ]
         widgets = {
@@ -30,4 +31,9 @@ class LandingPageForm(forms.ModelForm):
             'additional_image2':forms.ClearableFileInput(attrs={'class': 'w-full p-2 border border-gray-300 rounded'}),
             'additional_image3':forms.ClearableFileInput(attrs={'class': 'w-full p-2 border border-gray-300 rounded'}),
             'video':forms.ClearableFileInput(attrs={'class': 'w-full p-2 border border-gray-300 rounded'}),
+            'name': forms.TextInput(attrs={'class': 'w-full p-2 border border-gray-300 rounded'}),
+            'location': forms.TextInput(attrs={'class': 'w-full p-2 border border-gray-300 rounded'}),
+            'welMessage': forms.TextInput(attrs={'class': 'w-full p-2 border border-gray-300 rounded'}),
+            'bussiness_name': forms.TextInput(attrs={'class': 'w-full p-2 border border-gray-300 rounded'}),
+            'contact': forms.TextInput(attrs={'class': 'w-full p-2 border border-gray-300 rounded'}),
         }
