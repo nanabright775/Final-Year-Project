@@ -1,0 +1,75 @@
+{% extends 'basehome/base.html' %}
+{% load custom_tags %}
+{% comment %} {% load content_tags %} {% endcomment %}
+{% block title %} Adds{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+
+<body class="overflow-hidden">
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen"> 
+    <div class="w-full h-screen bg-gray-100">
+<h1 class="text-center text-4xl font-bold text-gray-900 mb-8">Adverts</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+        {% for item in content %}
+            {% if item|model_name == 'campaign' %}
+                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden dark:bg-gray-800 dark:border-gray-700">
+                    <div class="h-48 overflow-hidden">
+                        <img class="w-full h-full object-cover" src="{{ item.image.url }}" alt="Campaign Image">
+                    </div>
+                    <div class="p-4">
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ item.description }}</p>
+                        <a href="{{ item.url }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <p>{{ item.url }}</p>
+                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                            </svg>
+                        </a>
+                        <p class="pt-2 text-sm text-gray-600 dark:text-gray-400">Posted by: {{ item.user.username }} on {{ item.created_at|date:"F j, Y" }}</p>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'chat_detail' item.user.username %}" class="inline-flex items-center mt-3 px-3 py-2 text-sm font-medium text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                Chat with {{ item.user.username }}
+                            </a>
+                        {% endif %}
+                        <div class="flex justify-between mt-3">
+                            {% get_content_type_id item as content_type_id %}
+                            <a href="{% url 'like_content' content_type_id item.id %}" class="text-blue-500 hover:underline">Like {{ item.like_count }}</a>
+                            <a href="{% url 'comment_content' content_type_id item.id %}" class="text-blue-500 hover:underline">Comment</a>
+                        </div>
+                    </div>
+                </div>
+            {% elif item|model_name == 'reel' %}
+                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden dark:bg-gray-800 dark:border-gray-700">
+                    <video class="w-full h-48 object-cover" controls>
+                        <source src="{{ item.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="p-4">
+                        <p class="mb-2 text-gray-700 dark:text-gray-400">{{ item.description }}</p>
+                        <a href="{{ item.url }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            {{ item.url }}
+                        </a>
+                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Posted by {{ item.user.username }} on {{ item.created_at|date:"F j, Y" }}</p>
+                        {% if user.is_authenticated %}
+                            <div class="flex justify-between mt-2">
+                                <a href="{% url 'chat_detail' item.user.username %}" class="text-green-500 hover:underline">Chat</a>
+                            </div>
+                        {% endif %}
+                        <div class="flex justify-between mt-3">
+                            {% get_content_type_id item as content_type_id %}
+                            <a href="{% url 'like_content' content_type_id item.id %}" class="text-blue-500 hover:underline">Like {{ item.like_count }}</a>
+                           
+                            <a href="{% url 'comment_content' content_type_id item.id %}" class="text-blue-500 hover:underline">Comment</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
+</div>
+</body>
+{% endblock %}

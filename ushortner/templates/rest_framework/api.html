@@ -1,0 +1,144 @@
+{% extends "basehome/base.html" %}
+{% load static %}
+
+{% block title %}Detection {% endblock %}
+{% block content %}
+
+{% load static %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen">
+  <div class="w-full h-screen bg-gray-100">
+  <div class="container mx-auto p-6 bg-white rounded-md">
+    <div class="flex flex-col items-center justify-center" data-aos="fade-up">
+      <h1 class="text-3xl font-bold text-center mb-6">Link Detection</h1>
+      <form id="url-form" role="form" class="w-full max-w-md">
+        {% csrf_token %}
+        <div class="flex flex-col space-y-4">
+          <div class="form-group">
+            <input type="text" name="name" class="form-control border border-gray-300 p-2 w-full rounded-md" id="name" placeholder="Enter a URL link in format http or https and should contain www" />
+          </div>
+        </div>
+        <div class="text-center mt-4 space-x-2">
+          <button id="predict" class="btn btn-danger bg-red-500 text-white py-2 px-4 rounded-md" onclick="predictURL()" type="button">Predict</button>
+          <button id="reset" class="btn btn-primary bg-blue-500 text-white py-2 px-4 rounded-md" onclick="resetPage()" type="button">Reset</button>
+        </div>
+      </form>
+      <div class="result-container mt-4 hidden">
+        <p>Prediction Result: <span id="prediction-result" class="font-semibold"></span></p>
+        <p>Probability: <span id="phishing-probability" class="font-semibold"></span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Processing Spinner in Pop-up Box -->
+  <div id="spinner-container" tabindex="-1" class="fixed inset-0 flex items-center z-50  justify-center bg-gray-500 bg-opacity-75 hidden">
+    <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
+        <div class="loader"></div>
+        <p class="text-center mt-4">Checking...Please wait</p>
+    </div>
+</div>
+
+  <!-- Error Pop-up Box -->
+  <div id="error-popup" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 hidden">
+    <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
+      <p class="text-center text-red-500 font-semibold" id="error-message">Invalid URL! Please enter a valid URL.</p>
+      <button class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md" onclick="closeErrorPopup()">Close</button>
+    </div>
+  </div>
+
+
+
+  <style>
+    .loader {
+      border: 4px solid #f3f3f3; /* Light grey */
+      border-top: 4px solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+  </style>
+
+  <script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    function predictURL() {
+      var url = document.getElementById("name").value;
+      if (url === "") {
+        //alert("Please enter a URL.");
+        document.getElementById('error-popup').classList.remove('hidden');
+      } else {
+        if (url.includes("http")) {
+          document.getElementById("predict").innerHTML = "checking...";
+          document.getElementById("spinner-container").classList.remove("hidden");
+
+          fetch("http://127.0.0.1:8000/detect/", {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+              "X-CSRFToken": csrftoken
+            },
+            body: JSON.stringify({
+              url: url,
+            }),
+          })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            document.getElementById("predict").innerHTML = "Predict";
+            document.getElementById("spinner-container").classList.add("hidden");
+
+            var predictionResult = document.getElementById("prediction-result");
+            var phishingProbability = document.getElementById("phishing-probability");
+            var resultContainer = document.querySelector(".result-container");
+
+            predictionResult.textContent = data.prediction == 0 ? "Deemed suspicious" : "Deemed non-suspicious";
+            phishingProbability.textContent = (data.probability_phishing * 100).toFixed(2) + "%";
+            resultContainer.classList.remove("hidden");
+          })
+          .catch((error) => {
+            console.error("There was a problem with the fetch operation:", error);
+            document.getElementById("spinner-container").classList.add("hidden");
+          });
+        } else {
+          //alert("URL must contain HTTP or HTTPS.");
+          document.getElementById('error-popup').classList.remove('hidden');
+        }
+      }
+    }
+
+    function resetPage() {
+      location.reload();
+      document.getElementById('name').value='';
+    }
+
+    function closeErrorPopup() {
+      document.getElementById('error-popup').classList.add('hidden');
+    }
+  </script>
+{% endblock %}

@@ -1,0 +1,161 @@
+
+{% extends 'basehome/base.html' %}
+
+{% block title %}ShortenIt - Your URL Shortener Solution{% endblock %}
+{% load static %}
+{% block content %}
+
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon"> 
+<body class="bg-gray-100 text-gray-800">
+    <div class="bg-gray-100   sm:ml-64 mt-12 overflow-y-auto max-h-screen"> 
+
+   <!-- Hero Section -->
+    <section class="bg-blue-500 text-white py-10 animate-fadeIn">
+        <div class="container mx-auto text-center animate-fadeIn">
+            <h1 class="text-4xl font-bold mb-4">Shorten Your URLs with Ease</h1>
+            <p class="text-lg mb-8">Make your links more manageable and track their performance.</p>
+            <a href="/signup" class="bg-white text-blue-500 px-8 py-3 rounded-md font-semibold hover:bg-gray-200">Get Started for Free</a>
+        </div>
+    </section>
+
+    <!-- Importance of URL Shorteners -->
+    <section id="about" class="py-20">
+        <div class="container mx-auto px-4  ">
+            <h2 class="text-3xl font-bold mb-6 text-center">Why Use a URL Shortener?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Simplify Your Links</h3>
+                    <p class="mb-4">Long URLs can be cumbersome and difficult to manage. Shortened URLs are more user-friendly and easier to share.</p>
+                    <h3 class="text-xl font-semibold mb-2">Improve Click-Through Rates</h3>
+                    <p class="mb-4">Short URLs are more appealing and can improve click-through rates by making links look cleaner and more trustworthy.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Track Performance</h3>
+                    <p class="mb-4">Gain insights into how your links are performing with detailed analytics and click tracking.</p>
+                    <h3 class="text-xl font-semibold mb-2">Boost Your Marketing</h3>
+                    <p class="mb-4">Enhance your marketing campaigns by using custom short URLs that match your brand and message.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="bg-gray-200 py-20 animate-slideIn">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-6 text-center">Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="text-center">
+                    <h3 class="text-xl font-semibold mb-2">Custom Short URLs</h3>
+                    <p>Personalize your short URLs to make them more memorable and aligned with your brand.</p>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-xl font-semibold mb-2">Detailed Analytics</h3>
+                    <p>Track the performance of your links with comprehensive analytics and reports.</p>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-xl font-semibold mb-2">Link Management</h3>
+                    <p>Manage all your links in one place with an easy-to-use dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 animate-slideIn">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-6 text-center">What Our Users Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="text-center">
+                    <p class="italic">"ShortenIt has made managing my links so much easier. The analytics are incredibly useful!"</p>
+                    <p class="mt-4 font-semibold">- John Doe, Marketer</p>
+                </div>
+                <div class="text-center">
+                    <p class="italic">"I love the custom short URLs feature. It helps keep my brand consistent."</p>
+                    <p class="mt-4 font-semibold">- Jane Smith, Blogger</p>
+                </div>
+                <div class="text-center">
+                    <p class="italic">"The best URL shortener I’ve used. Highly recommend it to anyone needing to shorten links."</p>
+                    <p class="mt-4 font-semibold">- Bob Johnson, Developer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="bg-blue-500 text-white py-10">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6">Ready to Shorten Your URLs?</h2>
+            <p class="text-lg mb-8">Sign up today and start managing your links more effectively.</p>
+            <a href="/signup" class="bg-white text-blue-500 px-8 py-3 rounded-md font-semibold hover:bg-gray-200">Get Started for Free</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 QuicCut. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <a href="{% url 'service' %}" class="hover:text-white">Features</a>
+                <a href="{% url 'about' %}" class="hover:text-white">About</a>
+                <a href="#testimonials" class="hover:text-white">Testimonials</a>
+                <a href="{% url 'contact' %}" class="hover:text-white">Contact</a>
+            </div>
+        </div>
+    </footer>
+    <br>
+<br>
+</div>
+<br>
+<br>
+</body>
+
+
+<style>
+    body {
+      overflow: hidden; /* Prevents scrolling of the entire body */
+    }
+  @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+  }
+  
+  @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+  }
+  
+  .animate-fadeIn {
+      animation: fadeIn 1.5s ease-in-out;
+  }
+  
+  .animate-slideIn {
+      animation: slideIn 1s ease-in-out;
+  }
+  
+  .hover\:animate-pulse:hover {
+      animation: pulse 1s infinite;
+  }
+  
+  @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+  }
+  
+  @keyframes bgChange {
+    0% { background-image: url('{% static 'images/bg1.jpeg' %}'); }
+    25% { background-image: url('{% static 'images/bg2.jpg' %}'); }
+    50% { background-image: url('{% static 'images/bg3.jpg' %}'); }
+    75% { background-image: url('{% static 'images/bg4.webp' %}'); }
+    100% { background-image: url('{% static 'images/bg1.jpeg' %}'); }
+  }
+  
+  .animate-bgChange {
+    animation: bgChange 20s infinite; /* Adjust the duration for smoother transitions */
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    opacity: 0.6; /* Adjust the opacity to your preference */
+  }
+  </style>
+
+{% endblock %}

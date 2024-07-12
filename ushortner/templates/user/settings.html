@@ -1,0 +1,50 @@
+{% extends 'basehome/base.html' %}
+
+{% block title %}Settings {% endblock %}
+
+{% block content %}
+
+{% load static %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+<body class="overflow-hidden">
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen">
+  <div class="w-full h-screen bg-gray-100">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-4">Settings</h1>
+
+        {% if errors %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
+                <input type="text" id="username" name="username" value="{{ request.user.username }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="mb-4">
+                <label for="password1" class="block text-gray-700 text-sm font-bold mb-2">New Password</label>
+                <input type="password" id="password1" name="password1" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="mb-4">
+                <label for="password2" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
+                <input type="password" id="password2" name="password2" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+
+{% endblock %}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+    
+</head>
+{% load static %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+
+<body class="bg-gray-100 text-gray-900">
+
+<div class="container mx-auto p-8">
+    <h1 class="text-3xl font-bold mb-4">API Documentation</h1>
+
+    <!-- Ads Creation API -->
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-2">Ads Creation API</h2>
+        <ul class="list-disc pl-5">
+            <li><code>path('', views.content_list, name='content_list')</code></li>
+            <li><code>path('my-content/', views.my_content, name='my_content')</code></li>
+            <li><code>path('search/', views.search, name='search')</code></li>
+            <li><code>path('create/<str:content_type>/', views.content_create, name='content_create')</code></li>
+            <li><code>path('like/<int:content_type_id>/<int:object_id>/', views.like_content, name='like_content')</code></li>
+            <li><code>path('comment/<int:content_type_id>/<int:object_id>/', views.comment_content, name='comment_content')</code></li>
+            <li><code>path('<str:content_type>/<int:content_id>/', views.content_detail, name='content_detail')</code></li>
+            <li><code>path('update/<str:content_type>/<int:content_id>/', views.update_content, name='update_content')</code></li>
+            <li><code>path('delete/<str:content_type>/<int:content_id>/', views.delete_content, name='delete_content')</code></li>
+        </ul>
+    </section>
+
+    <!-- Business Card Creation API -->
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-2">Business Card Creation API</h2>
+        <ul class="list-disc pl-5">
+            <li><code>path('create/', views.create_business_card, name='create_business_card')</code></li>
+            <li><code>path('business-cards/', views.business_card_list, name='business_card_list')</code></li>
+            <li><code>path('business-cards/<int:pk>/', views.business_card_detail, name='business_card_detail')</code></li>
+            <li><code>path('business-cards/update/<int:pk>/', views.business_card_update, name='business_card_update')</code></li>
+            <li><code>path('business-cards/delete/<int:pk>/', views.business_card_delete, name='business_card_delete')</code></li>
+            <li><code>path('<int:business_card_id>/render/', views.render_business_card, name='render_business_card')</code></li>
+        </ul>
+    </section>
+
+    <!-- Chat API -->
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-2">Chat API</h2>
+        <ul class="list-disc pl-5">
+            <li><code>path('', views.chat_list, name='chat_list')</code></li>
+            <li><code>path('<str:username>/', views.chat_detail, name='chat_detail')</code></li>
+            <li><code>path('delete_chat/<int:user_id>/', views.delete_chat, name='delete_chat')</code></li>
+        </ul>
+    </section>
+
+    <!-- Link Prediction API -->
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-2">Link Prediction API</h2>
+        <ul class="list-disc pl-5">
+            <li><code>path('', views.predict, name='predict')</code></li>
+        </ul>
+    </section>
+
+    <!-- Landing Page API -->
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-2">Landing Page API</h2>
+        <ul class="list-disc pl-5">
+            <li><code>path('create/', create_landing_page_view, name='create_landing_page')</code></li>
+            <li><code>path('my-pages/', user_landing_pages_view, name='user_landing_pages')</code></li>
+            <li><code>path('<slug:slug>/', landing_page_view, name='landing_page')</code></li>
+            <li><code>path('landing/<slug:slug>/', landing_page_detail, name='landing_page_detail')</code></li>
+            <li><code>path('my-pages/update/<slug:slug>/', update_landing_page_view, name='update_landing_page')</code></li>
+            <li><code>path('my-pages/delete/<slug:slug>/', delete_landing_page_view, name='delete_landing_page')</code></li>
+        </ul>
+    </section>
+
+    <!-- User and Analytics API -->
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-2">User and Analytics API</h2>
+        <ul class="list-disc pl-5">
+            <li><code>path('signup/', signup_view, name='signup')</code></li>
+            <li><code>path('login/', login_view, name='login')</code></li>
+            <li><code>path('logout/', logout_view, name='logout')</code></li>
+            <li><code>path('userdashboard/', user_dashboard, name='userdashboard')</code></li>
+            <li><code>path('analytics/', analytics_view, name='analytics_view')</code></li>
+            <li><code>path('customize/', customize_short_url_view, name='customize_short_url')</code></li>
+            <li><code>path('generate_qr_code/', generate_qr_code_view, name='generate_qr_code')</code></li>
+            <li><code>path('chat/', include('chat.urls'))</code></li>
+            <li><code>path('links/', user_links, name='user_links')</code></li>
+            <li><code>path('advertisements/', include('advertisements.urls'))</code></li>
+            <li><code>path('business_card/', include('business_card.urls'))</code></li>
+            <li><code>path('detect/', include('detect.urls'))</code></li>
+            <li><code>path('landing/', include('landing_pages.urls'))</code></li>
+            <li><code>path('<short_code>/', redirect_view, name='redirect_view')</code></li>
+            <li><code>path('details/<short_code>/', url_details_view, name='url_details_view')</code></li>
+            <li><code>path('<str:short_code>/delete/', delete_short_url, name='delete_short_url')</code></li>
+        </ul>
+    </section>
+
+</div>
+
+</body>
+</html>

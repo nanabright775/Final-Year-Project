@@ -1,0 +1,146 @@
+{% extends 'basehome/base.html' %}
+{% block title %}creat a link {% endblock %}
+{% load static %}
+{% block content %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12  overflow-y-auto max-h-screen">
+  {% comment %} <div> {% endcomment %}
+    <div class="w-full h-screen bg-gray-100">
+
+<h1 class="text-center text-4xl font-bold text-gray-900 mb-8">Shorten Your URL</h1>
+<form method="post" class="flex mx-20">
+    {% csrf_token %}
+    <input type="text" name="url" placeholder="Enter URL here" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required>
+    <button type="submit" class="inline-flex items-center py-2.5 px-6 ms-3 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Shorten
+    </button>
+</form>
+<br>
+{% if short_code %}
+<div class="relative bg-white shadow-md rounded-lg  flex items-center space-x-6">
+
+  <div class="flex items-center space-x-4">
+      {% if qr_code %}
+      <div>
+          <img src="data:image/jpeg;base64,{{ qr_code|safe }}" alt="QR Code" class="w-48 h-48 border-gray-300 p-2 rounded-lg">
+        
+      </div>
+    </div>
+      {% endif %}
+     
+      <div class="mt-4">
+          <p>Your shortened URL is:</p>
+          <a href="{{ short_code }}" class="mb-2 text-2xl font-semibold tracking-tight text-blue-700 dark:text-white">
+              {{ short_code }}
+          </a>
+        
+          <p class="mb-3 mt-2 font-normal text-gray-500 dark:text-gray-400">{{ original_url }}</p>
+         
+
+          <div class="hidden md:flex flex-wrap space-x-2  mt-4">
+              <div class="m-5 rtl:ml-0 inline-flex  space-x-2 rounded-md " role="group">
+                
+              <a href="data:image/jpeg;base64,{{ qr_coded|safe }}" download="qr_code.jpg">
+                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Download QR Code</button>
+            </a>
+               
+                  <button id="menu-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700   dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                    Share
+                    <svg class="w-4 h-4 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5.2 7.85a2.81 2.81 0 1 1 2.8-2.81c0 .1 0 .21-.02.31L14.23 7a2.79 2.79 0 1 1 0 5.04l-6.25 2.26a2.86 2.86 0 1 1-.58-1.6L13.5 9.44a2.8 2.8 0 0 1 0-1.3L6.72 5.93c0 .1.02.21.02.31 0 .14-.02.28-.05.41zM5.2 3.29a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5zm9.6 8.21a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5zm-9.6 4.9a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5z" clip-rule="evenodd"/>
+                    </svg>
+                  </button>
+                  <div id="menu-dropdown" class="hidden absolute  mt-2 w-48 py-2 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+                    <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Share to WhatsApp</button>
+                    <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Share to Facebook</button>
+                    <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Share to Twitter</button>
+                    <a href="{% url 'content_create' 'campaign' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Advertise</a>
+                    <a href="{% url 'content_create' 'reel' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">VidAD</a>
+                   
+                  </div>
+
+                  <button onclick="copyToClipboard('http://127.0.0.1:8000/{{ short_url.short_code }}')" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700   dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                   Copy
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 5h6m-6 4h6M10 3v4h4V3h-4Z"/>
+                    </svg>
+                </button>
+
+              </div>
+          </div>
+          
+      </div>
+
+
+<div class="block md:hidden mt-4 ml-12 mr-4">
+    <div class="relative inline-block">
+      <button id="menu-button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+        Share
+        <svg class="w-4 h-4 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5.2 7.85a2.81 2.81 0 1 1 2.8-2.81c0 .1 0 .21-.02.31L14.23 7a2.79 2.79 0 1 1 0 5.04l-6.25 2.26a2.86 2.86 0 1 1-.58-1.6L13.5 9.44a2.8 2.8 0 0 1 0-1.3L6.72 5.93c0 .1.02.21.02.31 0 .14-.02.28-.05.41zM5.2 3.29a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5zm9.6 8.21a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5zm-9.6 4.9a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5z" clip-rule="evenodd"/>
+        </svg>
+      </button>
+      <div id="menu-dropdown" class="hidden absolute right-0 mt-2 w-48 py-2 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+        <button onclick="shareToWhatsApp('http://127.0.0.1:8000/{{ short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Share to WhatsApp</button>
+        <button onclick="shareToFacebook('http://127.0.0.1:8000/{{ short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Share to Facebook</button>
+        <button onclick="shareToTwitter('http://127.0.0.1:8000/{{ short_code }}')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Share to Twitter</button>
+        <a href="{% url 'content_create' 'campaign' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Advertise</a>
+        <a href="{% url 'content_create' 'reel' %}?short_url=http://127.0.0.1:8000/{{ short_url.short_code }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">VidAD</a>
+       
+      </div>
+    </div>
+  </div> 
+
+</div>
+
+{% endif %}
+
+
+  <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mt-8">
+    <p>Check out your analytics for the URLs</p>
+    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest platform for url shortning technology acquisitions of 2024 so far, Check you statiscal data of your links .</p>  
+    <a href="{% url 'analytics_view' %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Analytics
+      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+      </svg>
+  </a>
+  </div>
+    
+  <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mt-8 ">
+  <h2>Customize Your Short URL</h2>
+  <p>Want to create a custom short URL? <a href="{% url 'customize_short_url' %}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+    Click here to customize your short URL</a></p>
+  <p>Want to only have a QR CODE for a link <a href="{% url 'generate_qr_code' %}">Generate QR Code</a></p>
+  
+  <a href="{% url 'content_create' 'campaign' %}" class="inline-flex font-medium items-center text-blue-600 hover:underline">
+    Create a New Campaign
+    <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
+    </svg>
+  </a>
+
+  <a href="{% url 'my_content' %}">My Campaigns</a>
+</div>
+
+</div>
+<script src="{% static 'scripts.js' %}" defer></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var menuButton = document.getElementById('menu-button');
+    var menuDropdown = document.getElementById('menu-dropdown');
+
+    menuButton.addEventListener('click', function() {
+      menuDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', function(event) {
+      if (!menuButton.contains(event.target) && !menuDropdown.contains(event.target)) {
+        menuDropdown.classList.add('hidden');
+      }
+    });
+  });
+</script>
+{% endblock content %}

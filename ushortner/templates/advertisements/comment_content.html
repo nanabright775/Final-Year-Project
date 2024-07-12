@@ -1,0 +1,39 @@
+{% extends 'basehome/base.html' %}
+{% load custom_tags %}
+{% block title %}Comments{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+
+<body class="overflow-hidden">
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen"> 
+    <div class="w-full h-screen bg-gray-100">
+
+    <h1 class="text-center text-4xl font-bold text-gray-900 mb-8">Comments</h1>
+    <div class="max-w-lg mx-auto bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden dark:bg-gray-800 dark:border-gray-700">
+        <div class="p-4">
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ content_object.description }}</p>
+            {% for comment in comments %}
+                <div class="mb-2 p-2 border-b border-gray-200 dark:border-gray-700">
+                    <p class="text-gray-700 dark:text-gray-400"><strong>{{ comment.user.username }}:</strong> {{ comment.text }}</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Posted on {{ comment.created_at|date:"F j, Y" }}</p>
+                </div>
+            {% endfor %}
+            {% if user.is_authenticated %}
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="mt-4 px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Comment</button>
+                </form>
+            {% else %}
+                <p class="text-sm text-gray-500 dark:text-gray-400">You must be logged in to comment.</p>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
+</div>
+</body>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'basehome/base.html' %}
+
+{% block title %}Analytics {% endblock %}
+
+{% block content %}
+
+{% load static %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+<body class="overflow-hidden">
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen">
+  <div class="w-full h-screen bg-gray-100">
+  <h1 class="text-3xl font-bold mb-6">Analytics for {{ username }}</h1>
+  <form method="get" class="mb-6 flex flex-wrap items-center space-x-4">
+    <div class="mb-4">
+      <div class="flex">
+      <p class="block text-sm font-medium text-gray-700 mr-2">range </p>
+
+      <label for="start_date" class="block text-sm font-medium text-gray-700"> Start Date:</label>
+    </div>
+      <input type="date" name="start_date" id="start_date" value="{{ request.GET.start_date }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+    
+    </div>
+    <div class="mb-4">
+      <label for="end_date" class="block text-sm font-medium text-gray-700">End Date:</label>
+      <input type="date" name="end_date" id="end_date" value="{{ request.GET.end_date }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+    </div>
+    <div class="mb-4">
+      <label for="sort_by" class="block text-sm font-medium text-gray-700">Sort By:</label>
+      <select name="sort_by" id="sort_by" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        <option value="">Latest</option>
+        <option value="clicks" {% if request.GET.sort_by == 'clicks' %}selected{% endif %}>Clicks</option>
+      </select>
+    </div>
+    <div class="mb-4">
+      <label for="search" class="block text-sm font-medium text-gray-700">Search:</label>
+      <input type="text" name="search" id="search" value="{{ request.GET.search }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Search by URL or shortcode">
+    </div>
+    <div class="mb-4">
+      <button type="submit" class="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        Filter by clicks
+      </button>
+    </div>
+  </form>
+
+  <div class="overflow-x-auto overflow-y-auto max-h-80">
+    <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">URL</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clicks</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        {% for short_url, click_count in url_clicks.items %}
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <a href="{% url 'redirect_view' short_code=short_url.short_code %}" class="text-blue-600 hover:text-blue-800">http://127.0.0.1:8000/{{ short_url.short_code }}</a>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ click_count }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ short_url.date_created }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <a href="{% url 'url_details_view' short_code=short_url.short_code %}" class="text-indigo-600 hover:text-indigo-900">View Details</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <br>
+  <br>
+</div>
+</div>
+</body>
+{% endblock %}

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ landing_page.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 2s ease-in-out;
+        }
+        .layout1 { @apply flex flex-col items-center justify-center min-h-screen p-4; }
+        .layout2 { @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4; }
+        .layout3 { @apply flex flex-wrap items-start justify-start min-h-screen p-4; }
+        .theme1 { @apply bg-blue-50 text-blue-900; }
+        .theme2 { @apply bg-green-50 text-green-900; }
+        .theme3 { @apply bg-red-50 text-red-900; }
+    </style>
+</head>
+
+{% load static %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+<body class="bg-white rounded-lg {% if landing_page.background_image %} bg-cover bg-center{% endif %}"
+{% if landing_page.background_image %}
+    style="background-image: url('{{ landing_page.background_image.url }}');"
+{% elif landing_page.background_color %}
+    style="background-color: {{ landing_page.background_color }};"
+{% endif %}>
+    <div >
+        {% if landing_page.welMessage %}
+            <h1 class="p-4 text-4xl font-bold text-center fade-in">{{ landing_page.welMessage }}</h1>
+        {% else %}
+            <h1 class="p-4 text-4xl font-bold text-center fade-in">Hi there welcome to this Page!</h1>
+        {% endif %}
+        {% if landing_page.profile_image %}
+            <img src="{{ landing_page.profile_image.url }}" alt="{{ landing_page.name }}" class="mt-4 w-32 h-32 rounded-full mx-auto border-4 border-gray-200">
+        {% endif %}
+        <h1 class="text-4xl font-bold mt-4 text-center">{{ landing_page.title }}</h1>
+        <p class="mt-2 text-lg text-center">{{ landing_page.description }}</p>
+      
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% if landing_page.additional_image_1 %}
+                <div class="card rounded-lg p-4">
+                    <img src="{{ landing_page.additional_image_1.url }}" alt="Additional Image 1" class="w-full h-64 object-cover">
+                </div>
+            {% endif %}
+            {% if landing_page.additional_image_2 %}
+                <div class="card rounded-lg p-4">
+                    <img src="{{ landing_page.additional_image_2.url }}" alt="Additional Image 2" class="w-full h-64 object-cover">
+                </div>
+            {% endif %}
+            {% if landing_page.additional_image_3 %}
+                <div class="card rounded-lg p-4">
+                    <img src="{{ landing_page.additional_image_3.url }}" alt="Additional Image 3" class="w-full h-64 object-cover">
+                </div>
+            {% endif %}
+            {% if landing_page.video %}
+                <div class="card rounded-lg text-center p-4">
+                    <video controls class="w-full h-64 object-cover rounded-lg">
+                        <source src="{{ landing_page.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            {% endif %}
+        </div>
+
+       
+    </div>
+
+
+
+
+
+
+    <div id="share-button" class="fixed top-4 right-4 ">
+        <button class="bg-blue-500 text-white p-2 rounded-full shadow-md">
+            Share
+        </button>
+    </div>
+
+    <div id="share-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-xl font-bold mb-4">Share this page</h2>
+            <div class="flex flex-col justify-around mb-4">
+
+                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}" class="text-blue-400 flex items-center space-x-2 mb-4 mr-24"> 
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557a9.834 9.834 0 0 1-2.828.775 4.93 4.93 0 0 0 2.165-2.723 9.86 9.86 0 0 1-3.127 1.195A4.916 4.916 0 0 0 16.616 3c-2.728 0-4.94 2.213-4.94 4.943 0 .388.045.765.127 1.127C7.691 8.827 4.066 6.865 1.64 3.93a4.935 4.935 0 0 0-.667 2.481 4.92 4.92 0 0 0 2.188 4.107 4.904 4.904 0 0 1-2.228-.615v.061c0 2.312 1.64 4.242 3.816 4.683a4.935 4.935 0 0 1-2.224.084 4.927 4.927 0 0 0 4.6 3.417 9.865 9.865 0 0 1-6.102 2.103c-.397 0-.788-.023-1.175-.067A13.94 13.94 0 0 0 7.548 21c9.142 0 14.307-7.584 14.307-14.173 0-.215-.005-.429-.014-.643A10.12 10.12 0 0 0 24 4.557z"/></svg>
+                 <span>Share on X (formally twitter)</span>
+                </a>
+
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="text-blue-600 flex items-center space-x-2 mb-4">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.406.593 24 1.325 24H12.82V14.706h-3.29V11.29h3.29V8.412c0-3.261 1.994-5.042 4.905-5.042 1.39 0 2.584.103 2.93.149v3.398h-2.015c-1.578 0-1.883.75-1.883 1.847v2.417h3.766l-.491 3.416h-3.275V24h6.419c.729 0 1.323-.593 1.323-1.325V1.325C24 .593 23.406 0 22.675 0z"/></svg>
+                <span>share on Facebook</span>
+                </a>
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}" class="text-blue-700 flex items-center space-x-2 mb-4">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.23 0H1.77C.79 0 0 .774 0 1.727v20.545C0 23.226.79 24 1.77 24h20.46c.98 0 1.77-.774 1.77-1.727V1.727C24 .774 23.21 0 22.23 0zM7.08 20.452H3.56V9.045h3.52v11.407zm-1.76-13.025c-1.12 0-2.02-.897-2.02-2.005a2.022 2.022 0 0 1 4.04 0c0 1.108-.9 2.005-2.02 2.005zm15.1 13.025h-3.52v-5.478c0-1.305-.027-2.984-1.82-2.984-1.82 0-2.1 1.428-2.1 2.896v5.566h-3.52V9.045h3.38v1.557h.05c.47-.897 1.61-1.84 3.32-1.84 3.55 0 4.2 2.34 4.2 5.377v6.313z"/></svg>
+                <span>Share on LinkDin  </span>
+                </a>
+                <a href="mailto:?subject=Check%20out%20this%20page&body={{ request.build_absolute_uri }}" class="text-gray-600 flex items-center space-x-2mb-4">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <span>Share via Email</span>
+                </a>
+                <button id="copy-url-button" class="border border-blue-500 py-2 px-4 text-green-600 flex items-center space-x-2 mb-4 mt-4">
+                    <p class="text-black">
+                        {{ request.build_absolute_uri }}
+                    </p>
+                    <svg class="w-6 h-6 ml-2" fill="currentColor" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm2 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h10v14zm-4-5h-2v2h2v-2zm0-8h-2v6h2V8z"/></svg>
+                    <span>Copy</span>
+                </button>
+            </div>
+            <button id="close-share-modal" class="top-2  bg-gray-500 text-white p-2 rounded-lg">Close</button>
+        </div>
+    </div>
+
+    
+
+
+
+    <script>
+        document.getElementById("share-button").addEventListener("click", function() {
+            document.getElementById("share-modal").classList.remove("hidden");
+        });
+
+        document.getElementById("close-share-modal").addEventListener("click", function() {
+            document.getElementById("share-modal").classList.add("hidden");
+        });
+
+        document.getElementById("copy-url-button").addEventListener("click", function() {
+            const url = "{{ request.build_absolute_uri }}";
+            navigator.clipboard.writeText(url).then(function() {
+                alert("URL copied to clipboard");
+            }, function() {
+                alert("Failed to copy URL");
+            });
+        });
+    </script>
+
+
+    <footer class="bg-gray-800 text-gray-400 py-8 ">
+        <div class=" mx-auto  text-center">
+            <div class="mt-4 flex justify-center space-x-4">
+                <p>Follow me</p>
+                {% if landing_page.facebook_url %}
+                    <a href="{{ landing_page.facebook_url }}" class="text-blue-600 hover:underline">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.406.593 24 1.325 24H12.82V14.706h-3.29V11.29h3.29V8.412c0-3.261 1.994-5.042 4.905-5.042 1.39 0 2.584.103 2.93.149v3.398h-2.015c-1.578 0-1.883.75-1.883 1.847v2.417h3.766l-.491 3.416h-3.275V24h6.419c.729 0 1.323-.593 1.323-1.325V1.325C24 .593 23.406 0 22.675 0z"/></svg>
+                    </a>
+                {% endif %}
+                {% if landing_page.twitter_url %}
+                    <a href="{{ landing_page.twitter_url }}" class="text-blue-400 hover:underline">
+                        <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M13.795 10.533 20.68 2h-3.073l-5.255 6.517L7.69 2H1l7.806 10.91L1.47 22h3.074l5.705-7.07L15.31 22H22l-8.205-11.467Zm-2.38 2.95L9.97 11.464 4.36 3.627h2.31l4.528 6.317 1.443 2.02 6.018 8.409h-2.31l-4.934-6.89Z"/>
+                          </svg>
+                    </a>
+                {% endif %}
+                {% if landing_page.instagram_url %}
+                    <a href="{{ landing_page.instagram_url }}" class="text-pink-600 hover:underline">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.336 3.608 1.31.975.975 1.248 2.243 1.31 3.608.058 1.266.07 1.645.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.336 2.633-1.31 3.608-.975.975-2.243 1.248-3.608 1.31-1.266.058-1.645.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.336-3.608-1.31-.975-.975-1.248-2.243-1.31-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.336-2.633 1.31-3.608.975-.975 2.243-1.248 3.608-1.31C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.015 7.052.07 5.782.125 4.659.372 3.678 1.352 2.698 2.332 2.451 3.455 2.396 4.726.34 4.847.326 5.741.326 12c0 6.259.015 7.153.07 7.274.055 1.271.302 2.394 1.282 3.374.981.98 2.104 1.227 3.374 1.282 1.121.055 1.962.07 7.274.07 6.259 0 7.153-.015 7.274-.07 1.271-.055 2.394-.302 3.374-1.282.98-.98 1.227-2.104 1.282-3.374.055-1.121.07-1.962.07-7.274 0-6.259-.015-7.153-.07-7.274-.055-1.271-.302-2.394-1.282-3.374-.98-.98-2.104-1.227-3.374-1.282-1.121-.055-1.962-.07-7.274-.07zM12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 1 0-2.88 1.44 1.44 0 0 1 0 2.88z"/></svg>
+                    </a>
+                {% endif %}
+                {% if landing_page.linkedin_url %}
+                    <a href="{{ landing_page.linkedin_url }}" class="text-blue-700 hover:underline">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.23 0H1.77C.79 0 0 .774 0 1.727v20.545C0 23.226.79 24 1.77 24h20.46c.98 0 1.77-.774 1.77-1.727V1.727C24 .774 23.21 0 22.23 0zM7.08 20.452H3.56V9.045h3.52v11.407zm-1.76-13.025c-1.12 0-2.02-.897-2.02-2.005a2.022 2.022 0 0 1 4.04 0c0 1.108-.9 2.005-2.02 2.005zm15.1 13.025h-3.52v-5.478c0-1.305-.027-2.984-1.82-2.984-1.82 0-2.1 1.428-2.1 2.896v5.566h-3.52V9.045h3.38v1.557h.05c.47-.897 1.61-1.84 3.32-1.84 3.55 0 4.2 2.34 4.2 5.377v6.313z"/></svg>
+                    </a>
+                {% endif %}
+            </div>
+          
+            <div class="flex justify-center space-x-4 mt-4">
+                {% if landing_page.name%}
+               <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12h4m-2 2v-4M4 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                </svg>
+
+                <a href="#" class="hover:text-white">{{ landing_page.name }}</a>
+                {% endif %}
+                {% if landing_page %}
+                <a href="#" class="hover:text-white">{{ landing_page.contact }}</a>
+            {% endif %}
+                
+
+              
+                
+            {% if landing_page.location%}
+                <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
+                </svg>
+                  
+                <a href="#" class="hover:text-white">{{ landing_page.location }}</a>
+                    
+            {% endif %}
+            {% if landing_page.bussiness_name%}
+                <a href="#" class="hover:text-white">{{ landing_page.bussiness_name }}</a>
+            {% endif %}
+               
+            </div>
+            <p>&copy; 2024 QuicCut. All rights reserved.</p>
+        </div>
+    </footer>    
+</body>
+
+</html>
+

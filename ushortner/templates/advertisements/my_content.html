@@ -1,0 +1,68 @@
+{% extends "basehome/base.html" %}
+{% block title %}My Advertisements{% endblock %}
+{% load custom_tags %}
+{% block content %}
+{% load static %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+
+<body class="overflow-hidden">
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen"> 
+    <div class="w-full h-screen bg-gray-100">
+    <h1 class="text-3xl font-bold mb-4">My Advertisements</h1>
+    <form method="get" action="{% url 'search' %}">
+        <input type="text" name="q" placeholder="Search..." class="border rounded py-2 px-3 text-grey-darkest" />
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Search
+        </button>
+    </form>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        {% for item in content %}
+            <div class="max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                {% if item|model_name == 'campaign' %}
+                    <img class="w-full h-64 object-cover" src="{{ item.image.url }}" alt="Campaign Image">
+                    <div class="p-4">
+                        <p class="mb-2 text-gray-700 dark:text-gray-400">{{ item.description }}</p>
+                        <p class="mb-2 text-gray-700 dark:text-gray-400">
+                            <a href="{{ item.url }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            {{ item.url }}
+                            </a>
+                        </p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Posted by {{ item.user.username }} on {{ item.created_at }}</p>
+                        {% if user.is_authenticated %}
+                        <div class="flex justify-between mt-2">
+                            <a href="{% url 'update_content' 'campaign' item.id %}" class="text-green-500 hover:underline">Edit</a>
+                            <a href="{% url 'delete_content' 'campaign' item.id %}" class="text-red-500 hover:underline">Delete</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                {% elif item|model_name == 'reel' %}
+                    <video class="w-full h-64 object-cover" controls>
+                        <source src="{{ item.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="p-4">
+                        <p class="mb-2 text-gray-700 dark:text-gray-400">{{ item.description }}</p>
+                        <p class="mb-2 text-gray-700 dark:text-gray-400">
+                            <a href="{{ item.url }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            {{ item.url }}
+                            </a>
+                        </p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Posted by {{ item.user.username }} on {{ item.created_at }}</p>
+                        {% if user.is_authenticated %}
+                        <div class="flex justify-between mt-2">
+                            <a href="{% url 'update_content' 'reel' item.id %}" class="text-green-500 hover:underline">Edit</a>
+                            <a href="{% url 'delete_content' 'reel' item.id %}" class="text-red-500 hover:underline">Delete</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
+</div>
+</body>
+{% endblock %}

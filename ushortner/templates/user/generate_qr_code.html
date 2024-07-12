@@ -1,0 +1,42 @@
+{% extends 'basehome/base.html' %}
+{% block title %}generate_qr_code {% endblock %}
+
+{% block content %}
+
+{% load static %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen">
+  <div class="w-full h-screen bg-gray-100">
+  <h1 class="text-center text-3xl font-bold text-gray-900 mb-8">Generate QR Code for URL</h1>
+
+<form method="post" class="space-y-6 ml-10">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class=" py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+    Generate QR Code
+  </button>
+</form>
+
+{% if qr_code %}
+<div class="ml-10 mb-8">
+  <br>
+  <img src="data:image/jpeg;base64,{{ qr_code }}" alt="QR Code" class="border-gray-300 p-2 rounded-lg shadow-md">
+  <a href="data:image/jpeg;base64,{{ qr_code|safe }}" download="qr_code.jpg">
+    <br>
+    <button class="inline-flex px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Download QR Code
+        <svg class="w-6 h-6 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+          <path fill-rule="evenodd" d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule="evenodd"/>
+          <path fill-rule="evenodd" d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd"/>
+        </svg>
+                         
+    </button>
+</a>
+</div>
+
+</div>
+</div>
+{% endif %}
+
+{% endblock %}

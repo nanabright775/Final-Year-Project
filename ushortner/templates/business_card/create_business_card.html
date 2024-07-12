@@ -1,0 +1,80 @@
+
+
+{% extends "basehome/base.html" %}
+{% block title %}Business Card {% endblock %}
+{% block content %}
+
+{% load static %}
+<link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
+<body class="overflow-hidden">
+<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen"> 
+    <div class="w-full h-screen bg-gray-100">
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-4">Create Business Card</h1>
+        <form method="post" enctype="multipart/form-data" class="bg-gray p-6 rounded-lg">
+            {% csrf_token %}
+            <div class="mb-4">
+                {{ form.template.label_tag }}<br>
+                {{ form.template }}
+            </div>
+            <div class="mb-4">
+                {{ form.custom_template_image.label_tag }}<br>
+                {{ form.custom_template_image }}
+            </div>
+            <div class="mb-4">
+                {{ form.name.label_tag }}<br>
+                {{ form.name }}
+            </div>
+            <div class="mb-4">
+                {{ form.company_name.label_tag }}<br>
+                {{ form.company_name }}
+            </div>
+            <div class="mb-4">
+                {{ form.email.label_tag }}<br>
+                {{ form.email }}
+            </div>
+            <div class="mb-4">
+                {{ form.phone_number.label_tag }}<br>
+                {{ form.phone_number }}
+            </div>
+            <div class="mb-4">
+                {{ form.linkedin.label_tag }}<br>
+                {{ form.linkedin }}
+            </div>
+            <div class="mb-4">
+                {{ form.twitter.label_tag }}<br>
+                {{ form.twitter }}
+            </div>
+            <div class="mb-4">
+                {{ form.facebook.label_tag }}<br>
+                {{ form.facebook }}
+            </div>
+            <div class="mb-4">
+                {{ form.instagram.label_tag }}<br>
+                {{ form.instagram }}
+            </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Create Business Card</button>
+        </form>
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold mb-2">Available Templates</h2>
+            <div class="grid grid-cols-3 gap-4">
+                {% for template in templates %}
+                    <div class="border rounded-lg overflow-hidden shadow-lg">
+                        <div class="h-48 overflow-hidden">
+                            <img src="{{ template.image.url }}" alt="{{ template.name }}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-4">
+                            <p class="text-center font-bold">{{ template.name }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
+</div>
+</body>
+{% endblock %}
