@@ -40,8 +40,8 @@
 
           <div class="hidden md:flex flex-wrap space-x-2  mt-4">
               <div class="m-5 rtl:ml-0 inline-flex  space-x-2 rounded-md " role="group">
-                
-              <a href="data:image/jpeg;base64,{{ qr_coded|safe }}" download="qr_code.jpg">
+                <a href="data:image/jpeg;base64,{{ qr_code|safe }}" download="qr_code.jpg">
+
                 <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Download QR Code</button>
             </a>
                
@@ -60,12 +60,12 @@
                    
                   </div>
 
-                  <button onclick="copyToClipboard('http://127.0.0.1:8000/{{ short_url.short_code }}')" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700   dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                   Copy
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 5h6m-6 4h6M10 3v4h4V3h-4Z"/>
-                    </svg>
-                </button>
+                  <button onclick="copyToClipboard('{{ short_code }}')" class="inline-flex items-center px-4 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100  dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                    Copy
+                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 5h6m-6 4h6M10 3v4h4V3h-4Z"/>
+                     </svg>
+                 </button>
 
               </div>
           </div>
