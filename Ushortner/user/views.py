@@ -355,12 +355,11 @@ def dashboard_view(request):
 
     if best_links:
         best_link, _ = best_links[0]
+        highest_clicks = best_link.short_code
         clicks = Click.objects.filter(short_url=best_link).order_by('-timestamp')
         # Aggregating click statistics for charts
-
         clicks_per_day = clicks.extra({'day': 'date(timestamp)'}).values('day').annotate(clicks=Count('id')).order_by('day')
         clicks_per_day = list(clicks_per_day)
-
 
         referrer_distribution = clicks.values('referer').annotate(count=Count('referer')).order_by('-count')
         device_distribution = clicks.values('device').annotate(count=Count('device')).order_by('-count')
@@ -386,6 +385,8 @@ def dashboard_view(request):
         'referrer_distribution': list(referrer_distribution),
         'device_distribution': list(device_distribution),
         'browser_distribution': list(browser_distribution),
+        'highest_clicks' : highest_clicks,
+        
     }
 
     return render(request, 'user/dashboard.html', context)

@@ -11,8 +11,8 @@
     <title>{% block title %}Your Website Title{% endblock %}</title>
     {% compress css %}
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     {% endcompress %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="p-0 m-0">
 
@@ -237,9 +237,6 @@
                   </a>
                </li>
                
-                 
-
-               
               {% endif %}
               
             </ul>
@@ -251,26 +248,33 @@
         <br>
       </nav>
 
-    {% block content %}
+      <div id="contentss">
+      {% block content %}
 
-    {% endblock %}
-
-    <script>
-      document.getElementById('user-menu-button').addEventListener('click', function() {
-          document.getElementById('user-dropdown').classList.toggle('hidden');
-      });
-
-  </script>
-
-  <script>
-    $(document).ready(function() {
-        $('.load-content').on('click', function(e) {
-            e.preventDefault();
-            var url = $(this).attr('href');
-            $('#content').load(url + ' #content > *');
+      {% endblock %}
+      </div>
+      <script>
+        document.getElementById('user-menu-button').addEventListener('click', function() {
+            document.getElementById('user-dropdown').classList.toggle('hidden');
         });
-    });
-</script>
+
+        $(document).ready(function() {
+            $('.ajax-link').on('click', function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: $(this).attr('href'),
+                    type: 'GET',
+                    success: function(data) {
+                        $('#contentss').html($(data).find('#contentss').html());
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error: ', status, error);
+                    }
+                });
+            });
+        });
+    </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
