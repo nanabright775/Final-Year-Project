@@ -11,6 +11,7 @@
     <title>{% block title %}Your Website Title{% endblock %}</title>
     {% compress css %}
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     {% endcompress %}
 </head>
 <body class="p-0 m-0">
@@ -37,7 +38,7 @@
                         <span class="block text-sm text-gray-900 dark:text-white">{{ user.username }}</span>
                     </div>
                     <ul class="py-2">
-                        <li><a href="{% url 'dashboard' %}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a></li>
+                        <li><a href="{% url 'dashboard' %}" class="load-content block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a></li>
                         <li><a href="{% url 'settings' %}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a></li>
                         <li><a href="{% url 'api_documentation' %}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">API Documentaion</a></li>
                         <li><a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a></li>
@@ -260,9 +261,19 @@
       });
 
   </script>
+
+  <script>
+    $(document).ready(function() {
+        $('.load-content').on('click', function(e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            $('#content').load(url + ' #content > *');
+        });
+    });
+</script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-
     
 </body>
 </html>

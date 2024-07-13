@@ -149,7 +149,48 @@
 </div>
 </div>
 </div>
+
+<!-- Loading Spinner -->
+<div id="loading-spinner" class="hidden fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-50">
+  <div class="loader">Processing...</div>
+</div>
+
+<style>
+  .loader {
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid #3498db;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    color: #3498db;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .hidden {
+    {% comment %} display: none; {% endcomment %}
+  }
+</style>
+
+
+
 </body>
+
+
 <script src="{% static 'scripts.js' %}" defer></script>
 <script>
     // JavaScript for handling dropdown menu visibility
@@ -164,8 +205,16 @@
         var dropdown = document.getElementById('menu-dropdown');
         dropdown.classList.toggle('hidden');
     });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+          const form = document.getElementById('popup-modal');
+          const loadingSpinner = document.getElementById('loading-spinner');
+      
+          form.addEventListener('submit', function () {
+            loadingSpinner.classList.remove('hidden');
+          });
+        });
 </script>
-
-
 
 {% endblock %}
