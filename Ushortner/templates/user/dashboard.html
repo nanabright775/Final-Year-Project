@@ -106,15 +106,16 @@
     var referrerLabels = referrerData.map(item => item.referer);
     var referrerCounts = referrerData.map(item => item.count);
 
-    // Data for Device Chart
-    var deviceData = {{ device_distribution|safe }};
-    var deviceLabels = deviceData.map(item => item.device);
-    var deviceCounts = deviceData.map(item => item.count);
-
+   
     // Data for Browser Chart
     var browserData = {{ browser_distribution|safe }};
     var browserLabels = browserData.map(item => item.browser);
     var browserCounts = browserData.map(item => item.count);
+    
+    // Data for Device Chart
+    var deviceData = {{ device_distribution|safe }};
+    var deviceLabels = deviceData.map(item => item.device);
+    var deviceCounts = deviceData.map(item => item.count);
 
     // Clicks Per Day Chart
     new Chart(document.getElementById('clicksPerDayChart'), {
