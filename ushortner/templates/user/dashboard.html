@@ -4,242 +4,218 @@
 {% block content %}
 
 <link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
-<body class="overflow-hidden">
-<div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen">
-  <div class="w-full h-screen bg-gray-100">
-    <div class="relative bg-white shadow-md rounded-lg p-6">
+<div id="content" class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen">
+    <div class="w-full h-screen bg-gray-100">
+        <div class="relative bg-white shadow-md rounded-lg p-6">
+            <p class="text-xl italic mb-4">{{ greeting }} {{ user.username }}</p>
+            <h1 class="text-center text-2xl font-bold mb-8">Analytics Dashboard</h1>
 
-      <p class="text-xl italic mb-4">{{ greeting }} {{ user.username }}</p>
-      <h1 class="text-center text-2xl font-bold mb-8">Analytics Dashboard</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 text-center rounded-lg shadow-md">
+                    <h2 class="text-xl font-semibold">Total Links</h2>
+                    <p class="text-3xl">{{ total_links }}</p>
+                </div>
+                <div class="bg-white text-center p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-semibold">Total Clicks</h2>
+                    <p class="text-3xl">{{ total_clicks }}</p>
+                </div>
+            </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="bg-white p-6 text-center rounded-lg shadow-md">
-          <h2 class="text-xl font-semibold">Total Links</h2>
-          <p class="text-3xl">{{ total_links }}</p>
+            <div class="mt-6">
+                <h2 class="text-xl font-semibold mb-4">Top Performing Links</h2>
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Short URL</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clicks</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for link, click_count in best_links %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <a href="{{ link.get_absolute_url }}" class="text-blue-600 hover:text-blue-800">{{ link.short_code }}</a>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ click_count }} clicks</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if best_link %}
+            <div class="mt-6">
+                <h2 class="text-xl font-semibold mb-4">Details for Top Link: {{ best_link.short_code }}</h2>
+                <div class="overflow-y-auto max-h-80">
+                    <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm mb-6">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referer</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Browser</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for click in clicks %}
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ click.timestamp }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ click.referer }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ click.browser }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ click.device }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                    <div class="bg-white p-4 rounded-lg shadow-md">
+                        <p>Clicks Per Day</p>
+                        <canvas id="clicksPerDayChart" class="w-full h-64"></canvas>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-md">
+                        <p>Referrer Distribution</p>
+                        <canvas id="referrerChart" class="w-48 h-48"></canvas>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-md">
+                        <p>Device Distribution</p>
+                        <canvas id="deviceChart" class="w-48 h-48"></canvas>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-md">
+                        <p>Browser Distribution</p>
+                        <canvas id="browserChart" class="w-48 h-48"></canvas>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
-        <div class="bg-white text-center p-6 rounded-lg shadow-md">
-          <h2 class="text-xl font-semibold">Total Clicks</h2>
-          <p class="text-3xl">{{ total_clicks }}</p>
-        </div>
-        
-      </div>
-
-      <div class="mt-6">
-        <h2 class="text-xl font-semibold mb-4">Top Performing Links</h2>
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Short URL
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Clicks
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            {% for link, click_count in best_links %}
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <a href="{{ link.get_absolute_url }}" class="text-blue-600 hover:text-blue-800">
-                  {{ link.short_code }}
-                </a>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                {{ click_count }} clicks
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        
-      </div>
-
-      {% if best_link %}
-      <div class="mt-6">
-        <h2 class="text-xl font-semibold mb-4">Details for Top Link: {{ best_link.short_code }}</h2>
-
-        <div class="overflow-y-auto max-h-80">
-          <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm mb-6">
-            <thead class="bg-gray-50">
-              <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Referer</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Browser</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              {% for click in clicks %}
-              <tr>
-                <td class="px-6 py-4 whitespace-nowrap">{{ click.timestamp }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ click.referer }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ click.browser }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ click.device }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-          <div class="bg-white p-4 rounded-lg shadow-md">
-            <p>Clicks Per Day</p>
-            <canvas id="clicksPerDayChart" class="w-full h-64"></canvas>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-md">
-            <p>Referrer Distribution</p>
-            <canvas id="referrerChart" class="w-48 h-48"></canvas>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-md">
-            <p>Device Distribution</p>
-            <canvas id="deviceChart" class="w-48 h-48"></canvas>
-          </div>
-          <div class="bg-white p-4 rounded-lg shadow-md">
-            <p>Browser Distribution</p>
-            <canvas id="browserChart" class="w-48 h-48"></canvas>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-
     </div>
-  </div>
 </div>
-</body>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0"></script>
 <script>
-  // Data for Clicks Per Day Chart
-  var clicksPerDayData = {{ clicks_per_day|safe }};
-  var clicksPerDayLabels = clicksPerDayData.map(item => item.day);
-  var clicksPerDayCounts = clicksPerDayData.map(item => item.clicks);
+    // Data for Clicks Per Day Chart
+    var clicksPerDayData = {{ clicks_per_day|safe }};
+    var clicksPerDayLabels = clicksPerDayData.map(item => item.day);
+    var clicksPerDayCounts = clicksPerDayData.map(item => item.clicks);
 
-  // Data for Referrer Chart
-  var referrerData = {{ referrer_distribution|safe }};
-  var referrerLabels = referrerData.map(item => item.referer);
-  var referrerCounts = referrerData.map(item => item.count);
+    // Data for Referrer Chart
+    var referrerData = {{ referrer_distribution|safe }};
+    var referrerLabels = referrerData.map(item => item.referer);
+    var referrerCounts = referrerData.map(item => item.count);
 
-  // Data for Device Chart
-  var deviceData = {{ device_distribution|safe }};
-  var deviceLabels = deviceData.map(item => item.device);
-  var deviceCounts = deviceData.map(item => item.count);
+    // Data for Device Chart
+    var deviceData = {{ device_distribution|safe }};
+    var deviceLabels = deviceData.map(item => item.device);
+    var deviceCounts = deviceData.map(item => item.count);
 
-  // Data for Browser Chart
-  var browserData = {{ browser_distribution|safe }};
-  var browserLabels = browserData.map(item => item.browser);
-  var browserCounts = browserData.map(item => item.count);
+    // Data for Browser Chart
+    var browserData = {{ browser_distribution|safe }};
+    var browserLabels = browserData.map(item => item.browser);
+    var browserCounts = browserData.map(item => item.count);
 
-  // Clicks Per Day Chart
-  new Chart(document.getElementById('clicksPerDayChart'), {
-    type: 'bar',
-    data: {
-      labels: clicksPerDayLabels,
-      datasets: [{
-        label: 'Clicks Per Day',
-        data: clicksPerDayCounts,
-        backgroundColor: 'rgba(247, 119, 185, 0.8)', 
-        fill: true,
-        barThickness: 24,
-        categoryPercentage: 0.8, 
-        barPercentage: 0.9 
-        
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        x: { type: 'time', time: { unit: 'day' } },
-        y: { beginAtZero: true }
-      }
-    }
-  });
-
-  // Referrer Chart
-  new Chart(document.getElementById('referrerChart'), {
-    type: 'pie',
-    data: {
-      labels: referrerLabels,
-      datasets: [{
-        label: 'Referrer',
-        data: referrerCounts,
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: function(tooltipItem) {
-              return referrerLabels[tooltipItem.dataIndex] + ': ' + referrerCounts[tooltipItem.dataIndex];
+    // Clicks Per Day Chart
+    new Chart(document.getElementById('clicksPerDayChart'), {
+        type: 'bar',
+        data: {
+            labels: clicksPerDayLabels,
+            datasets: [{
+                label: 'Clicks Per Day',
+                data: clicksPerDayCounts,
+                backgroundColor: 'rgba(247, 119, 185, 0.8)',
+                fill: true,
+                barThickness: 24,
+                categoryPercentage: 0.8,
+                barPercentage: 0.9
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { type: 'time', time: { unit: 'day' } },
+                y: { beginAtZero: true }
             }
-          }
         }
-      }
-    }
-  });
-
-  // Device Chart
-  new Chart(document.getElementById('deviceChart'), {
-    type: 'pie',
-    data: {
-      labels: deviceLabels,
-      datasets: [{
-        label: 'Device',
-        data: deviceCounts,
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: function(tooltipItem) {
-              return deviceLabels[tooltipItem.dataIndex] + ': ' + deviceCounts[tooltipItem.dataIndex];
-            }
-          }
-        }
-      }
-    }
-  });
-
-  // Browser Chart
-  new Chart(document.getElementById('browserChart'), {
-    type: 'pie',
-    data: {
-      labels: browserLabels,
-      datasets: [{
-        label: 'Browser',
-        data: browserCounts,
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: function(tooltipItem) {
-              return browserLabels[tooltipItem.dataIndex] + ': ' + browserCounts[tooltipItem.dataIndex];
-            }
-          }
-        }
-      }
-    }
-  });
-</script>
-<script>
-  // JavaScript for handling dropdown menu visibility
-  document.querySelectorAll("[id^=dropdownMenuButton]").forEach(button => {
-    button.addEventListener("click", function() {
-      const menuId = this.id.replace("Button", "");
-      document.getElementById(menuId).classList.toggle("hidden");
     });
-  });
+
+    // Referrer Chart
+    new Chart(document.getElementById('referrerChart'), {
+        type: 'pie',
+        data: {
+            labels: referrerLabels,
+            datasets: [{
+                label: 'Referrer',
+                data: referrerCounts,
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return referrerLabels[tooltipItem.dataIndex] + ': ' + referrerCounts[tooltipItem.dataIndex];
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Device Chart
+    new Chart(document.getElementById('deviceChart'), {
+        type: 'pie',
+        data: {
+            labels: deviceLabels,
+            datasets: [{
+                label: 'Device',
+                data: deviceCounts,
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return deviceLabels[tooltipItem.dataIndex] + ': ' + deviceCounts[tooltipItem.dataIndex];
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Browser Chart
+    new Chart(document.getElementById('browserChart'), {
+        type: 'pie',
+        data: {
+            labels: browserLabels,
+            datasets: [{
+                label: 'Browser',
+                data: browserCounts,
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return browserLabels[tooltipItem.dataIndex] + ': ' + browserCounts[tooltipItem.dataIndex];
+                        }
+                    }
+                }
+            }
+        }
+    });
 </script>
 {% endblock %}
