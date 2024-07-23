@@ -4,109 +4,79 @@
 {% block title %}ShortenIt - Your URL Shortener Solution{% endblock %}
 {% load static %}
 {% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
 <link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon"> 
-<body class="bg-gray-100 text-gray-800">
-    <div class="bg-gray-100   sm:ml-64 mt-12 overflow-y-auto max-h-screen"> 
-
-   <!-- Hero Section -->
-    <section class="bg-blue-500 text-white py-10 animate-fadeIn">
-        <div class="container mx-auto text-center animate-fadeIn">
-            <h1 class="text-4xl font-bold mb-4">Shorten Your URLs with Ease</h1>
-            <p class="text-lg mb-8">Make your links more manageable and track their performance.</p>
-            <a href="/signup" class="bg-white text-blue-500 px-8 py-3 rounded-md font-semibold hover:bg-gray-200">Get Started for Free</a>
-        </div>
-    </section>
-
-    <!-- Importance of URL Shorteners -->
-    <section id="about" class="py-20">
-        <div class="container mx-auto px-4  ">
-            <h2 class="text-3xl font-bold mb-6 text-center">Why Use a URL Shortener?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div>
-                    <h3 class="text-xl font-semibold mb-2">Simplify Your Links</h3>
-                    <p class="mb-4">Long URLs can be cumbersome and difficult to manage. Shortened URLs are more user-friendly and easier to share.</p>
-                    <h3 class="text-xl font-semibold mb-2">Improve Click-Through Rates</h3>
-                    <p class="mb-4">Short URLs are more appealing and can improve click-through rates by making links look cleaner and more trustworthy.</p>
+<body class="bg-gray-100">
+    {% if user.is_authenticated %}
+    <div class="bg-gray-100 sm:ml-64 mt-8 overflow-y-auto max-h-screen"> 
+    {% else %}
+    <div class="bg-gray-100  mt-8 overflow-y-auto max-h-screen"> 
+    {% endif %}
+        <!-- Hero Section -->
+        <section class="bg-white py-12">
+            <div class="container mx-auto flex flex-col lg:flex-row items-center px-4 lg:px-0">
+                <div class="lg:w-1/2 lg:pr-8">
+                    <h1 class="text-4xl font-bold text-gray-800 leading-tight mb-4">Short and Customize and safe short URLs</h1>
+                    <p class="text-gray-600 mb-6">Our service is the fastest, easiest way to brand, track, and share short URLs using a custom domain name.</p>
+                    <a href="{% url 'signup' %}" class="bg-blue-500 text-white py-2 px-4 rounded shadow hover:bg-blue-600">Get Started</a>
                 </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-2">Track Performance</h3>
-                    <p class="mb-4">Gain insights into how your links are performing with detailed analytics and click tracking.</p>
-                    <h3 class="text-xl font-semibold mb-2">Boost Your Marketing</h3>
-                    <p class="mb-4">Enhance your marketing campaigns by using custom short URLs that match your brand and message.</p>
+                <div class="lg:w-1/2 flex flex-wrap justify-center lg:justify-end mt-8 lg:mt-0">
+                    <div class="w-full sm:w-1/2 p-4">
+                        {% comment %} <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuQIo_8dYWvlx5YmV7SVapP-KeuK6GUGbyLw&s" alt="Example URL" class="rounded-lg shadow-lg"> {% endcomment %}
+                    </div>
+                    <div class="w-full sm:w-1/2 p-4">
+                        {% comment %} <img src="https://www.shutterstock.com/image-photo/female-hand-holding-black-mobile-260nw-2250578027.jpg" alt="QR Code" class="rounded-lg shadow-lg"> {% endcomment %}
+                    </div>
+                    <div class="w-full p-4">
+                        <img src="https://www.shutterstock.com/image-vector/analytics-monitoring-concept-business-team-600nw-2350586545.jpg" alt="Analytics" class="rounded-lg w-full h-full ">
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="bg-gray-200 py-20 animate-slideIn">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-6 text-center">Features</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="text-center">
-                    <h3 class="text-xl font-semibold mb-2">Custom Short URLs</h3>
-                    <p>Personalize your short URLs to make them more memorable and aligned with your brand.</p>
-                </div>
-                <div class="text-center">
-                    <h3 class="text-xl font-semibold mb-2">Detailed Analytics</h3>
-                    <p>Track the performance of your links with comprehensive analytics and reports.</p>
-                </div>
-                <div class="text-center">
-                    <h3 class="text-xl font-semibold mb-2">Link Management</h3>
-                    <p>Manage all your links in one place with an easy-to-use dashboard.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="py-20 animate-slideIn">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-6 text-center">What Our Users Say</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="text-center">
-                    <p class="italic">"ShortenIt has made managing my links so much easier. The analytics are incredibly useful!"</p>
-                    <p class="mt-4 font-semibold">- John Doe, Marketer</p>
-                </div>
-                <div class="text-center">
-                    <p class="italic">"I love the custom short URLs feature. It helps keep my brand consistent."</p>
-                    <p class="mt-4 font-semibold">- Jane Smith, Blogger</p>
-                </div>
-                <div class="text-center">
-                    <p class="italic">"The best URL shortener I’ve used. Highly recommend it to anyone needing to shorten links."</p>
-                    <p class="mt-4 font-semibold">- Bob Johnson, Developer</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Call to Action -->
-    <section class="bg-blue-500 text-white py-10">
-        <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-6">Ready to Shorten Your URLs?</h2>
-            <p class="text-lg mb-8">Sign up today and start managing your links more effectively.</p>
-            <a href="/signup" class="bg-white text-blue-500 px-8 py-3 rounded-md font-semibold hover:bg-gray-200">Get Started for Free</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
+        </section>
+    
+    
     <footer class="bg-gray-800 text-gray-400 py-8">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2024 QuicCut. All rights reserved.</p>
-            <div class="flex justify-center space-x-4 mt-4">
-                <a href="{% url 'service' %}" class="hover:text-white">Features</a>
-                <a href="{% url 'about' %}" class="hover:text-white">About</a>
-                <a href="#testimonials" class="hover:text-white">Testimonials</a>
-                <a href="{% url 'contact' %}" class="hover:text-white">Contact</a>
+        <div class="bg-very-dark-violet py-8">
+            <div class="max-w-6xl mx-auto w-4/5 flex justify-between items-start flex-col md:flex-row">
+                <img src={logo} alt='QuiCcut' class="mt-5">
+                    <div class="flex flex-col mx-8 my-4 md:my-0 items-center md:items-start">
+                        <h6 class="text-white">Features</h6>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Link Shortening</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Branded Links</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Analytics</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Campaigns</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Link Detection using ml</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Create ADPages</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Create Ebussiness Card</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Create ADs</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Chats with creator</a>
+
+                    </div>
+                    <div class="flex flex-col mx-8 my-4 md:my-0 items-center md:items-start">
+                        <h6 class="text-white">Resources</h6>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Blog</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Developers</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Support</a>
+                    </div>
+                    <div class="flex flex-col mx-8 my-4 md:my-0 items-center md:items-start">
+                        <h6 class="text-white">Company</h6>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">About</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Our Team</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Careers</a>
+                        <a href="#" class="text-grey my-1 hover:text-cyan transition duration-500">Contact</a>
+                    </div>
+                <div class="flex mt-5">
+                    <FacebookIcon class="text-white w-8 h-8 mx-1 hover:text-cyan transition duration-500 cursor-pointer" />
+                    <TwitterIcon class="text-white w-8 h-8 mx-1 hover:text-cyan transition duration-500 cursor-pointer" />
+                    <PinterestIcon class="text-white w-8 h-8 mx-1 hover:text-cyan transition duration-500 cursor-pointer" />
+                    <InstagramIcon class="text-white w-8 h-8 mx-1 hover:text-cyan transition duration-500 cursor-pointer" />
+                </div>
             </div>
         </div>
+        
     </footer>
-    <br>
-<br>
-</div>
-<br>
-<br>
+
 </body>
 
 

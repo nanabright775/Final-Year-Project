@@ -6,7 +6,11 @@
 <link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
 
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    <div class="bg-gray-100 p-10 sm:ml-64 mt-8 overflow-y-auto max-h-screen"> 
+    {% if user.is_authenticated %}
+         <div class="bg-gray-100 p-10 sm:ml-64 mt-8 overflow-y-auto max-h-screen"> 
+    {% else %}
+        <div class="bg-gray-100 p-2 mt-8 overflow-y-auto max-h-screen"> 
+    {% endif %}
         <header class="relative overflow-hidden mt-8">
             <div class="container mx-auto text-center animate-fadeIn shadow-lg   bg-blue-600 text-white py-6">
                 <h1 class="text-4xl font-bold">Welcome to URL Shortener</h1>

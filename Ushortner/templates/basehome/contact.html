@@ -6,8 +6,13 @@
 <link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
 
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    <div class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen"> 
-        <!-- Main Content -->
+    {% if user.is_authenticated %}
+    <div class="bg-gray-100 p-10 sm:ml-64 mt-8 overflow-y-auto max-h-screen"> 
+    {% else %}
+    <div class="bg-gray-100 p-10 mt-8 overflow-y-auto max-h-screen"> 
+    {% endif %}   
+    
+    <!-- Main Content -->
         <main class="container mx-auto py-10">
             <section class="bg-white p-10 rounded-lg shadow-lg">
                 <h2 class="text-4xl font-bold text-center mb-10">Contact Us</h2>
