@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+#urls for campaign,Reels,likes,Comment
 urlpatterns = [
     path('', views.content_list, name='content_list'),
     path('my-content/', views.my_content, name='my_content'),

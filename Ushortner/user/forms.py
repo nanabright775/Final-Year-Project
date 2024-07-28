@@ -4,6 +4,7 @@ from urlshortner.models import ShortURL
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+#forms for a creating a custom shorten url
 class CustomShortURLForm(forms.ModelForm):
     custom_short_code = forms.CharField(
         max_length=20, 
@@ -24,6 +25,7 @@ class CustomShortURLForm(forms.ModelForm):
           
         }
 
+#forms for generating a qr code
 class GenerateQRCodeForm(forms.Form):
     url = forms.URLField(label='Enter URL', widget=forms.URLInput(attrs={
         'placeholder': 'Enter URL here',
@@ -32,6 +34,7 @@ class GenerateQRCodeForm(forms.Form):
         }))
 
 
+#forms for creating a user
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User

@@ -7,7 +7,7 @@ from django.conf import settings
 
 
 def shorten_view(request):
-        return render(request, 'basehome/homepage.html')
+        return render(request, 'basehome/landingpage.html')
 
 def about(request):
         return render(request, 'basehome/about.html')

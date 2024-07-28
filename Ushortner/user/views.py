@@ -21,6 +21,7 @@ from django.conf import settings
 from django.db.models import Count
 from datetime import datetime
 
+#signup view for a user
 def signup_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -51,9 +52,7 @@ def signup_view(request):
             )
             user.backend = f'{settings.AUTHENTICATION_BACKENDS[0]}'
             login(request, user)
-            return HttpResponseRedirect(reverse('dashboard'))
-
-            # return redirect('/')  
+            return HttpResponseRedirect(reverse('dashboard')) 
 
         else:
             for error in errors:
@@ -63,6 +62,7 @@ def signup_view(request):
     return render(request, 'user/signup.html')
 
 
+#logging in view
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -90,12 +90,12 @@ def login_view(request):
         return render(request, 'user/login.html', {'errors': errors})
     return render(request, 'user/login.html')
 
-
+#views for creating a short urls using the random method
 @login_required
 def user_dashboard(request):
     """View function for displaying the user dashboard page."""
     user_short_urls = ShortURL.objects.filter(user=request.user).order_by('-date_created')
-    short_code = None  # Initialize short_code here
+    short_code = None  
     qr_code = None 
 
     if request.method == 'POST':
@@ -122,7 +122,7 @@ def user_dashboard(request):
     return render(request, 'user/userdashboard.html', context)
 
 
-
+#logging out view
 def logout_view(request):
     logout(request)
     return redirect(reverse('login'))
@@ -148,6 +148,7 @@ def redirect_view(request, short_code):
     return redirect(short_url.original_url)
 
 
+#analytics view for displaying the analytics of a shortened url
 @login_required
 def analytics_view(request):
     clicks = Click.objects.filter(short_url__user=request.user)
@@ -189,10 +190,11 @@ def analytics_view(request):
         'search_query': search_query,
         'username': request.user.username
     }
-    # print(url_clicks)
+
     return render(request, 'user/analytics.html', context)
 
 
+#detail of a shortened links
 @login_required
 def url_details_view(request, short_code):
     short_url = get_object_or_404(ShortURL, short_code=short_code)
@@ -217,6 +219,8 @@ def url_details_view(request, short_code):
 
     return render(request, 'user/url_details.html', context)
 
+
+#views for customizing the a link
 @login_required
 def customize_short_url_view(request):
     short_url = None
@@ -270,12 +274,10 @@ def delete_short_url(request, short_code):
     return redirect('user_links')
 
 
-
+#getting the all of a users shortern links
 @login_required
 def user_links(request):
     user_short_urls = ShortURL.objects.filter(user=request.user)
-
-   
     search_query = request.GET.get('search', '')
     date_from = request.GET.get('date_from', '')
     date_to = request.GET.get('date_to', '')
@@ -294,12 +296,10 @@ def user_links(request):
     
     if min_clicks:
         user_short_urls = user_short_urls.filter(clicks__gte=min_clicks)
-        # click_user=click_user.filter(click_count__gte=min_clicks)
-    # print(Click.click_count)
     return render(request, 'user/links.html', {'user_short_urls': user_short_urls, })
 
 
-
+#views for settings 
 @login_required
 def settings_view(request):
     if request.method == 'POST':
@@ -327,6 +327,7 @@ def settings_view(request):
     return render(request, 'user/settings.html')
 
 
+#getting the greeting base on the time a user logged in
 def get_greeting():
     current_hour = datetime.now().hour
     if current_hour < 12:
@@ -336,6 +337,7 @@ def get_greeting():
     else:
         return "Good Evening"
 
+#dashboard for a user after logging in
 @login_required   
 def dashboard_view(request):
     clicks = Click.objects.filter(short_url__user=request.user)

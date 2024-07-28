@@ -1,6 +1,7 @@
 from django import forms
 from .models import Message
 
+#forms for sending a message
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message

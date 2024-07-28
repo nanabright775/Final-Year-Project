@@ -6,7 +6,7 @@
 <link rel="icon" href="{% static 'images/logo.ico' %}" type="image/x-icon">
 <div id="content" class="bg-gray-100 p-10 sm:ml-64 mt-12 overflow-y-auto max-h-screen">
     <div class="w-full h-screen bg-gray-100">
-        <div class="relative bg-white shadow-md rounded-lg p-6">
+        <div class="relative bg-white rounded-lg p-6">
             <p class="text-xl italic mb-4">{{ greeting }} {{ user.username }}</p>
             <h1 class="text-center text-2xl font-bold mb-8">Analytics Dashboard</h1>
 
@@ -22,8 +22,8 @@
                
                 
             </div>
-
-            <div class="mt-6">
+        </div>
+            <div class="mt-6 relative bg-white p-6">
                 <h2 class="text-xl font-semibold mb-4">Top Performing Links</h2>
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -47,7 +47,7 @@
             </div>
 
             {% if best_link %}
-            <div class="mt-6">
+            <div class="mt-6 relative bg-white p-6">
                 <h2 class="text-xl font-semibold mb-4">Details for Top Link: {{ best_link.short_code }}</h2>
                 <div class="overflow-y-auto max-h-80">
                     <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-sm mb-6">
@@ -71,7 +71,7 @@
                         </tbody>
                     </table>
                 </div>
-
+            </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                     <div class="bg-white p-4 rounded-lg shadow-md">
                         <p>Clicks Per Day</p>

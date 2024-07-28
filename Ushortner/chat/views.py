@@ -22,7 +22,7 @@ def chat_list(request):
     return render(request, 'chat/chat_list.html', {'users': users, 'unread_counts': unread_counts})
 
 
-
+#chat details
 @login_required
 def chat_detail(request, username):
     user = get_object_or_404(User, username=username)
@@ -70,7 +70,7 @@ def chat_detail(request, username):
 
 
 
-
+#deleting a chat
 @login_required
 def delete_chat(request, user_id):
     user = get_object_or_404(User, id=user_id)

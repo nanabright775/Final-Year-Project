@@ -1,7 +1,7 @@
 from django import forms
 from .models import Campaign, Reel, Comment
 
-
+#forms for campaign
 class CampaignForm(forms.ModelForm):
     class Meta:
         model = Campaign
@@ -12,6 +12,7 @@ class CampaignForm(forms.ModelForm):
             'image': forms.ClearableFileInput(attrs={'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50'}),
         }
 
+#forms for models
 class ReelForm(forms.ModelForm):
     class Meta:
         model = Reel
@@ -22,6 +23,7 @@ class ReelForm(forms.ModelForm):
             'url': forms.URLInput(attrs={'class': 'block w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50'}),
         }
 
+#forms for comment
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment

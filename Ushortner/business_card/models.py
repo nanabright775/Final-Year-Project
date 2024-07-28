@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+#models for bussiness card template
 class BusinessCardTemplate(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='business_card_templates/')
@@ -8,6 +9,7 @@ class BusinessCardTemplate(models.Model):
     def __str__(self):
         return self.name
 
+#models for bussiness card
 class UserBusinessCard(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     template = models.ForeignKey(BusinessCardTemplate, on_delete=models.CASCADE, blank=True, null=True)

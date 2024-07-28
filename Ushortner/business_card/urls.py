@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+
+#urls for bussiness card
 urlpatterns = [
     path('create/', views.create_business_card, name='create_business_card'),
     path('business-cards/', views.business_card_list, name='business_card_list'),

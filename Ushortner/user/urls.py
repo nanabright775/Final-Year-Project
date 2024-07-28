@@ -16,6 +16,7 @@ from .views import (
 )
 from chat import views
 
+#urls for user, shorten link analytics,campaign, chat, detection
 urlpatterns = [
     path('signup/', signup_view, name='signup'),
     path('login/', login_view, name='login'),

@@ -2,7 +2,7 @@ from django.db import models
 from user_agents import parse as ua_parse
 from user.models import User 
 
-# Create your models here.
+# Models for a short url
 class ShortURL(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     original_url = models.URLField()
@@ -18,6 +18,7 @@ class ShortURL(models.Model):
     class Meta:
         ordering = ['-date_created'] 
 
+#models for clicks to provide analytics
 class Click(models.Model):
     short_url = models.ForeignKey(ShortURL, on_delete=models.CASCADE)
     user_agent_string = models.CharField(max_length=255)
@@ -27,8 +28,6 @@ class Click(models.Model):
     browser = models.CharField(max_length=100, null=True, blank=True)
     device = models.CharField(max_length=100, null=True, blank=True)
     click_count = models.IntegerField(default=0)
-
-    # clicks = models.IntegerField(default=0)
 
 
     def save(self, *args, **kwargs):
@@ -43,5 +42,4 @@ class Click(models.Model):
         self.save(update_fields=['click_count'])
         
     def __str__(self):
-        # click_count = self.short_url.clicks.count()
         return f"{self.timestamp} {self.ip_address} {self.browser} {self.device}"

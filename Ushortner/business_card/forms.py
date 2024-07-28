@@ -1,6 +1,7 @@
 from django import forms
 from .models import UserBusinessCard
 
+#form for bussiness card creation
 class UserBusinessCardForm(forms.ModelForm):
     class Meta:
         model = UserBusinessCard

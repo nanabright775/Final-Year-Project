@@ -5,15 +5,16 @@ from .forms import CampaignForm, ReelForm, CommentForm
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q,F
 from django.http import JsonResponse
-# from django.db.models import F
 
 
+#getting all the content from reels and campaigns and placin them in content as one
 def content_list(request):
     campaigns = Campaign.objects.all()
     reels = Reel.objects.all()
     content = sorted(list(campaigns) + list(reels), key=lambda x: x.created_at, reverse=True)
     return render(request, 'advertisements/content_list.html', {'content': content})
 
+#creating reels and/or campaings
 @login_required
 def content_create(request, content_type):
     initial_data = {}
@@ -39,6 +40,7 @@ def content_create(request, content_type):
     return render(request, 'advertisements/content_create.html', {'form': form})
 
 
+#getting all the content from reels and campaigns and placin them in content as one
 @login_required
 def my_content(request):
     campaigns = Campaign.objects.filter(user=request.user)
@@ -47,6 +49,7 @@ def my_content(request):
     return render(request, 'advertisements/my_content.html', {'content': content})
 
 
+#updating reels or campaign
 @login_required
 def update_content(request, content_type, content_id):
     if content_type == 'campaign':
@@ -65,6 +68,7 @@ def update_content(request, content_type, content_id):
         form = form_class(instance=content)
     return render(request, 'advertisements/update_content.html', {'form': form, 'content': content})
 
+#deleting reels of campaigns
 @login_required
 def delete_content(request, content_type, content_id):
     if content_type == 'campaign':
@@ -77,6 +81,8 @@ def delete_content(request, content_type, content_id):
         return redirect('my_content')
     return render(request, 'advertisements/delete_content.html', {'content': content})
 
+
+#getting the details of a comments on a campaign or reels
 def content_detail(request, content_type, content_id):
     if content_type == 'campaign':
         content = get_object_or_404(Campaign, id=content_id)
@@ -100,6 +106,7 @@ def content_detail(request, content_type, content_id):
     return render(request, 'advertisements/content_detail.html', {'content': content, 'comments': comments, 'new_comment': new_comment, 'comment_form': comment_form})
 
 
+#quary for searching reels or campaigns
 def search(request):
     query = request.GET.get('q')
     if query:
@@ -117,7 +124,6 @@ def search(request):
 
 
 
-
 def like_content(request, content_type_id, object_id):
     content_type = get_object_or_404(ContentType, id=content_type_id)
     content_object = content_type.get_object_for_this_type(id=object_id)
@@ -128,10 +134,9 @@ def like_content(request, content_type_id, object_id):
     
     # Fetch the updated like count
     content_object.refresh_from_db()
-    
-    # return JsonResponse({'like_count': content_object.like_count})
     return redirect(content_list)
 
+#creating a comment
 def comment_content(request, content_type_id, object_id):
     content_type = get_object_or_404(ContentType, id=content_type_id)
     content_object = content_type.get_object_for_this_type(id=object_id)
