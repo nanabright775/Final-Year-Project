@@ -171,7 +171,6 @@ Contact
 For any questions or inquiries, please contact Bright Atsiatorme at nanabrightatsiatorme@gmail.com.
 
 Images
-landing page
 ![Screenshot 2024-07-28 at 21-33-40 ShortenIt - Your URL Shortener Solution](https://github.com/user-attachments/assets/a9f7c9fc-e642-4c02-9868-61b035792208)
 ![Screenshot 2024-07-28 at 21-42-51 Dashboard](https://github.com/user-attachments/assets/8084ea89-3fbf-4b77-96b5-e8c33239bb86)
 
