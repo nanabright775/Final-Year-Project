@@ -71,9 +71,8 @@ Access the Application
 
 Open your web browser and go to:
 
-arduino
 
-http://127.0.0.1:8000/
+    http://127.0.0.1:8000/
 
 Usage
 
@@ -114,7 +113,17 @@ Contact
 For any questions or inquiries, please contact Bright Atsiatorme at nanabrightatsiatorme@gmail.com.
 
 Images
+landing page
 ![Screenshot 2024-07-28 at 21-33-40 ShortenIt - Your URL Shortener Solution](https://github.com/user-attachments/assets/a9f7c9fc-e642-4c02-9868-61b035792208)
+![Screenshot 2024-07-28 at 21-42-51 Dashboard](https://github.com/user-attachments/assets/8084ea89-3fbf-4b77-96b5-e8c33239bb86)
 
+![Screenshot 2024-07-28 at 21-44-14 Dashboard](https://github.com/user-attachments/assets/c3da5101-ff68-4deb-9cc4-e0356d7068cc)
 
+![Screenshot 2024-07-28 at 21-44-42 creat a link](https://github.com/user-attachments/assets/5501e56a-9a7b-4392-91b5-71872aca668b)
+
+![Screenshot 2024-07-28 at 21-45-11 Business Card](https://github.com/user-attachments/assets/52a33491-4715-42b9-8532-5f88b87b4746)
+
+![Screenshot 2024-07-28 at 21-46-10 Analytics](https://github.com/user-attachments/assets/303efc7a-9a27-4e97-bd59-7531cfa97074)
+
+![Screenshot 2024-07-28 at 21-46-46 Detection](https://github.com/user-attachments/assets/718b0902-4b36-4872-a100-53c32c5079b2)
 
