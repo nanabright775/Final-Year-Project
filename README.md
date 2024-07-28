@@ -27,7 +27,7 @@ Clone the Repository
 
 bash
 
-    git clone https://github.com/yourusername/url-shortener.git
+    git clone https://github.com/nanabright775/Final-Year-Project.git
     cd url-shortener
 
 Create a Virtual Environment
@@ -58,6 +58,64 @@ Create an admin user to access the Django admin panel:
 bash
 
     python manage.py createsuperuser
+
+Tailwind CSS Setup
+
+This project uses Tailwind CSS for styling. Follow these steps to set it up:
+
+Install Tailwind CSS
+bash
+   
+    npm install -D tailwindcss
+    Initialize Tailwind CSS:
+
+bash
+
+    npx tailwindcss init
+
+Configure Tailwind CSS:
+Edit the tailwind.config.js file:
+
+javascript
+
+    /** @type {import('tailwindcss').Config} */
+    module.exports = {
+      content: [
+        './templates/**/*.html',
+        './static/src/**/*.js',
+        // Add other paths to your templates and JS files
+      ],
+      theme: {
+        extend: {},
+      },
+      plugins: [],
+    }
+
+Create CSS File:
+Create a CSS file (e.g., src/styles.css) and include the Tailwind directives:
+
+css
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+Build Tailwind CSS:
+Update package.json to include a build script:
+
+json
+
+    {
+      "scripts": {
+        "build:css": "tailwindcss -i ./src/styles.css -o ./static/css/styles.css --watch"
+      }
+    }
+
+Run the build script:
+
+bash
+
+    npm run build:css
 
 Run the Development Server
 
