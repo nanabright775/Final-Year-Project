@@ -28,7 +28,7 @@ Clone the Repository
 bash
 
     git clone https://github.com/nanabright775/Final-Year-Project.git
-    cd url-shortener
+    cd Final-Year-Project/Ushortner
 
 Create a Virtual Environment
 
@@ -61,61 +61,33 @@ bash
 
 Tailwind CSS Setup
 
-This project uses Tailwind CSS for styling. Follow these steps to set it up:
+This project uses Tailwind CSS and flowbite for styling. Follow these steps to set it up:
 
 Install Tailwind CSS
 bash
    
     npm install -D tailwindcss
-    Initialize Tailwind CSS:
+Initialize Tailwind CSS:
 
 bash
 
     npx tailwindcss init
-
-Configure Tailwind CSS:
-Edit the tailwind.config.js file:
-
-javascript
-
-    /** @type {import('tailwindcss').Config} */
-    module.exports = {
-      content: [
-        './templates/**/*.html',
-        './static/src/**/*.js',
-        // Add other paths to your templates and JS files
-      ],
-      theme: {
-        extend: {},
-      },
-      plugins: [],
-    }
-
-Create CSS File:
-Create a CSS file (e.g., src/styles.css) and include the Tailwind directives:
-
-css
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-Build Tailwind CSS:
-Update package.json to include a build script:
-
-json
-
-    {
-      "scripts": {
-        "build:css": "tailwindcss -i ./src/styles.css -o ./static/css/styles.css --watch"
-      }
-    }
 
 Run the build script:
 
 bash
 
     npm run build:css
+
+Install Flowbite 
+
+Flowbite is an open source library of interactive components built on top of Tailwind CSS and it can be
+installed using NPM and required as a plugin inside Tailwind CSS.
+
+Install Flowbite as a dependency using NPM:
+
+    npm install flowbite
+
 
 Run the Development Server
 
@@ -183,4 +155,5 @@ Images
 ![Screenshot 2024-07-28 at 21-46-10 Analytics](https://github.com/user-attachments/assets/303efc7a-9a27-4e97-bd59-7531cfa97074)
 
 ![Screenshot 2024-07-28 at 21-46-46 Detection](https://github.com/user-attachments/assets/718b0902-4b36-4872-a100-53c32c5079b2)
+![Screenshot 2024-07-29 at 12-53-26 Create AD Page](https://github.com/user-attachments/assets/82e96103-7080-40d3-95c8-83c6593efd1a)
 
